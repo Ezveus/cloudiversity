@@ -1,0 +1,27 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+
+# Ignore rails' secret token
+/config/initializers/secret_token.rb
+
+# Ruby version management
+/.ruby-version
+/.ruby-gemset
+
+# THANKS APPLE
+.DS_Store
+__MACOSX
+
+# THANKS EMACS
+*~
+
+# THANKS VIM
+*.swp
