@@ -1,0 +1,66 @@
+$cloudi-menu-width: 250px;
+$cloudi-menu-bg: #D0D0D0;
+$cloudi-menu-fg: #404040;
+
+$cloudi-link-fg: #204080;
+$cloudi-link-fg-hover: darken($cloudi-link-fg, 20%);
+
+// TODO: RES-PON-SIVE
+// Padding for the body to be able to move contents right
+
+body {
+    margin-left: $cloudi-menu-width;
+}
+
+.cloudi-menu {
+    width: $cloudi-menu-width;
+    background-color: $cloudi-menu-bg;
+    height: 100%;
+    box-sizing: content-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    color: $cloudi-menu-fg;
+    border-right: 1px solid darken($cloudi-menu-bg, 50%);
+    box-shadow: -3px 0 6px darken($cloudi-menu-bg, 15%) inset;
+
+    & .side-nav {
+        & li {
+            margin: 0;
+            padding: 0;
+            transition: background 0.2s;
+
+            &:hover, &.active {
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+
+            & a {
+                color: $cloudi-link-fg;
+                padding: 5px;
+
+                &:hover {
+                    color: $cloudi-link-fg-hover;
+                }
+            }
+        }
+    }
+}
+
+.cloudi-logo {
+    margin: 20px auto 5px auto;
+    width: 128px;
+    height: 128px;
+    background: transparent url(asset-path("cloudiversity.png", image)) center center
+    no-repeat;
+}
+
+// Embedded name in the logo is bad, this is in preparation of the future
+// where this will be fixed.
+// TODO: Change that ^
+.cloudi-brand {
+    text-align: center;
+    margin: 0 0 20px 0;
+    color: #123456;
+    display: none;
+}
