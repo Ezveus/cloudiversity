@@ -16,6 +16,7 @@
       %ul.side-nav
         %li= link_to 'Home', root_path
         - if current_user.present?
+          %li= link_to 'Administration', admin_path
           %li= link_to 'Log out', destroy_user_session_path, method: :delete
         - else
           %li= link_to 'Log in', new_user_session_path

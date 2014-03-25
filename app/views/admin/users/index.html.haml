@@ -1,0 +1,10 @@
+%h2 Utilisateurs
+%table{style: 'width: 100%'}
+  %thead
+    %tr
+      %td Login
+      %td E-mail
+      %td Actions
+  %tbody
+    = render partial: 'user_row', collection: @users, as: :user
+= link_to 'Create user', new_admin_user_path
