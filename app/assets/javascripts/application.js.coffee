@@ -3,8 +3,11 @@
 #= require foundation
 #= require_tree .
 
-# $(function(){ $(document).foundation(); });
-
 $ ->
     $(document).foundation()
+
+    $('.cloudi-menu-toggle').click ->
+        $('.cloudi-menu').toggleClass('visible')
+        false
+
     null

@@ -1,66 +1,103 @@
-$cloudi-menu-width: 250px;
-$cloudi-menu-bg: #D0D0D0;
-$cloudi-menu-fg: #404040;
+$cloudi-topbar-base: #456789;
+$cloudi-topbar-text: #FFFFFF;
+$cloudi-menu-base: #404040;
+$cloudi-menu-text: #FFFFFF;
+$cloudi-menu-height: 48px;
 
-$cloudi-link-fg: #204080;
-$cloudi-link-fg-hover: darken($cloudi-link-fg, 20%);
+.cloudi-topbar {
+    display: block;
+    background-color: $cloudi-topbar-base; // For legacy browsers
+    background: linear-gradient(lighten($cloudi-topbar-base, 20%), darken($cloudi-topbar-base, 10%));
+    border-bottom: 1px solid darken($cloudi-topbar-base, 20%);
+    border-top: 1px solid lighten($cloudi-topbar-base, 30%);
+    height: $cloudi-menu-height;
+    margin-bottom: 10px;
 
-// TODO: RES-PON-SIVE
-// Padding for the body to be able to move contents right
+    .cloudi-logo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        margin: (($cloudi-menu-height - 32px) / 2);
+        vertical-align: middle;
+    }
 
-body {
-    margin-left: $cloudi-menu-width;
-}
+    .cloudi-brand {
+        display: inline-block;
+        vertical-align: middle;
 
-.cloudi-menu {
-    width: $cloudi-menu-width;
-    background-color: $cloudi-menu-bg;
-    height: 100%;
-    box-sizing: content-box;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-    color: $cloudi-menu-fg;
-    border-right: 1px solid darken($cloudi-menu-bg, 50%);
-    box-shadow: -3px 0 6px darken($cloudi-menu-bg, 15%) inset;
+        color: $cloudi-topbar-text;
+	text-shadow: 0 1px 2px #404040;
+    }
 
-    & .side-nav {
-        & li {
-            margin: 0;
-            padding: 0;
-            transition: background 0.2s;
+    .cloudi-menu-toggle {
+        display: inline-block;
+        border-left: 1px solid darken($cloudi-topbar-base, 20%);
+        height: ($cloudi-menu-height - 1px);
+        vertical-align: middle;
+        width: $cloudi-menu-height;
+        float: right;
+        text-align: center;
+	margin-top: -1px;
+	overflow: hidden;
+	text-shadow: 0 1px 2px #404040;
+	font-size: (0.5 * $cloudi-menu-height);
 
-            &:hover, &.active {
-                background-color: rgba(0, 0, 0, 0.2);
-            }
+        span {
+            display: none;
+        }
 
-            & a {
-                color: $cloudi-link-fg;
-                padding: 5px;
+        &:after {
+            content: '\2630';
+            display: inline-block;
+            vertical-align: middle;
+            line-height: $cloudi-menu-height - 6px;
+            margin: 3px 0;
+            color: #FFFFFF;
+        }
 
-                &:hover {
-                    color: $cloudi-link-fg-hover;
-                }
-            }
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.2);
         }
     }
 }
 
-.cloudi-logo {
-    margin: 20px auto 5px auto;
-    width: 128px;
-    height: 128px;
-    background: transparent url(asset-path("cloudiversity.png", image)) center center
-    no-repeat;
-}
-
-// Embedded name in the logo is bad, this is in preparation of the future
-// where this will be fixed.
-// TODO: Change that ^
-.cloudi-brand {
-    text-align: center;
-    margin: 0 0 20px 0;
-    color: #123456;
+.cloudi-menu {
+    width: 100%;
+    background-color: $cloudi-menu-base;
     display: none;
+
+    .cloudi-logo, .cloudi-brand {
+        display: none;
+    }
+
+    .side-nav {
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: 0;
+            margin: 0;
+            border-bottom: 1px solid darken($cloudi-menu-base, 15%);
+
+            a {
+                padding: 10px;
+                display: block;
+                color: $cloudi-menu-text;
+
+                &:hover {
+                    color: $cloudi-menu-text;
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+            }
+        }
+    }
+
+    position: absolute;
+    left: 0;
+    top: $cloudi-menu-height;
+    z-index: 1;
+
+    &.visible {
+        display: block;
+    }
 }

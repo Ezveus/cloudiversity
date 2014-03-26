@@ -8,6 +8,14 @@
         = javascript_include_tag 'vendor/modernizr'
         = csrf_meta_tags
     %body
+        .cloudi-topbar
+            = link_to root_path do
+                .cloudi-logo
+                .cloudi-brand
+                    %strong> Cloud
+                    iversity
+                = link_to '#', class: 'cloudi-menu-toggle' do
+                    %span Menu
         .cloudi-menu
             = link_to root_path do
                 .cloudi-logo
@@ -22,7 +30,7 @@
                 - else
                     %li= link_to 'Log in', new_user_session_path
         .row
-            .large-8.columns
+            .columns
                 - if notice
                     .alert-box= notice
                 - if alert
