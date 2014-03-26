@@ -1,2 +1,10 @@
 %h2 User #{@user.login}
-E-mail: #{@user.email}
+.row
+    .large-9.columns
+        %ul.vcard
+            %li.fn= @user.full_name
+            %li.email= mail_to @user.email
+    .large-3.columns
+        %ul.side-nav
+            %li= link_to 'Edit', edit_admin_user_path(@user)
+            %li= link_to 'Delete', admin_user_path(@user), method: :delete, confirm: "Do you really want to delete #{@user.login}?"

@@ -10,7 +10,7 @@ class Admin::UsersController < ApplicationController
     def update
         @user = User.find(params[:id])
         respond_to do |format|
-            if @user.update(params.require(:user).permit(:email))
+            if @user.update(params.require(:user).permit(:email, :first_name, :last_name))
                 format.html do
                     redirect_to admin_user_path(@user),
                         notice: 'User updated successfully. ' +
@@ -34,7 +34,7 @@ class Admin::UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(params.require(:user).permit(:login, :email))
+        @user = User.new(params.require(:user).permit(:login, :email, :first_name, :last_name))
         @user.password = generate_password
 
         respond_to do |format|

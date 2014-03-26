@@ -1,11 +1,19 @@
 = form_for [:admin, user] do |f|
-  = f.label :login
-  = f.text_field :login, disabled: user.persisted?
-  = f.label :email
-  = f.email_field :email
-  - unless user.persisted?
-    %p
-      %em
-        The password for the new user will be generated randomly and sent to
-        the user's e-mail address.
-  = f.submit class: 'button right'
+    .input-wrapper
+        = f.label :login
+        = f.text_field :login, disabled: user.persisted?, required: !user.persisted?
+    .input-wrapper
+        = f.label :email
+        = f.email_field :email, required: true
+    .input-wrapper
+        = f.label :first_name
+        = f.text_field :first_name, required: true
+    .input-wrapper
+        = f.label :last_name
+        = f.text_field :last_name, required: true
+    - unless user.persisted?
+        %p
+            %em
+                The password for the new user will be generated randomly and sent to
+                the user's e-mail address.
+    = f.submit class: 'button right'
