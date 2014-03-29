@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325230006) do
+ActiveRecord::Schema.define(version: 20140328192417) do
+
+  create_table "school_classes", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "login",                default: "", null: false
@@ -34,10 +40,12 @@ ActiveRecord::Schema.define(version: 20140325230006) do
     t.datetime "updated_at"
     t.string   "first_name",           default: "", null: false
     t.string   "last_name",            default: "", null: false
+    t.integer  "school_class_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["login"], name: "index_users_on_login", unique: true
+  add_index "users", ["school_class_id"], name: "index_users_on_school_class_id"
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
 
 end

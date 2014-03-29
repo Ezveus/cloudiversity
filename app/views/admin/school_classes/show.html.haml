@@ -1,0 +1,15 @@
+%h2 Class #{@school_class.name}
+%h3 Class attendees
+%table
+    %thead
+        %tr
+            %td Name
+            %td Actions
+    %tbody
+        - @school_class.users.each do |user|
+            %tr
+                %td= user.full_name
+                %td
+                    = link_to 'View', admin_user_path(user), class: 'button'
+                    = button_to 'Remove from class', admin_school_class_remove_path(@school_class, user), method: :delete, class: 'button alert'
+= link_to 'Add attendees', admin_school_class_add_path(@school_class)

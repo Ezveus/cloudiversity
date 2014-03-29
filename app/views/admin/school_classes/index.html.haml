@@ -1,0 +1,10 @@
+%h2 Classes
+%table
+    %thead
+        %tr
+            %td Class
+            %td Att. Count
+            %td Action
+    %tbody
+        = render partial: 'row', collection: @school_classes, as: :school_class
+= link_to 'Create class', new_admin_school_class_path
