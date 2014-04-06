@@ -1,8 +1,16 @@
+@import "foundation_overrides";
+
 $cloudi-topbar-base: #456789;
 $cloudi-topbar-text: #FFFFFF;
 $cloudi-menu-base: #404040;
 $cloudi-menu-text: #FFFFFF;
 $cloudi-menu-height: 48px;
+$cloudi-menu-width: 250px;
+
+@font-face {
+    font-family: Entypo;
+    src: url(font_path('entypo.woff'));
+}
 
 .cloudi-topbar {
     display: block;
@@ -11,7 +19,6 @@ $cloudi-menu-height: 48px;
     border-bottom: 1px solid darken($cloudi-topbar-base, 20%);
     border-top: 1px solid lighten($cloudi-topbar-base, 30%);
     height: $cloudi-menu-height;
-    margin-bottom: 10px;
 
     .cloudi-logo {
         display: inline-block;
@@ -19,6 +26,7 @@ $cloudi-menu-height: 48px;
         height: 32px;
         margin: (($cloudi-menu-height - 32px) / 2);
         vertical-align: middle;
+        background: transparent url(image_path('cloudiversity_mobile.png'));
     }
 
     .cloudi-brand {
@@ -40,14 +48,14 @@ $cloudi-menu-height: 48px;
         margin-top: -1px;
         overflow: hidden;
         text-shadow: 0 1px 2px #404040;
-        font-size: (0.5 * $cloudi-menu-height);
+        font-size: $cloudi-menu-height - 6px;
 
         span {
             display: none;
         }
 
+        @include glyph("\2630");
         &:after {
-            content: '\2630';
             display: inline-block;
             vertical-align: middle;
             line-height: $cloudi-menu-height - 6px;
@@ -92,12 +100,244 @@ $cloudi-menu-height: 48px;
         }
     }
 
-    position: absolute;
-    left: 0;
-    top: $cloudi-menu-height;
-    z-index: 1;
-
     &.visible {
         display: block;
+    }
+}
+
+.menu-profile {
+    border-bottom: 1px solid darken($cloudi-menu-base, 15%);
+    font-size: 80%;
+
+    .menu-profile-front, .menu-profile-back {
+        display: block;
+        height: $cloudi-menu-height + 1px; // 1px for border
+    }
+
+    .menu-profile-front {
+        border-bottom: 1px solid darken($cloudi-menu-base, 15%);
+
+        .profile-picture {
+            display: inline-block;
+            width: $cloudi-menu-height;
+            height: $cloudi-menu-height;
+            vertical-align: middle;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .profile-info {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
+            color: $cloudi-menu-text;
+        }
+
+        .profile-expand {
+            display: none;
+        }
+    }
+
+    .menu-profile-back ul {
+        display: table;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        table-layout: fixed;
+
+        li {
+            display: table-cell;
+            border-left: 1px solid darken($cloudi-menu-base, 15%);
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            text-shadow: 0 0 2px darken($cloudi-menu-base, 20%);
+
+            &:first-child {
+                border-left-width: 0;
+            }
+
+            a {
+                display: block;
+                width: 100%;
+                height: 100%;
+                vertical-align: middle;
+
+                span {
+                    display: none;
+                }
+
+                .glyph {
+                    font-size: $cloudi-menu-height - 5px;
+                    line-height: $cloudi-menu-height - 3px;
+                    color: $cloudi-menu-text;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+            }
+        }
+
+        .menu-back {
+            display: none;
+
+            & + li {
+                border-left-width: 0;
+            }
+        }
+    }
+}
+
+@media #{$medium-only} {
+    .menu-profile {
+        .menu-profile-front {
+            display: inline-block;
+            border-bottom-width: 0;
+        }
+
+        .menu-profile-back {
+            display: inline-block;
+            float: right;
+            border-bottom-width: 0;
+
+            ul {
+                width: auto;
+                li {
+                    width: $cloudi-menu-height;
+                }
+
+                border-left: 1px solid darken($cloudi-menu-base, 15%);
+            }
+        }
+    }
+}
+
+@media #{$large-up} {
+    body {
+        padding-left: $cloudi-menu-width;
+    }
+
+    .cloudi-topbar {
+        display: none;
+    }
+
+    .cloudi-menu {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: $cloudi-menu-width;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 10px 0;
+        overflow-y: auto;
+
+        border-right: 1px solid darken($cloudi-menu-base, 15%);
+        box-shadow: -5px 0 5px darken($cloudi-menu-base, 5%) inset;
+
+        .cloudi-logo {
+            display: block;
+            width: 128px;
+            height: 128px;
+            margin: 0 auto;
+            background: transparent url(image_path('cloudiversity.png')) center
+            center no-repeat;
+        }
+
+        .cloudi-brand {
+            display: block;
+            text-align: center;
+            color: #456789;
+            text-shadow: 0 1px 2px #343434;
+        }
+
+        .side-nav {
+            border-top: 1px solid darken($cloudi-menu-base, 15%);
+            margin-top: 20px;
+        }
+    }
+
+    .menu-profile {
+        border-top: 1px solid darken($cloudi-menu-base, 15%);
+        box-sizing: border-box;
+
+        margin-top: 20px;
+        height: $cloudi-menu-height;
+        overflow: hidden;
+
+        .menu-profile-back {
+            border-left: 1px solid darken($cloudi-menu-base, 15%);
+            clear: both;
+            position: relative;
+            width: $cloudi-menu-width;
+            left: $cloudi-menu-width;
+            top: -$cloudi-menu-height - 2;
+            background-color: darken($cloudi-menu-base, 5%);
+            box-shadow: -5px 0 5px darken($cloudi-menu-base, 10%) inset;
+            transition: left 0.5s;
+
+            ul li a:hover {
+                background-color: darken($cloudi-menu-base, 10%);
+            }
+        }
+
+        &.expanded .menu-profile-back {
+            display: block;
+            left: -1px;
+        }
+
+        .profile-info {
+            max-width: $cloudi-menu-width - (2 * ($cloudi-menu-height + 10));
+            max-height: $cloudi-menu-height;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 150%;
+        }
+
+        .menu-profile-front .profile-expand {
+            display: inline-block;
+            width: $cloudi-menu-height;
+            float: right;
+            text-align: center;
+            color: $cloudi-menu-text;
+            font-size: $cloudi-menu-height - 6px;
+
+            &:hover {
+                background: -webkit-linear-gradient(left, transparent 0%,
+                    lighten($cloudi-menu-base, 5%) 35%,
+                    lighten($cloudi-menu-base, 10%) 85%,
+                    darken($cloudi-menu-base, 10%) 100%);
+                background: -moz-linear-gradient(left, $cloudi-menu-base 0%,
+                    lighten($cloudi-menu-base, 5%) 35%,
+                    lighten($cloudi-menu-base, 10%) 85%,
+                    darken($cloudi-menu-base, 10%) 100%);
+                background: linear-gradient(left, transparent 0%,
+                    lighten($cloudi-menu-base, 5%) 35%,
+                    lighten($cloudi-menu-base, 10%) 85%,
+                    darken($cloudi-menu-base, 10%) 100%);
+            }
+        }
+
+        .menu-profile-back {
+            border-top-width: 0;
+
+            ul .menu-back {
+                display: table-cell;
+
+                & + li {
+                    border-left-width: 1px;
+                }
+            }
+        }
+
+        & + .side-nav {
+            border-top-width: 0;
+            margin-top: 0;
+        }
     }
 }

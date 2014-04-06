@@ -1,0 +1,13 @@
+@mixin glyph($char) {
+    &:after {
+        font-family: Entypo;
+        content: $char;
+    }
+}
+
+.glyph-settings { @include glyph("\2699");  }
+.glyph-logout   { @include glyph("\E741");  }
+.glyph-back     { @include glyph("\E75D");  }
+.glyph-next     { @include glyph("\E75E");  }
+.glyph-inbox    { @include glyph("\E777");  }
+.glyph-user     { @include glyph("\1F464"); }

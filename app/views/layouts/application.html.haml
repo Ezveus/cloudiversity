@@ -22,11 +22,26 @@
                 .cloudi-brand
                     %strong> Cloud
                     iversity
+            - if current_user.present?
+                .menu-profile
+                    .menu-profile-front
+                        .profile-picture
+                        .profile-info= current_user.full_name
+                        = link_to '', '#', class: 'profile-expand glyph-next'
+                    .menu-profile-back
+                        %ul
+                            %li.menu-back
+                                = link_to '#', class: 'profile-expand' do
+                                    %span Log out
+                                    .glyph.glyph-back
+                            %li
+                                = link_to destroy_user_session_path, method: :delete do
+                                    %span Log out
+                                    .glyph.glyph-logout
             %ul.side-nav
                 %li= link_to 'Home', root_path
                 - if current_user.present?
                     %li= link_to 'Administration', admin_path
-                    %li= link_to 'Log out', destroy_user_session_path, method: :delete
                 - else
                     %li= link_to 'Log in', new_user_session_path
         .row

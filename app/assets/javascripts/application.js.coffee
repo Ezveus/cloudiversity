@@ -10,4 +10,8 @@ $ ->
         $('.cloudi-menu').toggleClass('visible')
         false
 
+    $('.profile-expand').click ->
+        $('.menu-profile').toggleClass('expanded')
+        false
+
     null
