@@ -1,16 +1,8 @@
 = form_for [:admin, user] do |f|
-    .input-wrapper
-        = f.label :login
-        = f.text_field :login, disabled: user.persisted?, required: !user.persisted?
-    .input-wrapper
-        = f.label :email
-        = f.email_field :email, required: true
-    .input-wrapper
-        = f.label :first_name
-        = f.text_field :first_name, required: true
-    .input-wrapper
-        = f.label :last_name
-        = f.text_field :last_name, required: true
+    = f.auto_input :login, field: { disabled: user.persisted?, required: !user.persisted? }
+    = f.auto_input :email, field: { required: true }, field_method: :email
+    = f.auto_input :first_name, field: { required: true }
+    = f.auto_input :last_name, field: { required: true }
     - unless user.persisted?
         %p
             %em

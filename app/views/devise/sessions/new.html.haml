@@ -2,16 +2,8 @@
 .row
     .large-8.columns
         = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-            .row
-                .large-3.columns
-                    = f.label :login, class: 'large-right inline'
-                .large-9.columns
-                    = f.text_field :login, autofocus: true
-            .row
-                .large-3.columns
-                    = f.label :password, class: 'large-right inline'
-                .large-9.columns
-                    = f.password_field :password, autocomplete: 'off'
+            = f.auto_input :login, field_opts: { autofocus: true }
+            = f.auto_input :password
             .row
                 - if devise_mapping.rememberable?
                     .large-3.large-offset-3.columns
