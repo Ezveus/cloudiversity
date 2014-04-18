@@ -1,11 +1,17 @@
-%h2 Utilisateurs
+- content_for :title do
+    Users
 %table{style: 'width: 100%'}
-  %thead
-    %tr
-      %td Login
-      %td Name
-      %td E-mail
-      %td Actions
-  %tbody
-    = render partial: 'row', collection: @users, as: :user
-= link_to 'Create user', new_admin_user_path
+    %thead
+        %tr
+            %td Login
+            %td Name
+            %td E-mail
+            %td Actions
+    %tbody
+        = render partial: 'row', collection: @users, as: :user
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to 'Create user', new_admin_user_path, class: 'glyph-add'

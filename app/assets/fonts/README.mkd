@@ -1,4 +1,0 @@
-# External resources
-
-Entypo: <http://www.entypo.com/>
-Under license CC BY-SA 3.0

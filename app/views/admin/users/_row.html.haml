@@ -3,5 +3,5 @@
   %td= user.full_name
   %td= mail_to user.email
   %td
-    = link_to 'Edit', edit_admin_user_path(user), class: 'button tiny'
-    = button_to 'Delete', admin_user_path(user), method: :delete, confirm: 'Un message', class: 'button tiny alert'
+    = link_to 'Edit', edit_admin_user_path(user), class: 'button glyph-button glyph-edit'
+    = link_to 'Delete', admin_user_path(user), method: :delete, confirm: 'Un message', class: 'button glyph-button glyph-delete alert'

@@ -1,0 +1,14 @@
+%navbar
+    = link_to root_path, class: 'cloudi-logo' do
+        %strong> Cloud
+        iversity
+    %ul.menu-link-list
+        -if current_user.present?
+            = render partial: 'static/usercard'
+        %li= link_to 'Home', root_path
+        - if current_user.present?
+            %li= link_to 'Administration', admin_path
+        - else
+            %li= link_to 'Log in', new_user_session_path
+    = link_to '#', class: 'menu-expander' do
+        %span Menu

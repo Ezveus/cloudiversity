@@ -1,217 +1,228 @@
-@import "foundation_overrides";
-
-$cloudi-topbar-base: #456789;
-$cloudi-topbar-text: #FFFFFF;
-$cloudi-menu-base: #404040;
-$cloudi-menu-text: #FFFFFF;
-$cloudi-menu-height: 48px;
+$cloudi-navbar-bg: #405570;
+$cloudi-navbar-border: darken($cloudi-navbar-bg, 10%);
+$cloudi-navbar-text: #FFFFFF;
+$cloudi-menu-bg: #E0E0E5;
+$cloudi-menu-border: darken($cloudi-menu-bg, 10%);
 $cloudi-menu-width: 250px;
+$cloudi-menu-text: #404040;
+$cloudi-usercard-size: 48px;
 
-@font-face {
-    font-family: Entypo;
-    src: url(font_path('entypo.woff'));
-}
+$cloudi-navbar-border-width: 5px;
+$cloudi-navbar-height-mobile: 48px;
 
-.cloudi-topbar {
-    display: block;
-    background-color: $cloudi-topbar-base; // For legacy browsers
-    background: linear-gradient(lighten($cloudi-topbar-base, 20%), darken($cloudi-topbar-base, 10%));
-    border-bottom: 1px solid darken($cloudi-topbar-base, 20%);
-    border-top: 1px solid lighten($cloudi-topbar-base, 30%);
-    height: $cloudi-menu-height;
+navbar {
+    position: fixed;
+    z-index: 1;
 
-    .cloudi-logo {
-        display: inline-block;
-        width: 32px;
-        height: 32px;
-        margin: (($cloudi-menu-height - 32px) / 2);
-        vertical-align: middle;
-        background: transparent url(image_path('cloudiversity_mobile.png'));
-    }
-
-    .cloudi-brand {
-        display: inline-block;
-        vertical-align: middle;
-
-        color: $cloudi-topbar-text;
-        text-shadow: 0 1px 2px #404040;
-    }
-
-    .cloudi-menu-toggle {
-        display: inline-block;
-        border-left: 1px solid darken($cloudi-topbar-base, 20%);
-        height: ($cloudi-menu-height - 1px);
-        vertical-align: middle;
-        width: $cloudi-menu-height;
-        float: right;
-        text-align: center;
-        margin-top: -1px;
-        overflow: hidden;
-        text-shadow: 0 1px 2px #404040;
-        font-size: $cloudi-menu-height - 6px;
-
-        span {
-            display: none;
-        }
-
-        @include glyph("\2630");
-        &:after {
-            display: inline-block;
-            vertical-align: middle;
-            line-height: $cloudi-menu-height - 6px;
-            margin: 3px 0;
-            color: #FFFFFF;
-        }
-
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-    }
-}
-
-.cloudi-menu {
-    width: 100%;
-    background-color: $cloudi-menu-base;
-    display: none;
-
-    .cloudi-logo, .cloudi-brand {
-        display: none;
-    }
-
-    .side-nav {
+    .menu-link-list {
+        background: $cloudi-menu-bg;
         padding: 0;
         margin: 0;
+        list-style-type: none;
 
         li {
-            padding: 0;
-            margin: 0;
-            border-bottom: 1px solid darken($cloudi-menu-base, 15%);
+            display: inline;
 
-            a {
-                padding: 10px;
-                display: block;
-                color: $cloudi-menu-text;
-
-                &:hover {
-                    color: $cloudi-menu-text;
-                    background-color: rgba(255, 255, 255, 0.1);
-                }
+            &:last-child a {
+                // border-bottom-width: 0;
             }
         }
-    }
 
-    &.visible {
-        display: block;
-    }
-}
-
-.menu-profile {
-    border-bottom: 1px solid darken($cloudi-menu-base, 15%);
-    font-size: 80%;
-
-    .menu-profile-front, .menu-profile-back {
-        display: block;
-        height: $cloudi-menu-height + 1px; // 1px for border
-    }
-
-    .menu-profile-front {
-        border-bottom: 1px solid darken($cloudi-menu-base, 15%);
-
-        .profile-picture {
-            display: inline-block;
-            width: $cloudi-menu-height;
-            height: $cloudi-menu-height;
-            vertical-align: middle;
-            background-position: center center;
-            background-repeat: no-repeat;
-        }
-
-        .profile-info {
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 5px;
+        a {
+            display: block;
+            padding: 10px;
+            border-bottom: 1px solid $cloudi-menu-border;
             color: $cloudi-menu-text;
+
+            &:hover {
+                background-color: $cloudi-menu-border;
+            }
+        }
+    }
+}
+
+.user-card {
+    .user-card-front {
+        display: block;
+        height: $cloudi-usercard-size;
+        overflow: hidden;
+        border-bottom: 1px solid $cloudi-menu-border;
+
+        .user-card-picture {
+            height: $cloudi-usercard-size;
+            width: $cloudi-usercard-size;
+            display: inline-block;
+            vertical-align: middle;
+
+            background: {
+                size: contain;
+                repeat: no-repeat;
+                position: left center;
+            }
         }
 
-        .profile-expand {
+        .user-card-identity {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+    }
+}
+
+@media #{$medium-down} {
+    body {
+        padding-top: $cloudi-navbar-height-mobile + 5px;
+    }
+
+    navbar {
+        display: block;
+        border-bottom: $cloudi-navbar-border-width solid $cloudi-navbar-border;
+        background-color: $cloudi-navbar-bg;
+        top: 0;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        height: $cloudi-navbar-height-mobile;
+
+        .cloudi-logo {
+            display: inline-block;
+            vertical-align: middle;
+            color: $cloudi-navbar-text;
+            padding: 2px 10px;
+            line-height: $cloudi-navbar-height-mobile - 4;
+        }
+
+        .menu-link-list {
+            position: fixed;
+            top: $cloudi-navbar-height-mobile;
+            bottom: 0;
+            border-bottom: $cloudi-navbar-border-width solid $cloudi-navbar-bg;
+
+            width: 100%;
+            // max-height: 80%;
+            overflow-y: auto;
+
             display: none;
+        }
+
+        &.expanded {
+            position: fixed;
+
+            .menu-link-list {
+                display: block;
+            }
+        }
+
+        .menu-expander {
+            display: inline-block;
+            height: $cloudi-navbar-height-mobile;
+            vertical-align: middle;
+            width: $cloudi-navbar-height-mobile;
+            line-height: $cloudi-navbar-height-mobile - 4;
+            font-size: $cloudi-navbar-height-mobile / 2;
+            padding: 2px 0;
+            float: right;
+            text-align: center;
+            color: $cloudi-navbar-text;
+
+            span {
+                display: none;
+            }
+
+            @include glyph('\f0c9');
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
         }
     }
 
-    .menu-profile-back ul {
-        display: table;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        table-layout: fixed;
+    .user-card {
+        display: block;
 
-        li {
-            display: table-cell;
-            border-left: 1px solid darken($cloudi-menu-base, 15%);
-            text-align: center;
-            padding: 0;
-            margin: 0;
-            text-shadow: 0 0 2px darken($cloudi-menu-base, 20%);
+        .user-card-back {
+            border-bottom: 1px solid $cloudi-menu-border;
 
-            &:first-child {
-                border-left-width: 0;
-            }
+            ul {
+                padding: 0;
+                margin: 0;
 
-            a {
-                display: block;
-                width: 100%;
-                height: 100%;
-                vertical-align: middle;
-
-                span {
-                    display: none;
-                }
-
-                .glyph {
-                    font-size: $cloudi-menu-height - 5px;
-                    line-height: $cloudi-menu-height - 3px;
-                    color: $cloudi-menu-text;
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                }
-
-                &:hover {
-                    background-color: rgba(255, 255, 255, 0.1);
+                li {
+                    padding: 0;
+                    margin: 0;
                 }
             }
         }
+    }
+}
 
-        .menu-back {
-            display: none;
+@media #{$small-only} {
+    .user-card {
+        .user-card-back {
+            display: table;
+            width: 100%;
 
-            & + li {
-                border-left-width: 0;
+            ul {
+                display: table-row;
+                table-layout: fixed;
+
+                li {
+                    display: table-cell;
+                    width: auto;
+
+                    a {
+                        border-bottom-width: 0;
+                        line-height: $cloudi-navbar-height-mobile - 4;
+                        font-size: $cloudi-navbar-height-mobile / 2;
+                        padding: 0;
+                        margin: 0;
+                        text-align: center;
+
+                        span {
+                            display: none;
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 @media #{$medium-only} {
-    .menu-profile {
-        .menu-profile-front {
+    .user-card {
+        border-bottom: 1px solid $cloudi-menu-border;
+        height: $cloudi-navbar-height-mobile;
+
+        .user-card-front {
             display: inline-block;
             border-bottom-width: 0;
         }
 
-        .menu-profile-back {
+        .user-card-back {
             display: inline-block;
             float: right;
             border-bottom-width: 0;
 
             ul {
-                width: auto;
-                li {
-                    width: $cloudi-menu-height;
-                }
+                display: inline;
 
-                border-left: 1px solid darken($cloudi-menu-base, 15%);
+                li {
+                    display: inline-block;
+                    width: $cloudi-navbar-height-mobile;
+                    height: $cloudi-navbar-height-mobile;
+                    text-align: center;
+
+                    a {
+                        line-height: $cloudi-navbar-height-mobile;
+                        font-size: $cloudi-navbar-height-mobile / 2;
+                        padding: 0;
+                        margin: 0;
+                        border-bottom-width: 0;
+                        height: $cloudi-navbar-height-mobile;
+
+                        span { display: none; }
+                    }
+                }
             }
         }
     }
@@ -219,125 +230,117 @@ $cloudi-menu-width: 250px;
 
 @media #{$large-up} {
     body {
-        padding-left: $cloudi-menu-width;
+        margin-left: $cloudi-menu-width + 5px;
     }
-
-    .cloudi-topbar {
-        display: none;
-    }
-
-    .cloudi-menu {
+    navbar {
         display: block;
-        position: fixed;
+        width: $cloudi-menu-width;
+        background: $cloudi-menu-bg;
+        height: 100%;
         top: 0;
         left: 0;
-        width: $cloudi-menu-width;
-        height: 100%;
-        box-sizing: border-box;
-        padding: 10px 0;
-        overflow-y: auto;
-
-        border-right: 1px solid darken($cloudi-menu-base, 15%);
-        box-shadow: -5px 0 5px darken($cloudi-menu-base, 5%) inset;
+        border-right: $cloudi-navbar-border-width solid $cloudi-menu-border;
 
         .cloudi-logo {
-            display: block;
-            width: 128px;
-            height: 128px;
-            margin: 0 auto;
-            background: transparent url(image_path('cloudiversity.png')) center
-            center no-repeat;
-        }
-
-        .cloudi-brand {
-            display: block;
+            margin: 20px 0 50px 0;
             text-align: center;
-            color: #456789;
-            text-shadow: 0 1px 2px #343434;
-        }
-
-        .side-nav {
-            border-top: 1px solid darken($cloudi-menu-base, 15%);
-            margin-top: 20px;
-        }
-    }
-
-    .menu-profile {
-        border-top: 1px solid darken($cloudi-menu-base, 15%);
-        box-sizing: border-box;
-
-        margin-top: 20px;
-        height: $cloudi-menu-height;
-        overflow: hidden;
-
-        .menu-profile-back {
-            border-left: 1px solid darken($cloudi-menu-base, 15%);
-            clear: both;
-            position: relative;
-            width: $cloudi-menu-width;
-            left: $cloudi-menu-width;
-            top: -$cloudi-menu-height - 2;
-            background-color: darken($cloudi-menu-base, 5%);
-            box-shadow: -5px 0 5px darken($cloudi-menu-base, 10%) inset;
-            transition: left 0.5s;
-
-            ul li a:hover {
-                background-color: darken($cloudi-menu-base, 10%);
-            }
-        }
-
-        &.expanded .menu-profile-back {
             display: block;
-            left: -1px;
-        }
+            color: #123456;
 
-        .profile-info {
-            max-width: $cloudi-menu-width - (2 * ($cloudi-menu-height + 10));
-            max-height: $cloudi-menu-height;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 150%;
-        }
-
-        .menu-profile-front .profile-expand {
-            display: inline-block;
-            width: $cloudi-menu-height;
-            float: right;
-            text-align: center;
-            color: $cloudi-menu-text;
-            font-size: $cloudi-menu-height - 6px;
-
-            &:hover {
-                background: -webkit-linear-gradient(left, transparent 0%,
-                    lighten($cloudi-menu-base, 5%) 35%,
-                    lighten($cloudi-menu-base, 10%) 85%,
-                    darken($cloudi-menu-base, 10%) 100%);
-                background: -moz-linear-gradient(left, $cloudi-menu-base 0%,
-                    lighten($cloudi-menu-base, 5%) 35%,
-                    lighten($cloudi-menu-base, 10%) 85%,
-                    darken($cloudi-menu-base, 10%) 100%);
-                background: linear-gradient(left, transparent 0%,
-                    lighten($cloudi-menu-base, 5%) 35%,
-                    lighten($cloudi-menu-base, 10%) 85%,
-                    darken($cloudi-menu-base, 10%) 100%);
-            }
-        }
-
-        .menu-profile-back {
-            border-top-width: 0;
-
-            ul .menu-back {
-                display: table-cell;
-
-                & + li {
-                    border-left-width: 1px;
+            &:before {
+                content: '';
+                display: block;
+                height: 100px;
+                background: {
+                    image: url(asset_path('cloudiversity.svg'));
+                    position: center center;
+                    repeat: no-repeat;
+                    size: 75%;
                 }
             }
         }
 
-        & + .side-nav {
-            border-top-width: 0;
-            margin-top: 0;
+        .menu-link-list {
+            a {
+                border-bottom-width: 0;
+                border-right: 0px solid $cloudi-navbar-border;
+                padding: 5px 10px;
+                transition: padding-left 0.5s,
+                    background-color 0.5s;
+
+                &:hover {
+                    background-color: lighten($cloudi-menu-bg, 10%);
+                    border-right-width: $cloudi-navbar-border-width;
+                    padding-left: 15px;
+                    margin-right: -$cloudi-navbar-border-width;
+                }
+            }
+        }
+
+        .menu-expander {
+            display: none;
+        }
+    }
+
+    .user-card {
+        display: block;
+        height: $cloudi-navbar-height-mobile;
+        border-top: 1px solid $cloudi-menu-border;
+        margin-bottom: 10px;
+
+        .user-card-front {
+            font-size: 90%;
+        }
+
+        .user-card-back {
+            display: table;
+            height: $cloudi-navbar-height-mobile - 1;
+            margin-top: -$cloudi-navbar-height-mobile;
+            background-color: lighten($cloudi-menu-bg, 15%);
+            width: $cloudi-menu-width;
+            border-right: $cloudi-navbar-border-width solid #123456;
+            margin-right: -$cloudi-navbar-border-width;
+            opacity: 0;
+            transition: opacity 0.4s;
+
+            // Weird bug with background :/
+            position: absolute;
+
+            ul {
+                display: table-row;
+                table-layout: fixed;
+                width: 100%;
+                height: 100%;
+
+                li {
+                    display: table-cell;
+
+                    a {
+                        display: block;
+                        height: $cloudi-navbar-height-mobile - 1;
+                        padding: 0;
+                        margin: 0;
+                        line-height: $cloudi-navbar-height-mobile;
+                        font-size: $cloudi-navbar-height-mobile / 2;
+                        text-align: center;
+                        color: lighten($cloudi-menu-text, 20%);
+
+                        span { display: none; }
+
+                        &:hover {
+                            border-right-width: 0;
+                            margin-right: 0;
+                            padding-left: 0;
+                            background-color: transparent;
+                            color: $cloudi-menu-text;
+                        }
+                    }
+                }
+            }
+        }
+
+        &:hover .user-card-back {
+            opacity: 1;
         }
     }
 }

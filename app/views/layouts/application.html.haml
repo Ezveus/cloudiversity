@@ -1,54 +1,29 @@
 !!!
 %html{lang: :en}
     %head
-        %title= content_for?(:title) ? yield(:title) : "Cloudiversity"
+        %title
+            - if content_for?(:title)
+                = yield(:title)
+                &mdash; Cloudiversity
+            - else
+                Cloudiversity
         %meta{name: :viewport, content: 'width=device-width,initial-scale=1.0'}/
         %meta{charset: 'utf-8'}/
         = stylesheet_link_tag 'application', media: 'all'
         = javascript_include_tag 'vendor/modernizr'
         = csrf_meta_tags
     %body
-        .cloudi-topbar
-            = link_to root_path do
-                .cloudi-logo
-                .cloudi-brand
-                    %strong> Cloud
-                    iversity
-                = link_to '#', class: 'cloudi-menu-toggle' do
-                    %span Menu
-        .cloudi-menu
-            = link_to root_path do
-                .cloudi-logo
-                .cloudi-brand
-                    %strong> Cloud
-                    iversity
-            - if current_user.present?
-                .menu-profile
-                    .menu-profile-front
-                        .profile-picture
-                        .profile-info= current_user.full_name
-                        = link_to '', '#', class: 'profile-expand glyph-next'
-                    .menu-profile-back
-                        %ul
-                            %li.menu-back
-                                = link_to '#', class: 'profile-expand' do
-                                    %span Log out
-                                    .glyph.glyph-back
-                            %li
-                                = link_to destroy_user_session_path, method: :delete do
-                                    %span Log out
-                                    .glyph.glyph-logout
-            %ul.side-nav
-                %li= link_to 'Home', root_path
-                - if current_user.present?
-                    %li= link_to 'Administration', admin_path
-                - else
-                    %li= link_to 'Log in', new_user_session_path
-        .row
-            .columns
-                - if notice
-                    .alert-box= notice
-                - if alert
-                    .alert-box.alert= alert
+        = render partial: 'static/menu'
+        - if content_for?(:title)
+            %h1= yield(:title)
+        - if alert
+            .alert-box.alert= alert
+        - if notice
+            .alert-box= notice
+        .wrapper
+            %main
                 = yield
-                = javascript_include_tag 'application'
+            - if content_for?(:toolbar)
+                %aside.toolbar
+                    = yield(:toolbar)
+        = javascript_include_tag 'application'
