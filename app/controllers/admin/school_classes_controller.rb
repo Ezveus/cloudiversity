@@ -5,6 +5,7 @@ class Admin::SchoolClassesController < ApplicationController
 
     def show
         @school_class = SchoolClass.find(params[:id])
+        @tscds = TeacherSchoolClassDiscipline.where(school_class: @school_class)
     end
 
     def edit
@@ -38,13 +39,13 @@ class Admin::SchoolClassesController < ApplicationController
 
     def destroy
         @school_class = SchoolClass.find(params[:id])
-        unless @school_class.users.empty?
+        unless @school_class.students.empty?
             redirect_to admin_school_class_path(@school_class),
                 alert: %(Can't remove a class while it contains attendees)
             return
         end
 
-        @school_class.delete
+        @school_class.destroy
         redirect_to admin_school_classes_path, notice: 'Class successfully removed'
     end
 
@@ -57,51 +58,50 @@ class Admin::SchoolClassesController < ApplicationController
         @school_class = SchoolClass.find(params[:school_class_id])
 
         if request.post?
-            if params[:user].nil?
-                redirect.call 'Please select at least one user'
+            if params[:student].nil?
+                redirect.call 'Please select at least one student'
                 return
             end
 
-            users = params[:user].map do |id, user|
-                if user['id'] == '0'
+            students = params[:student].map do |id, student|
+                if student['id'] == '0'
                     nil
                 else
                     id.to_i
                 end
             end.delete_if { |e| e.nil? }
 
-            if users.empty?
-                redirect.call 'Please select at least one user'
+            if students.empty?
+                redirect.call 'Please select at least one student'
                 return
             end
 
-            rogue_users = User.where("`id` IN(?) AND `school_class_id` NOT NULL", users);
-            unless rogue_users.empty?
-                redirect.call 'Some of selected users are already attending a class'
+            rogue_students = Student.all.select { |s| students.include?(s.user.id) }
+            unless rogue_students.empty?
+                redirect.call 'Some of selected students are already attending a class'
                 return
             end
 
-            User.where("`id` IN(?)", users)
-                .update_all(school_class_id: @school_class.id)
+            created_students = students.map { |student| Student.create!(user: User.find(student), school_class: @school_class) }
 
             redirect_to admin_school_class_path(@school_class),
-                notice: "Added #{users.count} users to #{@school_class.name}"
+                notice: "Added #{created_students.count} students to #{@school_class.name}"
             return
         end
 
-        @users = User.where(school_class_id: nil)
+        ids = Student.all.map { |s| s.user.id } + Teacher.all.map { |t| t.user.id }
+        @users = User.all.reject { |u| ids.include?(u.id) }
     end
 
     def remove
         @school_class = SchoolClass.find(params[:school_class_id])
-        @user = User.find(params[:user_id])
+        @student = Student.find(params[:student_id])
 
-        if @user.school_class == @school_class
-            @user.school_class = nil
-            @user.save
-            redirect_to admin_school_class_path(@school_class), notice: 'User removed successfully'
+        if @student.school_class == @school_class
+            @student.destroy
+            redirect_to admin_school_class_path(@school_class), notice: 'Student removed successfully'
         else
-            redirect_to admin_school_class_path(@school_class), alert: 'User is not attending this class'
+            redirect_to admin_school_class_path(@school_class), alert: 'Student is not attending this class'
         end
     end
 end

@@ -1,0 +1,9 @@
+- content_for :title do
+    Create a new teacher
+= render partial: 'form', object: @teacher, as: :teacher
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view all teachers", admin_teachers_path, class: "glyph-index")

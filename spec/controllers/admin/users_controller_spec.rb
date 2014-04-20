@@ -13,6 +13,5 @@ describe Admin::UsersController do
     end
 
     describe "Create an user" do
-        @user = FactoryGirl.create :user
     end
 end

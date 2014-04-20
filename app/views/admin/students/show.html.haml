@@ -1,0 +1,27 @@
+- content_for :title do
+    Student #{@student.user.login}
+.row
+    .large-12.columns
+        %ul.vcard
+            %li.fn= @student.user.full_name
+            %li.email= mail_to @student.user.email
+            %li.italic= @student.school_class.name
+.row
+    .large-12.columns
+        %h3 Teachers &amp; disciplines
+        - if @tscds.count > 0
+            %ul
+                - @tscds.each do |tscd|
+                    %li #{tscd.teacher.user.full_name} => #{tscd.discipline.name}
+        - else
+            %p
+                %em No teacher is associated to this student
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view all students", admin_students_path, class: "glyph-index")
+                %li= link_to("create a new student", new_admin_student_path, class: "glyph-add")
+                %li= link_to("edit this student", edit_admin_student_path(@student), class: "glyph-edit")
+                %li= link_to("delete this student", admin_student_path(@student), method: :delete, class: "glyph-delete")

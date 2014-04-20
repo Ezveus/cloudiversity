@@ -11,10 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328192417) do
+ActiveRecord::Schema.define(version: 20140405184708) do
+
+  create_table "disciplines", force: true do |t|
+    t.string "name"
+  end
 
   create_table "school_classes", force: true do |t|
     t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "students", force: true do |t|
+    t.integer  "school_class_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teacher_school_class_disciplines", force: true do |t|
+    t.integer "teacher_id"
+    t.integer "school_class_id"
+    t.integer "discipline_id"
+  end
+
+  add_index "teacher_school_class_disciplines", ["discipline_id"], name: "index_teacher_school_class_disciplines_on_discipline_id"
+  add_index "teacher_school_class_disciplines", ["school_class_id"], name: "index_teacher_school_class_disciplines_on_school_class_id"
+  add_index "teacher_school_class_disciplines", ["teacher_id"], name: "index_teacher_school_class_disciplines_on_teacher_id"
+
+  create_table "teachers", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -41,10 +66,13 @@ ActiveRecord::Schema.define(version: 20140328192417) do
     t.string   "first_name",           default: "", null: false
     t.string   "last_name",            default: "", null: false
     t.integer  "school_class_id"
+    t.integer  "role_id"
+    t.string   "role_type"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["login"], name: "index_users_on_login", unique: true
+  add_index "users", ["role_id", "role_type"], name: "index_users_on_role_id_and_role_type"
   add_index "users", ["school_class_id"], name: "index_users_on_school_class_id"
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
 

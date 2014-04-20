@@ -1,2 +1,9 @@
-%h2 Create a new user
+- content_for :title do
+    Create a new user
 = render partial: 'form', object: @user, as: :user
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view all users", admin_users_path, class: "glyph-show")

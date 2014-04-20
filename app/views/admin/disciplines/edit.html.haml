@@ -1,0 +1,9 @@
+- content_for :title do
+    Edit discipline #{@discipline.name}
+= render partial: 'form', object: @discipline, as: :discipline
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view this discipline", admin_discipline_path(@discipline), class: "glyph-show")

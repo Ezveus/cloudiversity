@@ -48,6 +48,9 @@ $glyph-button-size: 20px;
 }
 
 .glyph-delete { @include glyph('\f014'); }
+.glyph-index  { @include glyph('\f03a'); }
 .glyph-edit   { @include glyph('\f040'); }
 .glyph-add    { @include glyph('\f067'); }
+.glyph-minus  { @include glyph('\f068'); }
+.glyph-show   { @include glyph('\f06e'); }
 .glyph-logout { @include glyph('\f08b'); }

@@ -1,4 +1,5 @@
-%h2 Add attendees to #{@school_class.name}
+- content_for :title do
+    Add attendees to #{@school_class.name}
 = form_for [ :admin, @school_class ], url: admin_school_class_add_path(@school_class), method: :post do |f|
     %table
         %thead
@@ -7,8 +8,14 @@
                 %th Name
         %tbody
             - @users.each do |user|
-                = fields_for 'user[]', user do |user_fields|
+                = fields_for 'student[]', user do |student_fields|
                     %tr
-                        %td= user_fields.check_box :id, checked: false, class: 'inline'
-                        %td= user_fields.label :id, user.full_name
+                        %td= student_fields.check_box :id, checked: false, class: 'inline'
+                        %td= student_fields.label :id, user.full_name
     = f.submit class: 'button'
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view this class", admin_school_class_path(@school_class), class: "glyph-show")

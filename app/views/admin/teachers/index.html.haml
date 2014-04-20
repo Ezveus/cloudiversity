@@ -1,0 +1,17 @@
+- content_for :title do
+    Teachers
+%table{style: 'width: 100%'}
+    %thead
+        %tr
+            %td Login
+            %td Name
+            %td E-mail
+            %td Actions
+    %tbody
+        = render partial: 'row', collection: @teachers, as: :teacher
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to('Create teacher', new_admin_teacher_path, class: 'glyph-add')

@@ -1,2 +1,9 @@
-%h2 Edit #{@school_class.name}
+- content_for :title do
+    Edit #{@school_class.name}
 = render partial: 'form', object: @school_class, as: :school_class
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view this class", admin_school_class_path(@school_class), class: "glyph-show")

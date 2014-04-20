@@ -1,0 +1,9 @@
+- content_for :title do
+    Edit #{@student.user.login}
+= render partial: 'form', object: @student, as: :student
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view this student", admin_student_path(@student), class: "glyph-show")

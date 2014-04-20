@@ -1,5 +1,6 @@
-%h2 Classes
-%table
+- content_for :title do
+    Classes
+%table{style: 'width: 100%'}
     %thead
         %tr
             %td Class
@@ -7,4 +8,9 @@
             %td Action
     %tbody
         = render partial: 'row', collection: @school_classes, as: :school_class
-= link_to 'Create class', new_admin_school_class_path
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to('Create class', new_admin_school_class_path, class: "glyph-add")

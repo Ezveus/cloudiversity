@@ -1,5 +1,3 @@
 = form_for [ :admin, school_class ] do |f|
-    .input-wrapper
-        = f.label :name
-        = f.text_field :name
+    = f.auto_input :name
     = f.submit class: 'button right'

@@ -1,0 +1,26 @@
+- content_for :title do
+    Add a class and associated disciplines to teacher #{@teacher.user.full_name}
+= form_for [:admin, @teacher], url: admin_teacher_add_school_class_path(@teacher), method: :post do |f|
+    %p
+        %em Select the class you want to add
+    .row
+        .large-3.columns
+            = f.label :school_classes
+        .large-9.columns
+            = f.collection_select(:school_classes, SchoolClass.all, :id, :name, prompt: true)
+    %p
+        %em Select all disciplines you want to add with this class
+    .row
+        .large-3.columns
+            = f.label :disciplines
+        .large-9.columns
+            = f.collection_select(:disciplines, Discipline.all, :id, :name, { prompt: true }, { multiple: true, style: "height: auto;" })
+    = f.submit class: 'button right'
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view this teacher", admin_teacher_path(@teacher), class: "glyph-show")
+                %li= link_to("Add a class", new_admin_school_class_path, class: "glyph-add")
+                %li= link_to("Add a discipline", new_admin_discipline_path, class: "glyph-add")

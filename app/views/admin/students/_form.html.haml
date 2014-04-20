@@ -1,0 +1,12 @@
+= form_for [:admin, student] do |f|
+    .row
+        .large-3.columns
+            = f.label :user, class: "inline"
+        .large-9.columns
+            = f.collection_select(:user, User.all, :id, :login_full_name, prompt: true, selected: student.user.nil? ? nil : student.user.id)
+    .row
+        .large-3.columns
+            = f.label :school_class, class: "inline"
+        .large-9.columns
+            = f.collection_select(:school_class, SchoolClass.all, :id, :name, prompt: true, selected: student.school_class.nil? ? nil : student.school_class.id)
+    = f.submit class: 'button right'

@@ -1,0 +1,17 @@
+- content_for :title do
+    Remove classes and associated disciplines from teacher #{@teacher.user.full_name}
+%p
+    %em Select classes/disciplines you want to remove
+= form_for [:admin, @teacher], url: admin_teacher_rem_school_class_path(@teacher), method: :post do |f|
+    .row
+        .large-3.columns
+            = f.label :classes_and_disciplines
+        .large-9.columns
+            = f.collection_select(:disciplines, @tscds, :id, :school_class_discipline_name, { prompt: true }, { multiple: true, style: "height: auto;" })
+    = f.submit class: "button right"
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view this teacher", admin_teacher_path(@teacher), class: "glyph-show")

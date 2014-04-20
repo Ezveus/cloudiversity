@@ -19,6 +19,8 @@ end
 group :development do
   gem 'binding_of_caller'
   gem 'better_errors'
+  gem 'pry'
+  gem 'pry-rails'
 
   gem 'sqlite3'
 end

@@ -1,7 +1,7 @@
 %tr
     %td= school_class.name
-    %td= school_class.users.count
+    %td= school_class.students.count
     %td
-        = link_to 'View', admin_school_class_path(school_class), class: 'button'
-        = link_to 'Edit', edit_admin_school_class_path(school_class), class: 'button'
-        = button_to 'Delete', admin_school_class_path(school_class), method: :delete, confirm: 'Are you sure?', class: 'button alert'
+        = link_to('View', admin_school_class_path(school_class), class: 'button glyph-button glyph-show')
+        = link_to('Edit', edit_admin_school_class_path(school_class), class: 'button glyph-button glyph-edit')
+        = link_to('Delete', admin_school_class_path(school_class), method: :delete, class: 'button glyph-button glyph-delete')
