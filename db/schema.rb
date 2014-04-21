@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140405184708) do
+ActiveRecord::Schema.define(version: 20140421150230) do
 
   create_table "disciplines", force: true do |t|
     t.string "name"
@@ -68,8 +68,10 @@ ActiveRecord::Schema.define(version: 20140405184708) do
     t.integer  "school_class_id"
     t.integer  "role_id"
     t.string   "role_type"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["login"], name: "index_users_on_login", unique: true
   add_index "users", ["role_id", "role_type"], name: "index_users_on_role_id_and_role_type"

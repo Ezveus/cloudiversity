@@ -11,6 +11,7 @@ gem 'haml-rails'
 gem 'foundation-rails'
 gem 'devise'
 gem 'devise-encryptable'
+gem 'simple_token_authentication'
 
 group :doc do
   gem 'yard', require: false

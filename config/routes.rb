@@ -1,5 +1,5 @@
 Cloudiversity::Application.routes.draw do
-    devise_for :users
+    devise_for :users, controllers: { sessions: 'cloudiversity/sessions' }
 
     namespace :admin do
         resources :users
