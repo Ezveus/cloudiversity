@@ -1,3 +1,5 @@
+require 'securerandom'
+
 module Cloudi
     class SecretGenerator < Rails::Generators::NamedBase
         source_root File.expand_path('../templates', __FILE__)
@@ -5,7 +7,7 @@ module Cloudi
         argument :name, type: :string, default: "secret"
 
         def generate_secret
-            create_file "config/initializers/secret_token.rb", "Cloudiversity::Application.config.secret_key_base = '#{`rake secret`.chomp}'"
+            create_file "config/initializers/secret_token.rb", "Cloudiversity::Application.config.secret_key_base = '#{::SecureRandom.hex(64)}'"
         end
     end
 end
