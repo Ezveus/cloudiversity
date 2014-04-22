@@ -1,14 +1,7 @@
 - content_for :title do
     Users
-%table{style: 'width: 100%'}
-    %thead
-        %tr
-            %td Login
-            %td Name
-            %td E-mail
-            %td Actions
-    %tbody
-        = render partial: 'row', collection: @users, as: :user
+%ul.user-list
+    = render partial: 'row', collection: @users, as: :user
 - content_for :toolbar do
     %dl
         %dt Actions

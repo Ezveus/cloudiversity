@@ -35,7 +35,6 @@ class Admin::UsersController < ApplicationController
 
     def create
         @user = User.new(params.require(:user).permit(:login, :email, :first_name, :last_name))
-        @user.password = generate_password
 
         respond_to do |format|
             if @user.save
@@ -57,9 +56,15 @@ class Admin::UsersController < ApplicationController
         redirect_to admin_users_path, notice: "User #{@user.login} has been deleted."
     end
 
-    private
+    def reset_password
+        @user = User.find(params[:user_id])
+        if @user.reset_pending? and not @user.reset_expired?
+            # Render the view
+            return unless params[:confirm]
+        end
 
-    def generate_password
-        "password"
+        @user.send_reset_password_instructions
+
+        redirect_to admin_users_path, notice: "A mail has been sent to #{@user.email} with reset instructions."
     end
 end

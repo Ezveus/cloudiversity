@@ -24,6 +24,8 @@ group :development do
   gem 'pry-rails'
 
   gem 'sqlite3'
+
+  gem "letter_opener"
 end
 
 group :development, :test do

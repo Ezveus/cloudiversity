@@ -12,3 +12,4 @@
                 %li= link_to("create a new user", new_admin_user_path, class: "glyph-add")
                 %li= link_to("edit this user", edit_admin_user_path(@user), class: "glyph-edit")
                 %li= link_to("delete this user", admin_user_path(@user), method: :delete, class: "glyph-delete")
+                %li= link_to("reset password", admin_user_reset_password_path(@user), method: :post, class: "glyph-key")

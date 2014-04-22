@@ -1,0 +1,155 @@
+$userlist-height: 96px;
+$userlist-border: #A0A0A0;
+
+.user-list {
+    padding: 0;
+    list-style-type: none;
+    display: block;
+    margin: 0;
+
+    .user-list-item {
+        display: block;
+        padding: 0;
+        margin: 5px;
+        border-top: 5px solid $userlist-border;
+        background: #E5E6E9;
+        font-size: 90%;
+        line-height: 1.3;
+        height: $userlist-height + 5;
+    }
+
+    .user-list-photo {
+        width: $userlist-height;
+        height: $userlist-height;
+        display: inline-block;
+        background: {
+            position: left center;
+            repeat: no-repeat;
+            size: cover;
+        }
+        vertical-align: middle;
+    }
+
+    .user-list-item-content {
+        display: inline-block;
+        vertical-align: top;
+        max-height: $userlist-height;
+        padding: 5px 5px 5px 20px;
+        margin-right: -999em; // Negative size
+
+        .user-list-title {
+            display: block;
+            font-weight: bold;
+            color: #565656;
+            margin-left: -15px;
+            margin-bottom: 5px;
+
+            &:hover {
+                color: #456789;
+            }
+
+            .user-list-name {
+                display: inline;
+            }
+
+            .user-list-login {
+                display: inline;
+                font-size: 90%;
+                color: #565656;
+
+                &:before {
+                    content: '\2022\00A0';
+                }
+            }
+        }
+
+        a.glyph-button {
+            font-size: inherit;
+            color: #123456;
+            transition: none;
+            width: auto;
+            height: auto;
+            font-family: inherit;
+            line-height: inherit;
+            margin-left: 10px;
+
+            &:before {
+                font-size: inherit;
+                padding-right: 5px;
+                line-height: inherit;
+            }
+
+            &:hover {
+                color: #456789;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .user-list-links {
+        float: right;
+        margin: -5px 10px 0 0;
+
+        // Note:
+        // If ever the code for actions disappear, this should be cleaned
+        // up, as it depends on it.
+        a.glyph-button {
+            color: $userlist-border;
+            font-size: inherit;
+            width: auto;
+            height: auto;
+            border-top: 5px solid $userlist-border;
+            padding: 5px 5px 0 5px;
+            margin: 0 5px;
+            transition: none;
+            font-family: inherit;
+            background-color: #E5E6E9;
+
+            &:hover {
+                color: #456789;
+                border-top-color: #456789;
+            }
+
+            &:before {
+                font-size: inherit;
+                line-height: inherit;
+                padding-right: 5px;
+            }
+        }
+    }
+}
+
+@media #{$small-only} {
+    .user-list {
+        .user-list-item {
+            margin: 5px 0;
+            display: block;
+            width: auto;
+            height: auto;
+            margin: 0;
+
+            .user-list-photo {
+                display: none;
+            }
+
+            .user-list-links {
+                font-size: 0;
+                margin-right: 2px;
+
+                a {
+                    font-size: 0;
+                    margin: 0 0;
+
+                    &:before {
+                        font-size: 11pt;
+                        padding: 0;
+                    }
+                }
+            }
+
+            .user-list-item-content {
+                padding: 5px 5px 5px 20px;
+            }
+        }
+    }
+}

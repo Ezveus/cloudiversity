@@ -2,7 +2,11 @@ Cloudiversity::Application.routes.draw do
     devise_for :users, controllers: { sessions: 'cloudiversity/sessions' }
 
     namespace :admin do
-        resources :users
+        resources :users do
+            post 'reset_password' => 'users#reset_password', as: 'reset_password'
+            post 'unlock' => 'users#unlock', as: 'unlock'
+        end
+
         resources :school_classes do
             get 'add' => 'school_classes#add', as: 'add'
             post 'add' => 'school_classes#add'
