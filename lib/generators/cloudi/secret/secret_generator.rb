@@ -1,4 +1,5 @@
 require 'securerandom'
+require 'yaml'
 
 module Cloudi
     class SecretGenerator < Rails::Generators::NamedBase
@@ -7,7 +8,12 @@ module Cloudi
         argument :name, type: :string, default: "secret"
 
         def generate_secret
-            create_file "config/initializers/secret_token.rb", "Cloudiversity::Application.config.secret_key_base = '#{::SecureRandom.hex(64)}'"
+            secrets_hash = Hash.new
+            [:development, :production, :test].each do |env|
+                secrets_hash[env] = Hash.new
+                secrets_hash[env][:secret_key_base] = ::SecureRandom.hex(64)
+            end
+            create_file "config/secrets.yml", secrets_hash.to_yaml
         end
     end
 end

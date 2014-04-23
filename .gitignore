@@ -10,7 +10,7 @@
 /tmp
 
 # Ignore rails' secret token
-/config/initializers/secret_token.rb
+/config/secrets.yml
 
 # Ruby version management
 /.ruby-version
