@@ -7,6 +7,8 @@
             = render partial: 'static/usercard'
         %li= link_to 'Home', root_path
         - if current_user.present?
+            - Cloudiversity::ModuleManager.modules.each do |mod|
+                %li= link_to mod.name, '/' + mod.namespace
             %li= link_to 'Administration', admin_path
         - else
             %li= link_to 'Log in', new_user_session_path
