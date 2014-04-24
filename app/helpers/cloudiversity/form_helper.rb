@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Cloudiversity
     ## The core of `auto_input` method. This module injects itself in
     # rails's `FormHelper` to provide the new method.
@@ -39,6 +40,7 @@ module Cloudiversity
                     # Developper may override our detection
                     if opts.has_key?(:field_method)
                         method = (opts[:field_method].to_s + "_field").to_sym
+                        method = :text_area if opts[:field_method].to_s == 'text_area'
                     end
 
                     out = self.send method, object, field, field_opts
