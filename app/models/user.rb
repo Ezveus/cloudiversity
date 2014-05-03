@@ -36,22 +36,6 @@ class User < ActiveRecord::Base
         login + " - " + full_name
     end
 
-    def is_student?
-        role_type == "Student"
-    end
-
-    def is_teacher?
-        role_type == "Teacher"
-    end
-
-    def as_teacher
-        role if is_teacher?
-    end
-
-    def as_student
-        role if is_student?
-    end
-
     protected
 
     def password_required?

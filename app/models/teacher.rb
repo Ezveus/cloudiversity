@@ -1,5 +1,5 @@
 class Teacher < ActiveRecord::Base
-    has_one :user, as: :role
+    include UserRole
 
     has_many :teacher_school_class_discipline, dependent: :destroy
     has_many :disciplines, through: :teacher_school_class_discipline
