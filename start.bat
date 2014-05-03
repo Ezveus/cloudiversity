@@ -7,7 +7,7 @@ SET PATH=%RUBY_BIN%;%PATH%
 
 IF EXIST cloudiversity.configured GOTO launch_server
 
-bundle exec rake db:migrate && bundle exec rake db:seed && ECHO configured > cloudiversity.configured && bundle exec rails server
+bundle exec rails g cloudi:secret && bundle exec rake db:migrate && bundle exec rake db:seed && ECHO configured > cloudiversity.configured && bundle exec rails server
 
 :launch_server
 bundle exec rails server && PAUSE
