@@ -43,9 +43,10 @@ class Admin::TeachersController < ApplicationController
 
     def destroy
         @teacher = Teacher.find(params[:id])
+        user = @teacher.user
         @teacher.destroy
 
-        redirect_to admin_teachers_path, notice: "Teacher #{@teacher.user.login} has been deleted."
+        redirect_to admin_teachers_path, notice: "Teacher #{user.login} has been deleted."
     end
 
     def add_school_class

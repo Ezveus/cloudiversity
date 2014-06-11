@@ -8,17 +8,17 @@
 
 User.destroy_all
 
-administrator = User.create({ first_name: "Bruce", last_name: "Almighty", login: "administrator", email: "bruce@paradise.com", password: "password", password_confirmation: "password" })
+administrator = User.create!({ first_name: "Bruce", last_name: "Almighty", login: "administrator", email: "bruce@paradise.com", password: "password", password_confirmation: "password" })
 
-liliana = User.create({ first_name: "Liliana", last_name: "Vess", login: "liliana", email: "liliana@planeswalkers.com", password: "password", password_confirmation: "password" })
-jace = User.create({ first_name: "Jace", last_name: "Beleren", login: "jace_login", email: "jace@planeswalkers.com", password: "password", password_confirmation: "password" })
-ajani = User.create({ first_name: "Ajani", last_name: "Goldmane", login: "ajani_login", email: "ajani@planeswalkers.com", password: "password", password_confirmation: "password" })
+liliana = User.create!({ first_name: "Liliana", last_name: "Vess", login: "liliana", email: "liliana@planeswalkers.com", password: "password", password_confirmation: "password" })
+jace = User.create!({ first_name: "Jace", last_name: "Beleren", login: "jace_login", email: "jace@planeswalkers.com", password: "password", password_confirmation: "password" })
+ajani = User.create!({ first_name: "Ajani", last_name: "Goldmane", login: "ajani_login", email: "ajani@planeswalkers.com", password: "password", password_confirmation: "password" })
 
-garruk = User.create({ first_name: "Garruk", last_name: "Wildspeaker", login: "garruk_login", email: "garruk@planeswalkers.com", password: "password", password_confirmation: "password" })
-chandra = User.create({ first_name: "Chandra", last_name: "Nalaar", login: "chandra_login", email: "chandra@planeswalkers.com", password: "password", password_confirmation: "password" })
-gideon = User.create({ first_name: "Gidéon", last_name: "Jura", login: "gideon_login", email: "gideon@planeswalkers.com", password: "password", password_confirmation: "password" })
+garruk = User.create!({ first_name: "Garruk", last_name: "Wildspeaker", login: "garruk_login", email: "garruk@planeswalkers.com", password: "password", password_confirmation: "password" })
+chandra = User.create!({ first_name: "Chandra", last_name: "Nalaar", login: "chandra_login", email: "chandra@planeswalkers.com", password: "password", password_confirmation: "password" })
+gideon = User.create!({ first_name: "Gidéon", last_name: "Jura", login: "gideon_login", email: "gideon@planeswalkers.com", password: "password", password_confirmation: "password" })
 
-User.create(
+User.create!(
             [
                 { first_name: "Sorin", last_name: "Markov", login: "sorin_login", email: "sorin@planeswalkers.com", password: "password", password_confirmation: "password" },
                 { first_name: "Nissa", last_name: "Revane", login: "nissa_login", email: "nissa@planeswalkers.com", password: "password", password_confirmation: "password" }
@@ -26,11 +26,11 @@ User.create(
 
 SchoolClass.destroy_all
 
-ts1 = SchoolClass.create({ name: "TS1" })
-tes1 = SchoolClass.create({ name: "TES1" })
-tl = SchoolClass.create({ name: "TL" })
+ts1 = SchoolClass.create!({ name: "TS1" })
+tes1 = SchoolClass.create!({ name: "TES1" })
+tl = SchoolClass.create!({ name: "TL" })
 
-SchoolClass.create(
+SchoolClass.create!(
                    [
                     { name: "TS2" },
                     { name: "TS3" },
@@ -44,11 +44,11 @@ SchoolClass.create(
 
 Discipline.destroy_all
 
-maths = Discipline.create({ name: "Mathématiques" })
-philo = Discipline.create({ name: "Philosophie" })
-ses = Discipline.create({ name: "Sciences Économiques et Sociales" })
+maths = Discipline.create!({ name: "Mathématiques" })
+philo = Discipline.create!({ name: "Philosophie" })
+ses = Discipline.create!({ name: "Sciences Économiques et Sociales" })
 
-Discipline.create(
+Discipline.create!(
                   [
                     { name: "Sciences de la Vie et de la Terre" },
                     { name: "Physique-Chimie" },
@@ -56,25 +56,29 @@ Discipline.create(
                     { name: "Éducation Physique et Sportive" }
                     ])
 
+AbstractRole.destroy_all
 Teacher.destroy_all
-Teacher.create(
-               [
-                { user: liliana },
-                { user: jace },
-                { user: ajani }
-                ])
+
+AbstractRole.create!(
+                     [
+                      { role: Teacher.create!, user: liliana },
+                      { role: Teacher.create!, user: jace },
+                      { role: Teacher.create!, user: ajani },
+                      { role: Teacher.create!, user: gideon }
+                     ])
 
 Student.destroy_all
-Student.create(
-               [
-                { user: garruk, school_class: ts1 },
-                { user: chandra, school_class: tes1 },
-                { user: gideon, school_class: tl }
-                ])
+AbstractRole.create!(
+                     [
+                      { role: Student.create!(school_class: ts1), user: garruk },
+                      { role: Student.create!(school_class: tes1), user: chandra },
+                      { role: Student.create!(school_class: tl), user: gideon }
+                     ])
 
 TeacherSchoolClassDiscipline.destroy_all
-TeacherSchoolClassDiscipline.create(
+TeacherSchoolClassDiscipline.create!(
                                     [
                                         { teacher: liliana.as_teacher, school_class: ts1, discipline: maths },
                                         { teacher: jace.as_teacher, school_class: tl, discipline: philo },
-                                        { teacher: ajani.as_teacher, school_class: tes1, discipline: ses }])
+                                        { teacher: ajani.as_teacher, school_class: tes1, discipline: ses }
+                                    ])

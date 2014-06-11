@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140421150230) do
+ActiveRecord::Schema.define(version: 20140504171844) do
+
+  create_table "abstract_roles", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.string   "role_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "abstract_roles", ["role_id", "role_type"], name: "index_abstract_roles_on_role_id_and_role_type"
+  add_index "abstract_roles", ["user_id"], name: "index_abstract_roles_on_user_id"
 
   create_table "disciplines", force: true do |t|
     t.string "name"
@@ -61,9 +72,6 @@ ActiveRecord::Schema.define(version: 20140421150230) do
     t.datetime "updated_at"
     t.string   "first_name",             default: "", null: false
     t.string   "last_name",              default: "", null: false
-    t.integer  "school_class_id"
-    t.integer  "role_id"
-    t.string   "role_type"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.string   "authentication_token"
@@ -72,8 +80,6 @@ ActiveRecord::Schema.define(version: 20140421150230) do
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
   add_index "users", ["login"], name: "index_users_on_login", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["role_id", "role_type"], name: "index_users_on_role_id_and_role_type"
-  add_index "users", ["school_class_id"], name: "index_users_on_school_class_id"
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
 
 end

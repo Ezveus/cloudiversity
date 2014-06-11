@@ -1,17 +1,12 @@
+# @note Include this module in a role model
+
 module UserRole
     extend ActiveSupport::Concern
 
     included do
-        has_one :user, as: :role
-        $extended_class = name
-        ext_class = name
+        has_one :abstract_role, as: :role, dependent: :destroy
+        has_one :user, through: :abstract_role
 
-        $is_extended_class = proc { role_type == ext_class }
-        $as_extended_class = proc { self.role if role_type == ext_class }
-
-        class ::User
-            define_method "is_#{$extended_class.underscore}?", $is_extended_class
-            define_method "as_#{$extended_class.underscore}", $as_extended_class
-        end
+        ::User.register_role(name)
     end
 end

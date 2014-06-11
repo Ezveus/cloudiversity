@@ -48,8 +48,9 @@ class Admin::StudentsController < ApplicationController
 
     def destroy
         @student = Student.find(params[:id])
+        user = @student.user
         @student.destroy
 
-        redirect_to admin_students_path, notice: "Student #{@student.user.login} has been deleted."
+        redirect_to admin_students_path, notice: "Student #{user.login} has been deleted."
     end
 end

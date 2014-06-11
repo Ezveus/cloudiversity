@@ -1,9 +1,7 @@
 class UserInheritingValidator < ActiveModel::Validator
     def validate(record)
-        if record.user.nil? || User.where(id: record.user.id).first.nil?
-            record.errors[:user] = "should be a valid user present in database"
-        elsif User.find(record.user.id).role
-            record.errors[:user] = "is already taken"
+        if record.user && record.user.roles.map(&:role_type).include?(record.class.to_s)
+            record.errors[:user] = "already has this role"
         end
     end
 end
