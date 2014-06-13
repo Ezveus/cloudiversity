@@ -1,19 +1,22 @@
 class Admin::SchoolClassesController < ApplicationController
     def index
-        @school_classes = SchoolClass.all
+        @school_classes = policy_scope(SchoolClass)
     end
 
     def show
         @school_class = SchoolClass.find(params[:id])
+        authorize @school_class
         @tscds = TeacherSchoolClassDiscipline.where(school_class: @school_class)
     end
 
     def edit
         @school_class = SchoolClass.find(params[:id])
+        authorize @school_class
     end
 
     def update
         @school_class = SchoolClass.find(params[:id])
+        authorize @school_class
         if @school_class.update(params.require(:school_class).permit(:name))
             redirect_to admin_school_class_path(@school_class),
                 notice: 'Class successfully renamed'
@@ -24,10 +27,12 @@ class Admin::SchoolClassesController < ApplicationController
 
     def new
         @school_class = SchoolClass.new
+        authorize @school_class
     end
 
     def create
         @school_class = SchoolClass.new(params.require(:school_class).permit(:name))
+        authorize @school_class
 
         if @school_class.save
             redirect_to admin_school_class_path(@school_class),
@@ -39,6 +44,8 @@ class Admin::SchoolClassesController < ApplicationController
 
     def destroy
         @school_class = SchoolClass.find(params[:id])
+        authorize @school_class
+
         unless @school_class.students.empty?
             redirect_to admin_school_class_path(@school_class),
                 alert: %(Can't remove a class while it contains attendees)
@@ -56,6 +63,7 @@ class Admin::SchoolClassesController < ApplicationController
         end
 
         @school_class = SchoolClass.find(params[:school_class_id])
+        authorize @school_class, :update?
 
         if request.post?
             if params[:student].nil?
@@ -89,12 +97,13 @@ class Admin::SchoolClassesController < ApplicationController
             return
         end
 
-        ids = Student.all.map { |s| s.user.id } + Teacher.all.map { |t| t.user.id }
-        @users = User.all.reject { |u| ids.include?(u.id) }
+        @users = User.all.select { |u| u.roles.empty? }
     end
 
     def remove
         @school_class = SchoolClass.find(params[:school_class_id])
+        authorize @school_class, :update?
+
         @student = Student.find(params[:student_id])
 
         if @student.school_class == @school_class

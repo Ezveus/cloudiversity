@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140504171844) do
+ActiveRecord::Schema.define(version: 20140613111443) do
 
   create_table "abstract_roles", force: true do |t|
     t.integer  "user_id"
@@ -24,8 +24,28 @@ ActiveRecord::Schema.define(version: 20140504171844) do
   add_index "abstract_roles", ["role_id", "role_type"], name: "index_abstract_roles_on_role_id_and_role_type"
   add_index "abstract_roles", ["user_id"], name: "index_abstract_roles_on_user_id"
 
+  create_table "admins", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "disciplines", force: true do |t|
     t.string "name"
+  end
+
+  create_table "kinships", force: true do |t|
+    t.integer  "parent_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "kinships", ["parent_id"], name: "index_kinships_on_parent_id"
+  add_index "kinships", ["student_id"], name: "index_kinships_on_student_id"
+
+  create_table "parents", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "school_classes", force: true do |t|

@@ -1,14 +1,17 @@
 class Admin::UsersController < ApplicationController
     def index
-        @users = User.order('last_name, first_name')
+        @users = policy_scope(User)
     end
 
     def edit
         @user = User.find(params[:id])
+        authorize @user
     end
 
     def update
         @user = User.find(params[:id])
+        authorize @user
+
         respond_to do |format|
             if @user.update(params.require(:user).permit(:email, :first_name, :last_name))
                 format.html do
@@ -25,14 +28,17 @@ class Admin::UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id])
+        authorize @user
     end
 
     def new
         @user = User.new
+        authorize @user
     end
 
     def create
         @user = User.new(params.require(:user).permit(:login, :email, :first_name, :last_name))
+        authorize @user
 
         respond_to do |format|
             if @user.save
@@ -49,6 +55,7 @@ class Admin::UsersController < ApplicationController
 
     def destroy
         @user = User.find(params[:id])
+        authorize @user
         @user.delete
 
         redirect_to admin_users_path, notice: "User #{@user.login} has been deleted."
@@ -56,6 +63,8 @@ class Admin::UsersController < ApplicationController
 
     def reset_password
         @user = User.find(params[:user_id])
+        authorize @user, :update?
+
         if @user.reset_pending? and not @user.reset_expired?
             # Render the view
             return unless params[:confirm]

@@ -36,18 +36,20 @@ class User < ActiveRecord::Base
         login + " - " + full_name
     end
 
-    def self.register_role(role_name)
-        @@roles ||= []
-        unless @@roles.include?(role_name)
-            @@roles.append(role_name)
-        end
-    end
-
     def roles
         abstract_roles
     end
 
     def method_missing(m, *args, &block)
+        @@roles ||= ActiveRecord::Base.connection.tables.map do |model|
+            model.capitalize.singularize.camelize
+        end.select do |model|
+            begin
+                eval "#{model}.ancestors.include? UserRole"
+            rescue
+                false
+            end
+        end
         if /is_(?<role_name>\w+)\?/ =~ m.to_s
             role_name.capitalize!
             if @@roles.include?(role_name)

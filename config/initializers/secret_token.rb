@@ -24,5 +24,5 @@ if secret_hash && secret_hash[env] && secret_hash[env][:secret_key_base]
     Cloudiversity::Application.config.secret_key_base = secret_hash[env][:secret_key_base]
 else
     Cloudiversity::Application.config.secret_key_base = ''
-    $stderr.puts 'Warning: secrets are not generated.','  Please use `rails g cloudi:secrets` to fix this problem.'
+    $stderr.puts 'Warning: secrets are not generated.','  Please use `rails g cloudi:secret` to fix this problem.'
 end

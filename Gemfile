@@ -11,6 +11,7 @@ gem 'haml-rails'
 gem 'devise'
 gem 'devise-encryptable'
 gem 'simple_token_authentication'
+gem 'pundit'
 gem 'rails_uikit', github: 'adaedra/rails_uikit'
 gem 'therubyracer'
 

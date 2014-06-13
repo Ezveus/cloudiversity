@@ -1,4 +1,7 @@
 class Admin::StudentsController < ApplicationController
+    skip_after_action :verify_authorized
+    skip_after_action :verify_policy_scoped
+
     def index
         @students = Student.all
     end

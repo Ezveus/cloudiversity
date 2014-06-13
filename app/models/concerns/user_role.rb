@@ -7,6 +7,6 @@ module UserRole
         has_one :abstract_role, as: :role, dependent: :destroy
         has_one :user, through: :abstract_role
 
-        ::User.register_role(name)
+        delegate :full_name, :login_full_name, :login, to: :user
     end
 end

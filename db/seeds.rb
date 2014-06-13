@@ -57,8 +57,11 @@ Discipline.create!(
                     ])
 
 AbstractRole.destroy_all
-Teacher.destroy_all
 
+Admin.destroy_all
+AbstractRole.create!({ role: Admin.create!, user: administrator })
+
+Teacher.destroy_all
 AbstractRole.create!(
                      [
                       { role: Teacher.create!, user: liliana },
