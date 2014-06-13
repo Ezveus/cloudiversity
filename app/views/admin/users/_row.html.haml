@@ -27,6 +27,6 @@
                     Valid account
                     = action_to 'Reset password', admin_user_reset_password_path(user), method: 'post', glyph: 'key'
         .user-list-role
-            = user.role_type || content_tag(:em, "No role")
+            -# TODO: Put role back
             - if user.is_student?
                 &#8226; #{user.as_student.school_class.name}

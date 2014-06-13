@@ -1,16 +1,19 @@
-%navbar
-    = link_to root_path, class: 'cloudi-logo' do
-        %strong> Cloud
-        iversity
-    %ul.menu-link-list
-        -if current_user.present?
-            = render partial: 'static/usercard'
-        %li= link_to 'Home', root_path
-        - if current_user.present?
-            - Cloudiversity::ModuleManager.modules.each do |mod|
-                %li= link_to mod.name, '/' + mod.namespace
-            %li= link_to 'Administration', admin_path
-        - else
-            %li= link_to 'Log in', new_user_session_path
-    = link_to '#', class: 'menu-expander' do
-        %span Menu
+%li
+    = link_to root_path do
+        Home
+%li
+    = link_to admin_path do
+        Administration
+- if is_mobile
+    %li.uk-nav-header User
+    %li
+        = link_to admin_user_path(current_user) do
+            %strong= current_user.full_name
+            %br/
+            %small No role
+        = link_to destroy_user_session_path, method: :delete do
+            %i.uk-icon-sign-out
+            Sign out
+%li.uk-nav-header Modules
+- Cloudiversity::ModuleManager.modules.each do |mod|
+    = link_to mod.name, '/' + mod.namespace

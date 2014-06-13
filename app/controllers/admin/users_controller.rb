@@ -13,9 +13,7 @@ class Admin::UsersController < ApplicationController
             if @user.update(params.require(:user).permit(:email, :first_name, :last_name))
                 format.html do
                     redirect_to admin_user_path(@user),
-                        notice: 'User updated successfully. ' +
-                            'E-mail changes will be applied upon confirmation ' +
-                            'by the user.'
+                        notice: 'User updated successfully.'
                 end
             else
                 format.html do

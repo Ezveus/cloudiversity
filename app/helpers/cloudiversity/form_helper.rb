@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 module Cloudiversity
     ## The core of `auto_input` method. This module injects itself in
     # rails's `FormHelper` to provide the new method.
@@ -16,40 +15,39 @@ module Cloudiversity
             label_opts = opts[:label] || {}
             field_opts = opts[:field] || {}
             hide = opts[:hide] || false
-            row_opts = "row"
+            row_opts = 'uk-form-row'
 
             # Get the object we are working on, we need it for errors
             obj = instance_variable_get('@' + object.to_s)
 
             # Add some classes
-            add_class(label_opts, :inline)
+            add_class(label_opts, 'uk-form-label')
+            add_class(field_opts, 'uk-width-1-1')
             if obj.errors.include?(field)
-                add_class(label_opts, :error)
-                add_class(field_opts, :error)
+                add_class(field_opts, 'uk-form-danger')
             end
-            row_opts += " hide" if hide
+            row_opts += ' uk-hidden' if hide
 
             # The elements
-            content_tag :div, id: "#{object}_#{field}_row", class: row_opts do
-                content_tag(:div, class: 'large-3 columns') do
-                    label object, field, label_opts
-                end + content_tag(:div, class: 'large-9 columns') do
+            content_tag :div, class: row_opts, id: "cl-#{object}-#{field}-row" do
+                label(object, field, label_opts) \
+                + content_tag(:div, class: 'uk-form-controls') do
                     method = :text_field
-
-                    if field.to_s.start_with?("password")
+                    
+                    if field.to_s.start_with?('password')
                         method = :password_field
                     end
 
                     # Developper may override our detection
                     if opts.has_key?(:field_method)
-                        method = (opts[:field_method].to_s + "_field").to_sym
+                        method = (opts[:field_method].to_s + '_field').to_sym
                         method = :text_area if opts[:field_method].to_s == 'text_area'
                     end
 
                     out = self.send method, object, field, field_opts
 
                     if obj.errors.include?(field)
-                        out += content_tag(:small, class: 'error') do
+                        out += content_tag(:small, class: 'uk-text-danger') do
                             obj.errors.full_messages_for(field).first
                         end
                     end

@@ -2,30 +2,53 @@
 %html{lang: :en}
     %head
         %title
-            - if content_for?(:title)
-                = yield(:title)
-                &mdash; Cloudiversity
-            - else
-                Cloudiversity
+            #{yield :title} &mdash; Cloudiversity
         %meta{name: :viewport, content: 'width=device-width,initial-scale=1.0'}/
         %meta{charset: 'utf-8'}/
         = stylesheet_link_tag 'application', media: 'all'
         = controller_stylesheet_link_tag media: 'all'
-        = javascript_include_tag 'vendor/modernizr'
         = csrf_meta_tags
-    %body{class: controller_body_class}
-        = render partial: 'static/menu'
-        - if content_for?(:title)
-            %h1= yield(:title)
-        - if alert
-            .alert-box.alert= alert
-        - if notice
-            .alert-box= notice
-        .wrapper
-            %main
-                = yield
-            - if content_for?(:toolbar)
-                %aside.toolbar
-                    = yield(:toolbar)
+    %body
+        %nav.uk-navbar.uk-navbar-attached
+            %ul.uk-navbar-nav.uk-navbar-flip.uk-visible-large
+                - if current_user.present?
+                    %li{data: {'uk-dropdown' => ''}}
+                        = link_to admin_user_path(current_user) do
+                            = current_user.full_name
+                        .uk-dropdown.uk-dropdown-navbar
+                            %ul.uk-nav.uk-nav-navbar
+                                %li
+                                    = link_to admin_user_path(current_user) do
+                                        Profile
+                                %li
+                                    = link_to destroy_user_session_path, method: :delete do
+                                        %i.uk-icon-sign-out
+                                        Sign out
+            = link_to '', '#cl-menu', class: 'uk-navbar-toggle uk-hidden-large', 'data-uk-offcanvas' => ''
+            = link_to root_path, class: 'uk-navbar-brand uk-visible-large' do
+                %strong> Cloud
+                iversity
+            .uk-navbar-content.uk-navbar-center
+                = yield :title
+        %main
+            - if alert
+                .uk-alert.uk-alert-warning= alert
+            - if notice
+                .uk-alert= notice
+            .uk-grid.uk-grid-divider.uk-grid-small
+                .uk-width-large-1-5.uk-visible-large
+                    .uk-panel
+                        %ul.uk-nav.uk-nav-side
+                            = render partial: 'static/menu', locals: { is_mobile: false }
+                .uk-width-large-3-5
+                    .uk-panel
+                        = yield
+                .uk-width-large-1-5
+                    .uk-panel
+                        = yield :sidebar if content_for? :sidebar
+        #cl-menu.uk-offcanvas
+            .uk-offcanvas-bar
+                %ul.uk-nav.uk-nav-offcanvas
+                    = render partial: 'static/menu', locals: { is_mobile: true }
         = javascript_include_tag 'application'
         = controller_javascript_include_tag

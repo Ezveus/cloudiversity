@@ -23,5 +23,9 @@ module Cloudiversity
 
         config.assets.paths << Rails.root.join("app", "assets", "fonts")
         config.autoload_paths += %W["#{config.root}/app/validators/"]
+
+        config.to_prepare do
+            Devise::SessionsController.layout 'sign_in'
+        end
     end
 end

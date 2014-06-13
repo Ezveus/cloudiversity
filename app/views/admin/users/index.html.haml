@@ -2,6 +2,9 @@
     Users
 %ul.user-list
     = render partial: 'row', collection: @users, as: :user
+- sidebar! do |b|
+    = b.header 'Manage users'
+    = b.link 'Create user', new_admin_user_path, icon: 'plus'
 - content_for :toolbar do
     %dl
         %dt Actions
