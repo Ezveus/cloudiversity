@@ -15,6 +15,8 @@ module Cloudiversity
             # Extract the parameters that we will use to generate elements
             label_opts = opts[:label] || {}
             field_opts = opts[:field] || {}
+            hide = opts[:hide] || false
+            row_opts = "row"
 
             # Get the object we are working on, we need it for errors
             obj = instance_variable_get('@' + object.to_s)
@@ -25,14 +27,15 @@ module Cloudiversity
                 add_class(label_opts, :error)
                 add_class(field_opts, :error)
             end
+            row_opts += " hide" if hide
 
             # The elements
-            content_tag :div, class: 'row' do
+            content_tag :div, id: "#{object}_#{field}_row", class: row_opts do
                 content_tag(:div, class: 'large-3 columns') do
                     label object, field, label_opts
                 end + content_tag(:div, class: 'large-9 columns') do
                     method = :text_field
-                    
+
                     if field.to_s.start_with?("password")
                         method = :password_field
                     end
@@ -44,7 +47,7 @@ module Cloudiversity
                     end
 
                     out = self.send method, object, field, field_opts
-                    
+
                     if obj.errors.include?(field)
                         out += content_tag(:small, class: 'error') do
                             obj.errors.full_messages_for(field).first
