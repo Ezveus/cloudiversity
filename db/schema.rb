@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 20140613111443) do
     t.datetime "updated_at"
     t.string   "first_name",             default: "", null: false
     t.string   "last_name",              default: "", null: false
-    t.integer  "school_class_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.string   "authentication_token"
@@ -101,7 +100,6 @@ ActiveRecord::Schema.define(version: 20140613111443) do
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
   add_index "users", ["login"], name: "index_users_on_login", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["school_class_id"], name: "index_users_on_school_class_id"
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
 
 end

@@ -14,4 +14,6 @@ class TeacherSchoolClassDiscipline < ActiveRecord::Base
     def school_class_teacher_name
         school_class.name + " - " + teacher.user.full_name
     end
+
+    [Teacher, SchoolClass, Discipline].each { |k| k.send(:alias_method, :tscd, :teacher_school_class_discipline) }
 end

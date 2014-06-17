@@ -41,15 +41,7 @@ class User < ActiveRecord::Base
     end
 
     def method_missing(m, *args, &block)
-        @@roles ||= ActiveRecord::Base.connection.tables.map do |model|
-            model.capitalize.singularize.camelize
-        end.select do |model|
-            begin
-                eval "#{model}.ancestors.include? UserRole"
-            rescue
-                false
-            end
-        end
+        @@roles = User.app_roles
         if /is_(?<role_name>\w+)\?/ =~ m.to_s
             role_name.capitalize!
             if @@roles.include?(role_name)
@@ -67,6 +59,18 @@ class User < ActiveRecord::Base
             end
         end
         super
+    end
+
+    def self.app_roles
+        @@roles ||= ActiveRecord::Base.connection.tables.map do |model|
+            model.capitalize.singularize.camelize
+        end.select do |model|
+            begin
+                eval "#{model}.ancestors.include? UserRole"
+            rescue
+                false
+            end
+        end
     end
 
     protected
