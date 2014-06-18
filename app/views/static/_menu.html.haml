@@ -7,7 +7,7 @@
 - if is_mobile
     %li.uk-nav-header User
     %li
-        = link_to admin_user_path(current_user) do
+        = link_to current_user do
             %strong= current_user.full_name
             %br/
             %small No role
@@ -16,4 +16,4 @@
             Sign out
 %li.uk-nav-header Modules
 - Cloudiversity::ModuleManager.modules.each do |mod|
-    = link_to mod.name, '/' + mod.namespace
+    %li= link_to mod.name, '/' + mod.namespace

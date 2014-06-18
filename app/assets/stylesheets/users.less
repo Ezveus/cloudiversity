@@ -1,0 +1,28 @@
+.cl-user-thumbnail {
+    width: 192px;
+    display: inline-block;
+    margin: 0 5px 10px 5px;
+    vertical-align: top;
+}
+
+.cl-user-row {
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.cl-user-picture {
+    vertical-align: middle;
+    border: 1px solid darken(@cl-theme-border, 20%);
+    border-radius: @global-border-radius - 1px;
+    display: inline-block;
+    margin-right: 5px;
+
+    & > img {
+        border-radius: @global-border-radius - 2px;
+        height: 58px;
+    }
+
+    & + .uk-panel {
+        vertical-align: middle;
+    }
+}

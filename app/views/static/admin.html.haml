@@ -1,17 +1,39 @@
 - title! 'Administration'
-%dl
-    %dt= link_to 'Users', admin_users_path
-    %dd
-        Allows to view users, edit or delete them, and add new.
-    %dt= link_to 'Teachers', admin_teachers_path
-    %dd
-        Allows to view teachers, edit or delete them, and add new.
-    %dt= link_to 'Students', admin_students_path
-    %dd
-        Allows to view students, edit or delete them, and add new.
-    %dt= link_to 'Classes', admin_school_classes_path
-    %dd
-        Allows to manage classes and attendees
-    %dt= link_to 'Disciplines', admin_disciplines_path
-    %dd
-        Allows to view disciplines, edit or delete them, and add new.
+.uk-grid
+    .uk-width-large-1-2
+        .uk-panel.uk-panel-box
+            %h3.uk-panel-title User management
+            %ul.uk-nav.uk-nav-side
+                %li
+                    = link_to admin_users_path do
+                        %i.uk-icon-eye
+                        View all
+                        %div View, edit, remove users, or change user roles
+                %li
+                    = link_to new_admin_user_path do
+                        %i.uk-icon-plus
+                        Create a new one
+                %li.uk-nav-header Filter users
+                %li= link_to 'Teachers', admin_teachers_path
+    .uk-width-large-1-2
+        .uk-panel.uk-panel-box
+            %h3.uk-panel-title School structure
+            %ul.uk-nav.uk-nav-side
+                %li.uk-nav-header Disciplines
+                %li
+                    = link_to admin_disciplines_path do
+                        %i.uk-icon-eye
+                        View all
+                %li
+                    = link_to new_admin_discipline_path do
+                        %i.uk-icon-plus
+                        Create a new one
+                %li.uk-nav-header Classes
+                %li
+                    = link_to admin_school_classes_path do
+                        %i.uk-icon-eye
+                        View all
+                %li
+                    = link_to new_admin_school_class_path do
+                        %i.uk-icon-plus
+                        Create a new one

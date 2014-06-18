@@ -26,6 +26,7 @@ module Cloudiversity
 
         config.to_prepare do
             Devise::SessionsController.layout 'sign_in'
+            Devise::PasswordsController.layout 'sign_in'
         end
     end
 end

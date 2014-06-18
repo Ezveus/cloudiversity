@@ -15,7 +15,7 @@ class Admin::UsersController < ApplicationController
         respond_to do |format|
             if @user.update(params.require(:user).permit(:email, :first_name, :last_name))
                 format.html do
-                    redirect_to admin_user_path(@user),
+                    redirect_to @user,
                         notice: 'User updated successfully.'
                 end
             else
@@ -43,7 +43,7 @@ class Admin::UsersController < ApplicationController
         respond_to do |format|
             if @user.save
                 format.html do
-                    redirect_to admin_user_path(@user), notice: 'User created successfully'
+                    redirect_to @user, notice: 'User created successfully'
                 end
             else
                 format.html do
@@ -63,7 +63,7 @@ class Admin::UsersController < ApplicationController
 
     def reset_password
         @user = User.find(params[:user_id])
-        authorize @user, :update?
+        authorize @user
 
         if @user.reset_pending? and not @user.reset_expired?
             # Render the view
@@ -73,5 +73,17 @@ class Admin::UsersController < ApplicationController
         @user.send_reset_password_instructions
 
         redirect_to admin_users_path, notice: "A mail has been sent to #{@user.email} with reset instructions."
+    end
+
+    def unlock
+        @user = User.find(params[:user_id])
+        authorize @user
+
+        if @user.locked_at?
+            @user.unlock_access!
+            redirect_to @user, notice: 'Account unlocked'
+        else
+            redirect_to @user, alert: 'User was not locked'
+        end
     end
 end

@@ -1,59 +1,41 @@
 class Admin::StudentsController < ApplicationController
-    skip_after_action :verify_authorized
-    skip_after_action :verify_policy_scoped
-
-    def index
-        @students = Student.all
-    end
-
-    def show
-        @student = Student.find(params[:id])
-        @tscds = TeacherSchoolClassDiscipline.where(school_class: @student.school_class)
-    end
-
     def new
         @student = Student.new
-    end
+        authorize @student
 
-    def create
-        user_id = params.require(:student).require(:user)
-        user = User.find(user_id)
-        school_class_id = params.require(:student).require(:school_class)
-        school_class = SchoolClass.find(school_class_id)
-        @student = Student.new(user: user, school_class: school_class)
-
-        if @student.save
-            redirect_to admin_student_path(@student), notice: 'Student created successfully'
+        if params[:user_id]
+            @student.user = User.find params[:user_id]
         else
-            render action: :new
+            @student.user = User.new
+            authorize @student.user, :create?
         end
     end
 
-    def edit
-        @student = Student.find(params[:id])
-    end
+    def create
+        @student = Student.new(params.require(:student).permit(:school_class_id))
+        @student.user = User.find(params.require(:student).require(:user_id))
+        authorize @student
 
-    def update
-        user_id = params.require(:student).require(:user)
-        user = User.find(user_id)
-        school_class_id = params.require(:student).require(:school_class)
-        school_class = SchoolClass.find(school_class_id)
-        @student = Student.find(params[:id])
-
-        @student.user = user if user != @student.user
-        @student.school_class = school_class if school_class != @student.school_class
         if @student.save
-            redirect_to admin_student_path(@student), notice: 'Student updated successfully'
+            redirect_to @student.user, notice: 'User successfully promoted'
         else
-            render action: :edit
+            redirect_to @student.user, alert: 'Error while promoting the user'
         end
     end
 
     def destroy
-        @student = Student.find(params[:id])
-        user = @student.user
-        @student.destroy
+        if params[:user_id]
+            @student = User.find(params[:user_id]).as_student
+            raise ActiveRecord::RecordNotFound if @student.nil?
+        else
+            @student = Student.find(params[:id])
+        end
+        authorize @student
 
-        redirect_to admin_students_path, notice: "Student #{user.login} has been deleted."
+        if request.delete?
+            user = @student.user
+            @student.destroy
+            redirect_to user, notice: 'User successfully demoted'
+        end
     end
 end

@@ -17,6 +17,7 @@ module Cloudiversity::LayoutHelper
         # Saves the current context for later use.
         def initialize(ctx)
             @ctx = ctx
+            @waiting_header = nil
         end
 
         # Generates a link entry.
@@ -26,9 +27,16 @@ module Cloudiversity::LayoutHelper
         # * `icon`: Sets an icon to the link (icon name, without prefix)
         # * `subtitle`: Adds an additional subtitle text
         def link(text, link, opts = {})
+            waiting_header = @waiting_header
+            @waiting_header = nil
             @ctx.instance_eval {
-                content_tag :li do
-                    link_to link do
+                l = unless waiting_header.nil?
+                    content_tag(:li, class: 'uk-nav-header') do
+                        waiting_header
+                    end
+                end || ''
+                l += content_tag(:li) do
+                    link_to(link, opts[:link] || {}) do
                         s = ''
 
                         unless opts[:icon].nil?
@@ -45,16 +53,16 @@ module Cloudiversity::LayoutHelper
                         raw s
                     end
                 end
+                raw l
             }
         end
 
         # Generates a header in the menu
+        # The element is actually really generated if you put at least one
+        # link below
         def header(text)
-            @ctx.instance_eval {
-                content_tag :li, class: 'uk-nav-header' do
-                    text
-                end
-            }
+            @waiting_header = text
+            ''
         end
     end
 

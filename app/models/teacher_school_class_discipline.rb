@@ -3,6 +3,8 @@ class TeacherSchoolClassDiscipline < ActiveRecord::Base
     belongs_to :school_class
     belongs_to :discipline
 
+    has_many :students, through: :school_class
+
     def school_class_discipline_name
         school_class.name + " - " + discipline.name
     end

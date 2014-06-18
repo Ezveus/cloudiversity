@@ -7,7 +7,11 @@ class User < ActiveRecord::Base
 
     has_many :abstract_roles
 
-    validates :login, presence: true, length: { minimum: 6 }, uniqueness: true
+    validates :login,
+        presence: true,
+        length: { minimum: 6 },
+        uniqueness: true,
+        format: /\A[a-z][\w\.-]+\z/i
     validates :first_name, presence: true
     validates :last_name, presence: true
 
@@ -30,6 +34,10 @@ class User < ActiveRecord::Base
     # If a password reset is pending, has it expired ?
     def reset_expired?
         reset_password_sent_at? and not reset_password_period_valid?
+    end
+
+    def good?
+        password_set? and not locked_at?
     end
 
     def login_full_name
@@ -59,6 +67,37 @@ class User < ActiveRecord::Base
             end
         end
         super
+    end
+
+    def to_param
+        login
+    end
+
+    # Reimplements standard +find+ to be able to find by both login and
+    # id.
+    # Just check if the parameter looks like an id (first character is a
+    # number) and sends back to standard +find+ or, if it's a login, uses
+    # +find_by+.
+    # As the standard method, returns a user or raise an exception.
+    def self.find(id)
+        if id =~ /\A\d/
+            super id
+        else
+            find_by! login: id
+        end
+    end
+
+    def to_json
+        {
+            id: id,
+            login: login,
+            first_name: first_name,
+            last_name: last_name,
+            email: email,
+            roles: roles.map do |role|
+                role.role_type
+            end
+        }.to_json
     end
 
     def self.app_roles

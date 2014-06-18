@@ -1,87 +1,102 @@
 class Admin::TeachersController < ApplicationController
-    skip_after_action :verify_authorized
-    skip_after_action :verify_policy_scoped
-
     def index
-        @teachers = Teacher.all
-    end
-
-    def show
-        @teacher = Teacher.find(params[:id])
-        @tscds = TeacherSchoolClassDiscipline.where(teacher: @teacher)
+        @teachers = policy_scope(Teacher)
     end
 
     def new
         @teacher = Teacher.new
+        authorize @teacher
+
+        if params[:user_id]
+            @teacher.user = User.find params[:user_id]
+        else
+            @teacher.user = User.new
+            authorize @teacher.user, :create?
+        end
     end
 
     def create
-        user_id = params.require(:teacher).require(:user)
+        user_id = params.require(:teacher).require(:user_id)
         user = User.find(user_id)
         @teacher = Teacher.new(user: user)
+        authorize @teacher
 
         if @teacher.save
-            redirect_to admin_teacher_path(@teacher), notice: 'Teacher created successfully'
-        else
-            render action: :new
+            redirect_to @teacher.user, notice: 'User successfully promoted'
+            return
         end
-    end
 
-    def edit
-        @teacher = Teacher.find(params[:id])
-    end
-
-    def update
-        @teacher = Teacher.find(params[:id])
-        user_id = params.require(:teacher).require(:user)
-        user = User.find(user_id)
-
-        @teacher.user = user if user != @teacher.user
-        if @teacher.save
-            redirect_to admin_teacher_path(@teacher), notice: 'Teacher updated successfully. '
-        else
-            render action: :edit
-        end
+        redirect_to @teacher.user, alert: 'Error while promoting user.'
     end
 
     def destroy
-        @teacher = Teacher.find(params[:id])
-        user = @teacher.user
-        @teacher.destroy
+        if params[:user_id]
+            @teacher = User.find(params[:user_id]).as_teacher
+            raise ActiveRecord::RecordNotFound if @teacher.nil?
+        else
+            @teacher = Teacher.find params[:id]
+        end
+        authorize @teacher
 
-        redirect_to admin_teachers_path, notice: "Teacher #{user.login} has been deleted."
-    end
-
-    def add_school_class
-        @teacher = Teacher.find(params[:teacher_id])
-
-        if request.post?
-            filtered_params = params.require(:teacher).permit(:school_classes, disciplines: [])
-
-            school_class = SchoolClass.find(filtered_params["school_classes"])
-            filtered_params["disciplines"].each do |discipline_id|
-                unless discipline_id.blank?
-                    discipline = Discipline.find(discipline_id)
-                    TeacherSchoolClassDiscipline.create!(teacher: @teacher, school_class: school_class, discipline: discipline)
-                end
+        if @teacher.teacher_school_class_discipline.count > 0
+            # We can't allow this
+            if request.delete?
+                redirect_to @teacher.user, alert: 'Cannot remove if it has assigned classes'
+            else
+                render 'destroy_error'
             end
+        end
 
-            redirect_to admin_teacher_path(@teacher), notice: 'Teacher updated successfully. '
+        if request.delete?
+            user = @teacher.user
+            @teacher.destroy
+            redirect_to user, notice: 'User successfully demoted'
         end
     end
 
-    def rem_school_class
-        @teacher = Teacher.find(params[:teacher_id])
-        @tscds = TeacherSchoolClassDiscipline.where(teacher: @teacher)
+    # Assignation of a teacher to a set of classes in a given discipline.
+    # This method handles both GET and POST methods. In case of POST, it will
+    # create all the required join elements (checking all given data in the
+    # meantime).
+    def assign
+        @teacher = Teacher.find params[:teacher_id]
+        authorize @teacher
 
         if request.post?
-            filtered_params = params.require(:teacher).permit(disciplines: [])
+            classes, discipline = params.require(:teacher_school_class_discipline).slice(:classes, :discipline).values
+            transaction = [] # See comment below
 
-            filtered_params["disciplines"].each do |tscd_id|
-                TeacherSchoolClassDiscipline.delete(tscd_id) unless tscd_id.blank?
+            classes.each do |cls, _|
+                # Just check if the ids are valid
+                SchoolClass.find cls
+                Discipline.find discipline
+
+                # We check if the association already exists, to not double
+                # it
+                tscd = TeacherSchoolClassDiscipline.find_or_initialize_by(
+                    teacher_id: @teacher.id,
+                    school_class_id: cls,
+                    discipline_id: discipline)
+                next if tscd.persisted?
+
+                transaction << tscd
             end
 
-            redirect_to admin_teacher_path(@teacher), notice: 'Teacher updated successfully. '
+            # If one fail, all fail: we stock the objects we created to
+            # all save at the same time. If any of the data above was invalid,
+            # no action will be taken in the final.
+            # Note: if one fail to save, it will not block the other. The
+            # 'all fail' is valable for validation. If something fails in the
+            # loop, it will be silently discarded. But there should be no
+            # reason that this would happen.
+            transaction.each do |item|
+                item.save
+            end
+
+            redirect_to @teacher.user, notice: "Added #{transaction.count} class(es) to #{@teacher.full_name}"
+        else
+            @classes = SchoolClass.all
+            @disciplines = Discipline.all
         end
     end
 end

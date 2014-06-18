@@ -13,12 +13,12 @@
             %ul.uk-navbar-nav.uk-navbar-flip.uk-visible-large
                 - if current_user.present?
                     %li{data: {'uk-dropdown' => ''}}
-                        = link_to admin_user_path(current_user) do
+                        = link_to current_user do
                             = current_user.full_name
                         .uk-dropdown.uk-dropdown-navbar
                             %ul.uk-nav.uk-nav-navbar
                                 %li
-                                    = link_to admin_user_path(current_user) do
+                                    = link_to current_user do
                                         Profile
                                 %li
                                     = link_to destroy_user_session_path, method: :delete do
@@ -35,7 +35,13 @@
                 .uk-alert.uk-alert-warning= alert
             - if notice
                 .uk-alert= notice
-            .uk-grid.uk-grid-divider.uk-grid-small
+            %noscript
+                .uk-alert.uk-alert-danger#cl-nojs
+                    %strong You have JavaScript disabled.
+                    Some features of cloudiversity will not work correctly
+                    without. If you're using a script blocker, consider
+                    adding cloudiversity as an exception.
+            .uk-grid
                 .uk-width-large-1-5.uk-visible-large
                     .uk-panel
                         %ul.uk-nav.uk-nav-side
