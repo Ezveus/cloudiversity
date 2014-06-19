@@ -1,16 +1,12 @@
-- content_for :title do
-    Classes
-%table{style: 'width: 100%'}
-    %thead
-        %tr
-            %td Class
-            %td Att. Count
-            %td Action
-    %tbody
-        = render partial: 'row', collection: @school_classes, as: :school_class
-- content_for :toolbar do
-    %dl
-        %dt Actions
-        %dd
-            %ul.link-list
-                %li= link_to('Create class', new_admin_school_class_path, class: "glyph-add")
+- title! 'Classes'
+.cl-box-list
+    - @school_classes.each do |cls|
+        = link_to [ :admin, cls ], class: 'uk-panel uk-panel-box' do
+            = cls.name
+            .uk-align-right
+                %span.uk-text-muted
+                    %i.uk-icon-group
+                    = cls.students.count
+                    %i.uk-icon-mortar-board.uk-margin-left
+                    = cls.teacher_school_class_discipline.count
+                %i.uk-icon-chevron-right.uk-margin-left

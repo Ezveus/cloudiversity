@@ -6,7 +6,6 @@ class Admin::SchoolClassesController < ApplicationController
     def show
         @school_class = SchoolClass.find(params[:id])
         authorize @school_class
-        @tscds = TeacherSchoolClassDiscipline.where(school_class: @school_class)
     end
 
     def edit

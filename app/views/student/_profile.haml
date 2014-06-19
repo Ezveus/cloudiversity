@@ -2,4 +2,4 @@
     .uk-panel-title Student
     %dl.uk-description-list.uk-description-list-horizontal
         %dt Class
-        %dd= student.school_class.name
+        %dd= link_to student.school_class.name, [ :admin, student.school_class ]

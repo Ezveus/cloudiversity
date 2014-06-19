@@ -2,6 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 require File.expand_path('../../lib/cloudiversity/module', __FILE__)
+require File.expand_path('../../lib/cloudiversity/version', __FILE__)
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
