@@ -15,6 +15,8 @@ gem 'simple_token_authentication'
 gem 'pundit'
 gem 'rails_uikit', github: 'adaedra/rails_uikit'
 gem 'therubyracer'
+gem 'redcarpet'
+gem 'codemirror-rails', '~> 4.2'
 
 group :doc do
     gem 'yard', require: false
