@@ -1,6 +1,8 @@
 //= require jquery.ui.slider
 
 @import "uikit/themes/default/gradient/uikit";
+@import "uikit/addons/form-select";
+@import "uikit/addons/form-advanced";
 @import "uikit_cloudiversity";
 
 main {
@@ -20,6 +22,11 @@ main {
     font-family: "Fira Sans";
     src: font-url('FiraSans-Bold.woff');
     font-weight: bold;
+}
+
+// Fix for form fields
+.uk-form input[type="radio"], .uk-form input[type="checkbox"] {
+    overflow: initial;
 }
 
 @import "users";

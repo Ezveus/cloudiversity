@@ -5,3 +5,4 @@
 #= require jquery.ui.slider
 #= require_tree .
 #= require uikit/uikit
+#= require uikit/addons/form-select
