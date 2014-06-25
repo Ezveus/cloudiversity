@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/adaedra/rails_uikit.git
-  revision: 533487876541b24814714d5391b1b9e6323dac22
+  revision: 7e5ecca46671dabd95d996270d392d3a9c7da5f5
   specs:
-    rails_uikit (2.7.1)
+    rails_uikit (2.7.1.2)
       less-rails
       rails (>= 4.0.4)
 
