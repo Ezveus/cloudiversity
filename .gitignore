@@ -16,6 +16,9 @@
 /.ruby-version
 /.ruby-gemset
 
+# Production Env
+public/assets
+
 # THANKS APPLE
 .DS_Store
 __MACOSX
