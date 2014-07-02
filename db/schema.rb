@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617163023) do
+ActiveRecord::Schema.define(version: 20140627112750) do
 
   create_table "abstract_roles", force: true do |t|
     t.integer  "user_id"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20140617163023) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "attachments", force: true do |t|
+    t.string   "file"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attachments", ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type"
 
   create_table "disciplines", force: true do |t|
     t.string "name"
@@ -95,6 +105,7 @@ ActiveRecord::Schema.define(version: 20140617163023) do
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.string   "authentication_token"
+    t.string   "avatar"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"

@@ -15,6 +15,7 @@ gem 'simple_token_authentication'
 gem 'pundit'
 gem 'rails_uikit', github: 'adaedra/rails_uikit'
 gem 'therubyracer'
+gem 'carrierwave'
 gem 'redcarpet'
 gem 'codemirror-rails', '~> 4.2'
 

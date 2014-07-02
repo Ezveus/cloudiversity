@@ -1,6 +1,6 @@
 = link_to user, class: 'cl-user-row uk-panel uk-panel-box' + (user == current_user ? ' uk-panel-box-primary' : '') do
     .cl-user-picture.uk-hidden-small
-        = image_tag "users/#{user.login}.jpg"
+        = image_tag user.avatar.url
     .uk-panel.uk-display-inline-block
         %div
             - if policy(user).update? and not user.good?

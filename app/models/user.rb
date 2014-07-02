@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
     has_many :abstract_roles
 
+    mount_uploader :avatar, AvatarUploader
+
     validates :login,
         presence: true,
         length: { minimum: 6 },
@@ -50,10 +52,10 @@ class User < ActiveRecord::Base
 
     def method_missing(m, *args, &block)
         @@roles = User.app_roles
-        if /is_(?<role_name>\w+)\?/ =~ m.to_s
-            role_name.capitalize!
-            if @@roles.include?(role_name)
-                return roles.map{|r| r.role_type}.include? role_name
+        if /is_(?<role__name>\w+)\?/ =~ m.to_s
+            role__name.capitalize!
+            if @@roles.include?(role__name)
+                return roles.map{|r| r.role_type}.include? role__name
             end
         elsif /as_(?<role_name>\w+)/ =~ m.to_s
             role_name.capitalize!
@@ -80,7 +82,7 @@ class User < ActiveRecord::Base
     # +find_by+.
     # As the standard method, returns a user or raise an exception.
     def self.find(id)
-        if id =~ /\A\d/
+        if id.to_s =~ /\A\d/
             super id
         else
             find_by! login: id

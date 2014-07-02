@@ -6,7 +6,7 @@
         %li.uk-active= @user.login
 .uk-grid
     .uk-width-medium-1-4.uk-hidden-small
-        = image_tag("users/#{@user.login}.jpg", class: 'uk-thumbnail uk-width-1-1')
+        = image_tag(@user.avatar.url, class: 'uk-thumbnail uk-width-1-1')
     .uk-width-medium-3-4
         .uk-panel.uk-panel-box.uk-panel-box-primary.uk-panel-header
             .uk-panel-title= @user.full_name
@@ -34,6 +34,9 @@
         = render partial: 'student/profile', object: @user.as_student, as: :student if @user.is_student?
 - sidebar! do |s|
     - s.header 'Users management'
+    -# TODO: Decide if we keep it like that or make a special route for avatar editing
+    - if policy(@user).update?
+        = s.link 'Update this user', edit_admin_user_path(@user)
     - if policy(User).create?
         = s.link 'Create an user', new_admin_user_path, icon: 'plus'
     - s.header 'Account management'

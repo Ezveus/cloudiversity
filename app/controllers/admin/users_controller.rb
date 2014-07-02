@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
         authorize @user
 
         respond_to do |format|
-            if @user.update(params.require(:user).permit(:email, :first_name, :last_name))
+            if @user.update(params.require(:user).permit(:email, :first_name, :last_name, :avatar))
                 format.html do
                     redirect_to @user,
                         notice: 'User updated successfully.'
@@ -34,10 +34,11 @@ class Admin::UsersController < ApplicationController
     def new
         @user = User.new
         authorize @user
+        @user.build_attachment
     end
 
     def create
-        @user = User.new(params.require(:user).permit(:login, :email, :first_name, :last_name))
+        @user = User.new(params.require(:user).permit(:login, :email, :first_name, :last_name, :avatar))
         authorize @user
 
         respond_to do |format|
