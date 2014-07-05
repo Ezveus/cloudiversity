@@ -34,7 +34,6 @@ class Admin::UsersController < ApplicationController
     def new
         @user = User.new
         authorize @user
-        @user.build_attachment
     end
 
     def create
