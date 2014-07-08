@@ -7,5 +7,9 @@ class CreatePeriods < ActiveRecord::Migration
 
             t.timestamps
         end
+
+        change_table :teacher_school_class_disciplines do |t|
+            t.belongs_to :period, index: true, default: nil
+        end
     end
 end
