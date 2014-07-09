@@ -17,3 +17,6 @@
 #= require uikit/addons/form-select
 #= require uikit/addons/search
 #= require uikit/addons/autocomplete
+#
+# Nested Form
+#= require jquery_nested_form

@@ -18,6 +18,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'therubyrhino', platforms: :jruby
 gem 'carrierwave'
 gem 'codemirror-rails', '~> 4.2'
+gem 'nested_form'
 gem 'will_paginate', '~> 3.0'
 
 group :doc do
