@@ -2,7 +2,7 @@
 .uk-container-center.uk-width-large-3-5
     .uk-panel-title
         Assign classes to:
-    = render partial: 'users/summary', object: @teacher, as: :user
+    = render partial: 'users/summary', object: @teacher.user, as: :user
     = form_for TeacherSchoolClassDiscipline.new, url: admin_teacher_assign_path(@teacher), method: :post, html: {class: 'uk-form uk-form-horizontal'} do |f|
         .uk-form-row.uk-margin-top
             = f.label :discipline, class: 'uk-form-label'

@@ -1,15 +1,5 @@
-- content_for :title do
-    Disciplines
-%table{style: 'width: 100%'}
-    %thead
-        %tr
-            %td Name
-            %td Actions
-    %tbody
-        = render partial: 'row', collection: @disciplines, as: :discipline
-- content_for :toolbar do
-    %dl
-        %dt Actions
-        %dd
-            %ul.link-list
-                %li= link_to('Create discipline', new_admin_discipline_path, class: "glyph-add")
+- title! 'Disciplines'
+.cl-box-list
+    = render partial: 'row', collection: @disciplines, as: :discipline
+- sidebar! do |s|
+    = s.link 'Create a discipline', new_admin_discipline_path, icon: 'plus'

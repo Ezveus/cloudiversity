@@ -4,7 +4,8 @@
     .uk-panel.uk-display-inline-block
         %div
             - if policy(user).update? and not user.good?
-                .uk-icon-warning.uk-text-danger
+                %span{data: {'uk-tooltip' => ''}, title: user_status(user, false)}
+                    %i.uk-icon-warning.uk-text-danger
             %strong= user.full_name
             %span.uk-text-muted= "(#{user.login})"
         %div= role(user)

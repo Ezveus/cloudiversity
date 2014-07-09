@@ -63,6 +63,11 @@ class Admin::TeachersController < ApplicationController
         authorize @teacher
 
         if request.post?
+            if params.require(:teacher_school_class_discipline)[:classes].nil?
+                redirect_to @teacher.user, notice: 'You did not select any classes.'
+                return
+            end
+
             classes, discipline = params.require(:teacher_school_class_discipline).slice(:classes, :discipline).values
             transaction = [] # See comment below
 
@@ -97,6 +102,53 @@ class Admin::TeachersController < ApplicationController
         else
             @classes = SchoolClass.all
             @disciplines = Discipline.all
+
+            # We can't assign classes if we don't have at least a class and a discipline.
+            redirect_to @teacher.user, alert: 'There are no defined classes. Please add a class first.' if @classes.count == 0
+            redirect_to @teacher.user, alert: 'There are no defined disciplines. Please add a discipline first.' if @disciplines.count == 0
+        end
+    end
+
+    # Change a teacher assigned to a class
+    def transfer
+        @teacher = Teacher.find params[:teacher_id]
+        @discipline = Discipline.find params[:discipline]
+        @school_class = SchoolClass.find params[:school_class]
+
+        @tscd = TeacherSchoolClassDiscipline.find_by!(
+            teacher: @teacher,
+            discipline: @discipline,
+            school_class: @school_class
+        )
+
+        authorize @tscd, :update?
+
+        if request.post?
+            new_teacher = Teacher.find params.require(:teacher_school_class_discipline).require(:teacher_id)
+            @tscd.teacher = new_teacher
+            @tscd.save
+
+            redirect_to @teacher.user, notice: "The discipline #{@discipline.name} in #{@school_class.name} has been transferred to #{new_teacher.full_name}."
+        end
+    end
+
+    # Delete an assignation
+    def unassign
+        @teacher = Teacher.find params[:teacher_id]
+        @discipline = Discipline.find params[:discipline]
+        @school_class = SchoolClass.find params[:school_class]
+
+        @tscd = TeacherSchoolClassDiscipline.find_by!(
+            teacher: @teacher,
+            discipline: @discipline,
+            school_class: @school_class
+        )
+
+        authorize @tscd, :delete?
+
+        if request.delete?
+            @tscd.destroy
+            redirect_to @teacher.user, notice: "The class has been unassigned. All associated data has been deleted."
         end
     end
 end

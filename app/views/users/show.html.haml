@@ -34,16 +34,17 @@
         = render partial: 'student/profile', object: @user.as_student, as: :student if @user.is_student?
 - sidebar! do |s|
     - s.header 'Users management'
-    -# TODO: Decide if we keep it like that or make a special route for avatar editing
-    - if policy(@user).update?
-        = s.link 'Update this user', edit_admin_user_path(@user)
     - if policy(User).create?
         = s.link 'Create an user', new_admin_user_path, icon: 'plus'
     - s.header 'Account management'
+    - if policy(@user).edit?
+        = s.link 'Edit', edit_admin_user_path(@user), icon: 'pencil'
     - if policy(@user).reset_password?
         = s.link(@user.password_set? ? 'Reset password' : 'Initialize password', admin_user_reset_password_path(@user), link: {method: :post}, icon: 'key')
     - if @user.locked_at? and policy(@user).update?
         = s.link('Unlock', admin_user_unlock_path(@user), link: {method: :post}, icon: 'unlock')
+    - if policy(@user).destroy?
+        = s.link('Delete', admin_user_destroy_path(@user), icon: 'trash-o')
     - s.header 'Roles'
     - if not @user.is_admin? and policy(Admin).create?
         = s.link 'Promote as administrator', admin_user_promote_admin_path(@user)
@@ -57,8 +58,3 @@
         = s.link 'Promote as student', admin_user_promote_student_path(@user)
     - elsif @user.is_student? and policy(@user.as_student).destroy?
         = s.link 'Demote from student', admin_user_demote_student_path(@user)
-    - if @user.is_teacher?
-        - @user.as_teacher.tap do |teacher|
-            - s.header 'Teacher management'
-            - if policy(teacher).update?
-                = s.link 'Assign classes', admin_teacher_assign_path(teacher), icon: 'university'

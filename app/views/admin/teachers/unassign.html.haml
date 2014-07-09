@@ -1,0 +1,20 @@
+- title! 'Unassign'
+.uk-panel.uk-panel-box.uk-container-center.uk-width-3-5
+    %p You are deleting the following association:
+    .cl-user-summary
+        - @teacher.user.tap do |user|
+            = image_tag user.avatar.url, width: 64, class: 'uk-thumbnail uk-vertical-align-middle uk-margin-right uk-margin-left'
+            .uk-panel.uk-vertical-align-middle
+                %strong= user.full_name
+                .uk-text-small
+                    = @discipline.name
+                    %br/
+                    = @school_class.name
+    %p.uk-text-danger
+        This will erase all associated data. It is not possible to undo this action.
+    %p
+        <strong>Note:</strong> If you just want to change the teacher of this relation, use the "Transfer" button on the user view.
+        .uk-align-right
+            = form_tag admin_teacher_unassign_path(@teacher, discipline: @discipline, school_class: @school_class), method: :delete do
+                = link_to "Cancel", @teacher.user, class: 'uk-button'
+                = submit_tag "Unassign", class: 'uk-button uk-button-danger'

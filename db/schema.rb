@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140627112750) do
+ActiveRecord::Schema.define(version: 20140627143949) do
 
   create_table "abstract_roles", force: true do |t|
     t.integer  "user_id"
@@ -41,7 +41,10 @@ ActiveRecord::Schema.define(version: 20140627112750) do
 
   create_table "disciplines", force: true do |t|
     t.string "name"
+    t.string "handle"
   end
+
+  add_index "disciplines", ["handle"], name: "index_disciplines_on_handle"
 
   create_table "kinships", force: true do |t|
     t.integer  "parent_id"
@@ -62,7 +65,10 @@ ActiveRecord::Schema.define(version: 20140627112750) do
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "handle"
   end
+
+  add_index "school_classes", ["handle"], name: "index_school_classes_on_handle"
 
   create_table "students", force: true do |t|
     t.integer  "school_class_id"

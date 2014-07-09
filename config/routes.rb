@@ -17,21 +17,34 @@ Cloudiversity::Application.routes.draw do
             get 'demote/teacher' => 'teachers#destroy', as: 'demote_teacher'
             get 'promote/student' => 'students#new', as: 'promote_student'
             get 'demote/student' => 'students#destroy', as: 'demote_student'
+
+            collection do
+                get 'search' => 'users#search', as: 'search'
+                post 'search' => 'users#search'
+            end
+
+            get 'delete' => 'users#destroy', as: 'destroy'
         end
 
         resources :admins, only: [ :create, :destroy ]
         resources :teachers, only: [ :index, :create, :destroy ] do
             get 'assign' => 'teachers#assign', as: 'assign'
             post 'assign' => 'teachers#assign'
-        end
-        resources :students, only: [ :create, :destroy ]
 
-        resources :school_classes do
+            get 'transfer' => 'teachers#transfer', as: 'transfer'
+            post 'transfer' => 'teachers#transfer'
+
+            get 'unassign' => 'teachers#unassign', as: 'unassign'
+            delete 'unassign' => 'teachers#unassign'
+        end
+        resources :students, only: [ :create, :destroy, :edit, :update ]
+
+        resources :school_classes, id: Handleable::ROUTE_FORMAT do
             get 'add' => 'school_classes#add', as: 'add'
             post 'add' => 'school_classes#add'
             delete ':student_id' => 'school_classes#remove', as: 'remove'
         end
-        resources :disciplines
+        resources :disciplines, id: Handleable::ROUTE_FORMAT
     end
 
     get 'admin' => 'static#admin', as: :admin

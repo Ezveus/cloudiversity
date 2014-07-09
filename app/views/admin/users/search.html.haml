@@ -1,0 +1,5 @@
+- title! 'Search'
+- sidebar! do |s|
+    - s.header 'Quick actions'
+    = s.link 'View all', admin_users_path, icon: 'eye' if policy(User).index?
+    = s.link 'Create', new_admin_user_path, icon: 'plus' if policy(User).create?

@@ -4,6 +4,7 @@
         %title
             #{yield :title} &mdash; Cloudiversity
         %meta{name: :viewport, content: 'width=device-width,initial-scale=1.0'}/
+        %meta(name="apple-mobile-web-app-capable" content="yes")/
         %meta{charset: 'utf-8'}/
         = stylesheet_link_tag 'application', media: 'all'
         = controller_stylesheet_link_tag media: 'all'
@@ -44,6 +45,8 @@
             .uk-grid
                 .uk-width-large-1-5.uk-visible-large
                     .uk-panel
+                        .uk-text-center
+                            = image_tag 'school_logo.png', class: 'uk-width-4-5 uk-margin-bottom'
                         %ul.uk-nav.uk-nav-side
                             = render partial: 'static/menu', locals: { is_mobile: false }
                 .uk-width-large-3-5

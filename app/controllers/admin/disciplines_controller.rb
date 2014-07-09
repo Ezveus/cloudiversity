@@ -6,7 +6,10 @@ class Admin::DisciplinesController < ApplicationController
     def show
         @discipline = Discipline.find(params[:id])
         authorize @discipline
-        @tscds = TeacherSchoolClassDiscipline.where(discipline: @discipline)
+
+        @teachers = @discipline.teacher_school_class_discipline.all.group_by do |d|
+            d.teacher
+        end
     end
 
     def new
