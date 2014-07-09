@@ -1,10 +1,11 @@
 = link_to user, class: 'cl-user-row uk-panel uk-panel-box' + (user == current_user ? ' uk-panel-box-primary' : '') do
     .cl-user-picture.uk-hidden-small
-        = image_tag "users/#{user.login}.jpg"
+        = image_tag user.avatar.url
     .uk-panel.uk-display-inline-block
         %div
             - if policy(user).update? and not user.good?
-                .uk-icon-warning.uk-text-danger
+                %span{data: {'uk-tooltip' => ''}, title: user_status(user, false)}
+                    %i.uk-icon-warning.uk-text-danger
             %strong= user.full_name
             %span.uk-text-muted= "(#{user.login})"
         %div= role(user)

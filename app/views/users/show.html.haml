@@ -6,7 +6,7 @@
         %li.uk-active= @user.login
 .uk-grid
     .uk-width-medium-1-4.uk-hidden-small
-        = image_tag("users/#{@user.login}.jpg", class: 'uk-thumbnail uk-width-1-1')
+        = image_tag(@user.avatar.url, class: 'uk-thumbnail uk-width-1-1')
     .uk-width-medium-3-4
         .uk-panel.uk-panel-box.uk-panel-box-primary.uk-panel-header
             .uk-panel-title= @user.full_name
@@ -37,10 +37,14 @@
     - if policy(User).create?
         = s.link 'Create an user', new_admin_user_path, icon: 'plus'
     - s.header 'Account management'
+    - if policy(@user).edit?
+        = s.link 'Edit', edit_admin_user_path(@user), icon: 'pencil'
     - if policy(@user).reset_password?
         = s.link(@user.password_set? ? 'Reset password' : 'Initialize password', admin_user_reset_password_path(@user), link: {method: :post}, icon: 'key')
     - if @user.locked_at? and policy(@user).update?
         = s.link('Unlock', admin_user_unlock_path(@user), link: {method: :post}, icon: 'unlock')
+    - if policy(@user).destroy?
+        = s.link('Delete', admin_user_destroy_path(@user), icon: 'trash-o')
     - s.header 'Roles'
     - if not @user.is_admin? and policy(Admin).create?
         = s.link 'Promote as administrator', admin_user_promote_admin_path(@user)
@@ -54,8 +58,3 @@
         = s.link 'Promote as student', admin_user_promote_student_path(@user)
     - elsif @user.is_student? and policy(@user.as_student).destroy?
         = s.link 'Demote from student', admin_user_demote_student_path(@user)
-    - if @user.is_teacher?
-        - @user.as_teacher.tap do |teacher|
-            - s.header 'Teacher management'
-            - if policy(teacher).update?
-                = s.link 'Assign classes', admin_teacher_assign_path(teacher), icon: 'university'

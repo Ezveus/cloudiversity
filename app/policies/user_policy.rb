@@ -27,6 +27,11 @@ class UserPolicy < ApplicationPolicy
         reset_password?
     end
 
+    def search?
+        # TODO: Study if this can be widened
+        user.is_admin?
+    end
+
     class Scope < Struct.new(:user, :scope)
         def resolve
             scope.order('last_name, first_name')

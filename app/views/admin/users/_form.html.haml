@@ -1,8 +1,10 @@
-= form_for [:admin, user], html: { class: 'uk-form uk-form-horizontal' } do |f|
+= form_for [:admin, user], html: { class: 'uk-form uk-form-horizontal', multipart: true } do |f|
     = f.auto_input :login, field: { disabled: user.persisted?, required: !user.persisted? }
     = f.auto_input :email, field: { required: true }, field_method: :email
     = f.auto_input :first_name, field: { required: true }
     = f.auto_input :last_name, field: { required: true }
+    = f.auto_input :avatar, field_method: :file
+    = f.hidden_field :avatar_cache
     - unless user.persisted?
         .uk-form-row
             = f.label :password, class: 'uk-form-label'

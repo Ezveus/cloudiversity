@@ -1,5 +1,5 @@
 module UsersHelper
-    def user_status(user)
+    def user_status(user, color = true)
         css = 'uk-text-success'
         text = 'OK'
 
@@ -31,7 +31,11 @@ module UsersHelper
             end
         end
 
-        content_tag :dd, class: css do
+        if color
+            content_tag :dd, class: css do
+                text
+            end
+        else
             text
         end
     end

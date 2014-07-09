@@ -14,21 +14,24 @@ gem 'devise-encryptable'
 gem 'simple_token_authentication'
 gem 'pundit'
 gem 'rails_uikit', github: 'adaedra/rails_uikit'
-gem 'therubyracer'
-gem 'redcarpet'
+gem 'therubyracer', platforms: :ruby
+gem 'therubyrhino', platforms: :jruby
+gem 'carrierwave'
 gem 'codemirror-rails', '~> 4.2'
+gem 'will_paginate', '~> 3.0'
 
 group :doc do
     gem 'yard', require: false
 end
 
 group :development do
-    gem 'binding_of_caller'
+    gem 'binding_of_caller', platforms: :ruby
     gem 'better_errors'
     gem 'pry'
     gem 'pry-rails'
 
-    gem 'sqlite3'
+    gem 'sqlite3', platforms: :ruby
+    gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
 
     gem 'letter_opener'
 end
@@ -44,4 +47,13 @@ group :production do
     # gem 'sqlite3'
     # gem 'mysql2'
     # gem 'pg'
+    # 
+    # Or, if you're using jruby
+    # gem 'activerecord-jdbcsqlite3-adapter'
+    # gem 'activerecord-jdbcmysql-adapter'
+    # gem 'activerecord-jdbcpostgresql-adapter'
+    # gem 'activerecord-jdbcmssql-adapter'
 end
+
+# A web server, compatible with YRI and JRuby
+gem 'puma'

@@ -10,3 +10,6 @@
                     %i.uk-icon-mortar-board.uk-margin-left
                     = cls.teacher_school_class_discipline.count
                 %i.uk-icon-chevron-right.uk-margin-left
+- sidebar! do |s|
+    - s.header 'Administration'
+    = s.link 'Create class', new_admin_school_class_path, icon: 'plus' if policy(SchoolClass).create?

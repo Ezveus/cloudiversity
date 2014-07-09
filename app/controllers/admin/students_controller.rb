@@ -38,4 +38,9 @@ class Admin::StudentsController < ApplicationController
             redirect_to user, notice: 'User successfully demoted'
         end
     end
+
+    def edit
+        @student = Student.find(params[:id])
+        authorize @student
+    end
 end

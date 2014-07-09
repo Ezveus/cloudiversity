@@ -55,6 +55,14 @@ class TeacherSchoolClassDisciplinePolicy < ApplicationPolicy
         show?
     end
 
+    def update?
+        user.is_admin?
+    end
+
+    def delete?
+        user.is_admin?
+    end
+
     private
     ## Returns true if the current user can see the record
     def user_can_see?

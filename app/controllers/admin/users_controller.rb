@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
     def index
-        @users = policy_scope(User)
+        @users = policy_scope(User).paginate(page: params[:page])
     end
 
     def edit
@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
         authorize @user
 
         respond_to do |format|
-            if @user.update(params.require(:user).permit(:email, :first_name, :last_name))
+            if @user.update(params.require(:user).permit(:email, :first_name, :last_name, :avatar))
                 format.html do
                     redirect_to @user,
                         notice: 'User updated successfully.'
@@ -37,7 +37,7 @@ class Admin::UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(params.require(:user).permit(:login, :email, :first_name, :last_name))
+        @user = User.new(params.require(:user).permit(:login, :email, :first_name, :last_name, :avatar))
         authorize @user
 
         respond_to do |format|
@@ -54,11 +54,18 @@ class Admin::UsersController < ApplicationController
     end
 
     def destroy
-        @user = User.find(params[:id])
+        @user = User.find(params[:user_id] || params[:id])
         authorize @user
-        @user.delete
 
-        redirect_to admin_users_path, notice: "User #{@user.login} has been deleted."
+        if request.delete?
+            if @user.roles.count > 0
+                redirect_to @user, alert: 'This user has still roles assigned. Please demote him from all his roles before deleting it.'
+                return
+            end
+
+            @user.destroy
+            redirect_to admin_users_path, notice: "User #{@user.login} has been deleted."
+        end
     end
 
     def reset_password
@@ -84,6 +91,28 @@ class Admin::UsersController < ApplicationController
             redirect_to @user, notice: 'Account unlocked'
         else
             redirect_to @user, alert: 'User was not locked'
+        end
+    end
+
+    def search
+        authorize User.new
+
+        if request.post?
+
+            respond_to do |f|
+                f.json {
+                    login = params.require(:login)
+                    render json: (User.where(['`login` LIKE ?', login + '%']).limit(5).map do |u|
+                        { value: u.login, title: u.full_name, url: user_path(u), text: u.login }
+                    end)
+                }
+                f.html {
+                    if (@user = User.find_by(login: params.require(:login)))
+                        redirect_to @user
+                        return
+                    end
+                }
+            end
         end
     end
 end

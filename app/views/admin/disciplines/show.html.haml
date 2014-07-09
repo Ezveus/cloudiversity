@@ -1,19 +1,14 @@
-- content_for :title do
-    #{@discipline.name}
-%h3 Teachers associated to this discipline
-%table{style: 'width: 100%'}
-    %thead
-        %tr
-            %td Teacher
-            %td Class
-    %tbody
-        = render partial: 'show_row', collection: @tscds, as: :tscd
-- content_for :toolbar do
-    %dl
-        %dt Actions
+- title! 'Discipline'
+%ul.uk-breadcrumb
+    %li= link_to 'Administration', admin_path
+    %li= link_to 'Disciplines', [ :admin, Discipline ]
+    %li.active= @discipline.name
+%dl.uk-description-list.uk-description-list-horizontal
+    %dt.uk-text-muted Teacher
+    %dd.uk-text-muted Classes
+    - @teachers.each do |teacher, classes|
+        %dt= link_to teacher.full_name, teacher.user
         %dd
-            %ul.link-list
-                %li= link_to("view all disciplines", admin_disciplines_path, class: "glyph-index")
-                %li= link_to("create a new discipline", new_admin_discipline_path, class: "glyph-add")
-                %li= link_to("edit this discipline", edit_admin_discipline_path(@discipline), class: "glyph-edit")
-                %li= link_to("delete this discipline", admin_discipline_path(@discipline), method: :delete, class: "glyph-delete")
+            %ul.uk-list
+                - classes.each do |klass|
+                    %li= link_to klass.school_class.name, [:admin, klass.school_class]

@@ -8,6 +8,7 @@ class StaticController < ApplicationController
     end
 
     def admin
+        raise Pundit::NotAuthorizedError unless current_user.is_admin?
     end
 
     def version

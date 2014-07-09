@@ -15,3 +15,5 @@
 #= require marked
 #= require uikit/addons/htmleditor
 #= require uikit/addons/form-select
+#= require uikit/addons/search
+#= require uikit/addons/autocomplete
