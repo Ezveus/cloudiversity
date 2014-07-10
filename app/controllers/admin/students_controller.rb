@@ -43,4 +43,15 @@ class Admin::StudentsController < ApplicationController
         @student = Student.find(params[:id])
         authorize @student
     end
+
+    def update
+        @student = Student.find(params[:id])
+        authorize @student
+
+        if @student.update(params.require(:student).permit(:school_class_id))
+            redirect_to @student.user, notice: 'Class successfully updated'
+        else
+            render action: :edit
+        end
+    end
 end
