@@ -18,4 +18,7 @@ class TeacherSchoolClassDiscipline < ActiveRecord::Base
     end
 
     [Teacher, SchoolClass, Discipline].each { |k| k.send(:alias_method, :tscd, :teacher_school_class_discipline) }
+
+    validates_presence_of :teacher_id, :school_class_id, :discipline_id
+    validates_with TSCDValidator
 end
