@@ -20,6 +20,7 @@ gem 'carrierwave'
 gem 'codemirror-rails', '~> 4.2'
 gem 'nested_form'
 gem 'will_paginate', '~> 3.0'
+gem 'highline',      '~> 1.6.21'
 
 group :doc do
     gem 'yard', require: false
