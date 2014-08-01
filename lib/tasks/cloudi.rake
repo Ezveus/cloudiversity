@@ -23,8 +23,8 @@ namespace :cloudi do
     end
 
     namespace :admin do
-	desc "Creates a new administrator if no one exists"
-	task :create => :environment do
+        desc "Creates a new administrator if no one exists"
+        task :create => :environment do
             if Admin.count > 0
                 $stderr.puts "An administrator already exists."
                 puts "Connect as administrator to create a new administrator."
