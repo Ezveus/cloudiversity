@@ -5,7 +5,8 @@ class Period < ActiveRecord::Base
     has_many :school_classes, through: :teacher_school_class_discipline
 
     validates_presence_of :name, :end_date, :start_date
-    validates_with DateValidator
+    validates_uniqueness_of :name
+    validates_with TimeSpanValidator
 
     def to_s
         "#{name} (#{start_date} - #{end_date})"
