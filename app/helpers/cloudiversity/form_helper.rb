@@ -9,7 +9,7 @@ module Cloudiversity
         # `auto_input` will take care of the following:
         # * Layout (`div` tags, classes)
         # * Error classes and messages
-        # * Find the correct field to use (currently only works for passowrd fields)
+        # * Find the correct field to use (currently only works for password fields)
         def auto_input(object, field, opts = {})
             # Extract the parameters that we will use to generate elements
             label_opts = opts[:label] || {}
@@ -33,7 +33,7 @@ module Cloudiversity
                 label(object, field, label_opts) \
                 + content_tag(:div, class: 'uk-form-controls') do
                     method = :text_field
-                    
+
                     if field.to_s.start_with?('password')
                         method = :password_field
                     end

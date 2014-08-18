@@ -49,7 +49,7 @@ group :production do
     # gem 'sqlite3'
     # gem 'mysql2'
     # gem 'pg'
-    # 
+    #
     # Or, if you're using jruby
     # gem 'activerecord-jdbcsqlite3-adapter'
     # gem 'activerecord-jdbcmysql-adapter'

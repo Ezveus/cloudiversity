@@ -78,10 +78,21 @@ AbstractRole.create!(
                       { role: Student.create!(school_class: tl), user: gideon }
                      ])
 
+Period.destroy_all
+semester1_2014 = Period.create!(name: "Semester 1 2014", start_date: Date.parse("01/01/2014"), end_date: Date.parse("30/06/2014"))
+semester2_2014 = Period.create!(name: "Semester 2 2014", start_date: Date.parse("01/07/2014"), end_date: Date.parse("31/12/2014"))
+Period.create!(name: "Semester 1 2015", start_date: Date.parse("01/01/2015"), end_date: Date.parse("30/06/2015"))
+Period.create!(name: "Semester 2 2015", start_date: Date.parse("01/07/2015"), end_date: Date.parse("31/12/2015"))
+Period.create!(name: "Semester 1 2016", start_date: Date.parse("01/01/2016"), end_date: Date.parse("30/06/2016"))
+Period.create!(name: "Semester 2 2016", start_date: Date.parse("01/07/2016"), end_date: Date.parse("31/12/2016"))
+
 TeacherSchoolClassDiscipline.destroy_all
 TeacherSchoolClassDiscipline.create!(
                                     [
-                                        { teacher: liliana.as_teacher, school_class: ts1, discipline: maths },
-                                        { teacher: jace.as_teacher, school_class: tl, discipline: philo },
-                                        { teacher: ajani.as_teacher, school_class: tes1, discipline: ses }
+                                        { teacher: liliana.as_teacher, school_class: ts1, discipline: maths, period: semester1_2014 },
+                                        { teacher: jace.as_teacher, school_class: tl, discipline: philo, period: semester1_2014 },
+                                        { teacher: ajani.as_teacher, school_class: tes1, discipline: ses, period: semester1_2014 },
+                                        { teacher: liliana.as_teacher, school_class: ts1, discipline: maths, period: semester2_2014 },
+                                        { teacher: jace.as_teacher, school_class: tl, discipline: philo, period: semester2_2014 },
+                                        { teacher: ajani.as_teacher, school_class: tes1, discipline: ses, period: semester2_2014 }
                                     ])

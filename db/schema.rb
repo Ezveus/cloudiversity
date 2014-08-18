@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140627143949) do
+ActiveRecord::Schema.define(version: 20140708163260) do
 
   create_table "abstract_roles", force: true do |t|
     t.integer  "user_id"
@@ -46,6 +46,31 @@ ActiveRecord::Schema.define(version: 20140627143949) do
 
   add_index "disciplines", ["handle"], name: "index_disciplines_on_handle"
 
+  create_table "grade_assessments", force: true do |t|
+    t.string   "assessment"
+    t.boolean  "school_class_assessment",            default: false
+    t.integer  "teacher_school_class_discipline_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "grade_assessments", ["student_id"], name: "index_grade_assessments_on_student_id"
+  add_index "grade_assessments", ["teacher_school_class_discipline_id"], name: "index_grade_assessments_on_teacher_school_class_discipline_id"
+
+  create_table "grade_grades", force: true do |t|
+    t.string   "assessment"
+    t.integer  "teacher_school_class_discipline_id"
+    t.integer  "student_id"
+    t.integer  "coefficient"
+    t.integer  "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "grade_grades", ["student_id"], name: "index_grade_grades_on_student_id"
+  add_index "grade_grades", ["teacher_school_class_discipline_id"], name: "index_grade_grades_on_teacher_school_class_discipline_id"
+
   create_table "kinships", force: true do |t|
     t.integer  "parent_id"
     t.integer  "student_id"
@@ -57,6 +82,14 @@ ActiveRecord::Schema.define(version: 20140627143949) do
   add_index "kinships", ["student_id"], name: "index_kinships_on_student_id"
 
   create_table "parents", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "periods", force: true do |t|
+    t.date     "end_date"
+    t.string   "name"
+    t.date     "start_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -80,9 +113,11 @@ ActiveRecord::Schema.define(version: 20140627143949) do
     t.integer "teacher_id"
     t.integer "school_class_id"
     t.integer "discipline_id"
+    t.integer "period_id"
   end
 
   add_index "teacher_school_class_disciplines", ["discipline_id"], name: "index_teacher_school_class_disciplines_on_discipline_id"
+  add_index "teacher_school_class_disciplines", ["period_id"], name: "index_teacher_school_class_disciplines_on_period_id"
   add_index "teacher_school_class_disciplines", ["school_class_id"], name: "index_teacher_school_class_disciplines_on_school_class_id"
   add_index "teacher_school_class_disciplines", ["teacher_id"], name: "index_teacher_school_class_disciplines_on_teacher_id"
 
