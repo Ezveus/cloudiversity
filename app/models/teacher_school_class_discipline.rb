@@ -2,6 +2,7 @@ class TeacherSchoolClassDiscipline < ActiveRecord::Base
     belongs_to :teacher
     belongs_to :school_class
     belongs_to :discipline
+    belongs_to :period
 
     has_many :students, through: :school_class
 
@@ -17,8 +18,8 @@ class TeacherSchoolClassDiscipline < ActiveRecord::Base
         school_class.name + " - " + teacher.user.full_name
     end
 
-    [Teacher, SchoolClass, Discipline].each { |k| k.send(:alias_method, :tscd, :teacher_school_class_discipline) }
+    [Teacher, SchoolClass, Discipline, Period].each { |k| k.send(:alias_method, :tscd, :teacher_school_class_discipline) }
 
-    validates_presence_of :teacher_id, :school_class_id, :discipline_id
+    validates_presence_of :teacher_id, :school_class_id, :discipline_id, :period_id
     validates_with TSCDValidator
 end
