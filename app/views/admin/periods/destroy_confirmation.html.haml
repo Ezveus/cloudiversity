@@ -1,0 +1,20 @@
+- title! "Period"
+
+- if current_user.is_admin?
+    %ul.uk-breadcrumb
+        %li= link_to 'Administration', admin_path
+        %li= link_to 'Periods', admin_periods_path
+        %li= link_to 'Period', admin_period_path(@period)
+        %li.uk-active Delete
+
+%p
+    Are you sure you want to delete this period?
+    %br
+    %em
+        %i.uk-icon-warning
+        This action is permanent.
+    = link_to "Back to this period", admin_period_path(@period), class: "uk-align-right uk-button uk-button-danger"
+    = link_to "Delete this period", admin_period_path(@period), method: :delete, class: "uk-align-right uk-button uk-button-success"
+
+- sidebar! do |sidebar|
+    = sidebar.link "View this period", admin_period_path(@period), icon: "eye" if policy(@period).show?

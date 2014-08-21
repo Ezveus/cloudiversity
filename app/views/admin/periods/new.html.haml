@@ -1,0 +1,9 @@
+- content_for :title do
+    Create period
+= render partial: 'form', object: @period, as: :period
+- content_for :toolbar do
+    %dl
+        %dt Actions
+        %dd
+            %ul.link-list
+                %li= link_to("view all classes", admin_periods_path, class: "glyph-index")

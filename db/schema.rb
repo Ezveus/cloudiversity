@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708163260) do
+ActiveRecord::Schema.define(version: 20140821133651) do
 
   create_table "abstract_roles", force: true do |t|
     t.integer  "user_id"
@@ -45,6 +45,29 @@ ActiveRecord::Schema.define(version: 20140708163260) do
   end
 
   add_index "disciplines", ["handle"], name: "index_disciplines_on_handle"
+
+  create_table "forum_messages", force: true do |t|
+    t.integer  "forum_thread_id"
+    t.integer  "user_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "deleted_by"
+  end
+
+  add_index "forum_messages", ["forum_thread_id"], name: "index_forum_messages_on_forum_thread_id"
+  add_index "forum_messages", ["user_id"], name: "index_forum_messages_on_user_id"
+
+  create_table "forum_threads", force: true do |t|
+    t.string   "title"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "forum_category_id"
+    t.string   "forum_category_type"
+  end
+
+  add_index "forum_threads", ["user_id"], name: "index_forum_threads_on_user_id"
 
   create_table "grade_assessments", force: true do |t|
     t.string   "assessment"
@@ -92,7 +115,10 @@ ActiveRecord::Schema.define(version: 20140708163260) do
     t.date     "start_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "handle"
   end
+
+  add_index "periods", ["handle"], name: "index_periods_on_handle"
 
   create_table "school_classes", force: true do |t|
     t.string   "name",       null: false
