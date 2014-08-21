@@ -45,6 +45,11 @@ Cloudiversity::Application.routes.draw do
             delete ':student_id' => 'school_classes#remove', as: 'remove'
         end
         resources :disciplines, id: Handleable::ROUTE_FORMAT
+        resources :periods, id: Handleable::ROUTE_FORMAT do
+            member do
+                get :destroy_confirmation
+            end
+        end
     end
 
     get 'admin' => 'static#admin', as: :admin

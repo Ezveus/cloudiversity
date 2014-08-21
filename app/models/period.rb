@@ -1,4 +1,6 @@
 class Period < ActiveRecord::Base
+    include Handleable
+
     has_many :teacher_school_class_discipline, dependent: :destroy
     has_many :teachers, through: :teacher_school_class_discipline
     has_many :disciplines, through: :teacher_school_class_discipline
@@ -10,5 +12,10 @@ class Period < ActiveRecord::Base
 
     def to_s
         "#{name} (#{start_date} - #{end_date})"
+    end
+
+    protected
+    def generate_handle
+        name.parameterize
     end
 end

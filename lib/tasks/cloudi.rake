@@ -19,6 +19,15 @@ namespace :cloudi do
                     puts "Updated discipline #{discipline.name}"
                 end
             end
+
+            Period.all.each do |period|
+                if period.handle.nil? or period.handle.empty?
+                    period.generate_handle!
+                    period.save!
+
+                    puts "Updated period #{period.name}"
+                end
+            end
         end
     end
 
