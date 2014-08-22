@@ -68,20 +68,22 @@ class Admin::TeachersController < ApplicationController
                 return
             end
 
-            classes, discipline = params.require(:teacher_school_class_discipline).slice(:classes, :discipline).values
+            classes, discipline, period = params.require(:teacher_school_class_discipline).slice(:classes, :discipline, :period).values
             transaction = [] # See comment below
 
             classes.each do |cls, _|
                 # Just check if the ids are valid
                 SchoolClass.find cls
                 Discipline.find discipline
+                Period.find period
 
                 # We check if the association already exists, to not double
                 # it
                 tscd = TeacherSchoolClassDiscipline.find_or_initialize_by(
                     teacher_id: @teacher.id,
                     school_class_id: cls,
-                    discipline_id: discipline)
+                    discipline_id: discipline,
+                    period_id: period)
                 next if tscd.persisted?
 
                 transaction << tscd
@@ -102,10 +104,12 @@ class Admin::TeachersController < ApplicationController
         else
             @classes = SchoolClass.all
             @disciplines = Discipline.all
+            @periods = Period.all
 
-            # We can't assign classes if we don't have at least a class and a discipline.
+            # We can't assign classes if we don't have at least a class, a period and a discipline.
             redirect_to @teacher.user, alert: 'There are no defined classes. Please add a class first.' if @classes.count == 0
             redirect_to @teacher.user, alert: 'There are no defined disciplines. Please add a discipline first.' if @disciplines.count == 0
+            redirect_to @teacher.user, alert: 'There are no defined periods. Please add a period first.' if @periods.count == 0
         end
     end
 
@@ -114,11 +118,13 @@ class Admin::TeachersController < ApplicationController
         @teacher = Teacher.find params[:teacher_id]
         @discipline = Discipline.find params[:discipline]
         @school_class = SchoolClass.find params[:school_class]
+        @period = Period.find params[:period]
 
         @tscd = TeacherSchoolClassDiscipline.find_by!(
             teacher: @teacher,
             discipline: @discipline,
-            school_class: @school_class
+            school_class: @school_class,
+            period: @period
         )
 
         authorize @tscd, :update?
@@ -137,11 +143,13 @@ class Admin::TeachersController < ApplicationController
         @teacher = Teacher.find params[:teacher_id]
         @discipline = Discipline.find params[:discipline]
         @school_class = SchoolClass.find params[:school_class]
+        @period = Period.find params[:period]
 
         @tscd = TeacherSchoolClassDiscipline.find_by!(
             teacher: @teacher,
             discipline: @discipline,
-            school_class: @school_class
+            school_class: @school_class,
+            period: @period
         )
 
         authorize @tscd, :delete?

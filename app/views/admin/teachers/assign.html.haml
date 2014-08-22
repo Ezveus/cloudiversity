@@ -13,6 +13,14 @@
                     .uk-float-right
                         %i.uk-icon-chevron-down
         .uk-form-row
+            = f.label :period, class: 'uk-form-label'
+            .uk-form-controls
+                .uk-form-select.uk-button.uk-width-1-1.uk-text-left{data: {'uk-form-select' => ''}}
+                    %span
+                    = f.collection_select :period, @periods, :id, :to_s, {}, { class: 'uk-width-1-1' }
+                    .uk-float-right
+                        %i.uk-icon-chevron-down
+        .uk-form-row
             = f.label :classes, 'Classes', class: 'uk-form-label'
             .uk-form-controls
                 .uk-panel.uk-panel-box.uk-scrollable-box

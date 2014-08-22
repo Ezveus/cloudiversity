@@ -7,9 +7,7 @@ class Admin::DisciplinesController < ApplicationController
         @discipline = Discipline.find(params[:id])
         authorize @discipline
 
-        @teachers = @discipline.teacher_school_class_discipline.all.group_by do |d|
-            d.teacher
-        end
+        @periods = @discipline.teacher_school_class_discipline.group_by { |tscd| tscd.period }
     end
 
     def new

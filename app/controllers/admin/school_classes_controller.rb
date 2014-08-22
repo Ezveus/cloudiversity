@@ -6,6 +6,7 @@ class Admin::SchoolClassesController < ApplicationController
     def show
         @school_class = SchoolClass.find(params[:id])
         authorize @school_class
+        @periods = @school_class.teacher_school_class_discipline.group_by { |tscd| tscd.period }
     end
 
     def edit

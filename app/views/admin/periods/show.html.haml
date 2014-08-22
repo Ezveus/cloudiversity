@@ -5,11 +5,26 @@
         %li= link_to 'Periods', admin_periods_path
         %li.uk-active Period
 
-.uk-panel.uk-panel-box
-    %h2=@period.name
+.uk-panel.uk-panel-box.uk-panel-header
+    .uk-panel-title
+        %h2=@period.name
     %ul
         %li From #{@period.start_date}
         %li To #{@period.end_date}
+
+%br
+
+.uk-panel.uk-panel-box.uk-panel-header
+    .uk-panel-title
+        Teachers, school classes & disciplines
+    - @period.teacher_school_class_discipline.group_by { |tscd| tscd.teacher }.each do |teacher, tscds|
+        %h4= link_to teacher.full_name, user_path(teacher.user)
+        %dl.uk-description-list.uk-description-list-horizontal
+            - tscds.group_by { |tscd| tscd.discipline }.each do |discipline, tscds|
+                %dt= link_to discipline.name, admin_discipline_path(discipline)
+                %dd
+                    - tscds.each do |tscd|
+                        = link_to tscd.school_class.name, admin_school_class_path(tscd.school_class)
 
 - sidebar! do |s|
     - s.header 'Administration'
