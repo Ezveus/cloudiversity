@@ -8,6 +8,9 @@
 .uk-panel.uk-panel-box.uk-panel-header
     .uk-panel-title
         %h2=@period.name
+    - if @period.current_one?
+        .uk-panel-badge.uk-badge
+            Current period
     %ul
         %li From #{@period.start_date}
         %li To #{@period.end_date}
@@ -29,4 +32,5 @@
 - sidebar! do |s|
     - s.header 'Administration'
     = s.link 'Edit period', edit_admin_period_path(@period), icon: "edit" if policy(@period).update?
+    = s.link 'Set as current period', set_current_admin_period_path(@period), icon: "check-square-o" if policy(@period).set_current?
     = s.link 'Delete period', destroy_confirmation_admin_period_path(@period), icon: "trash-o" if policy(@period).destroy?

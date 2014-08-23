@@ -54,4 +54,18 @@ class Admin::PeriodsController < ApplicationController
         @period = Period.find(params[:id])
         authorize(@period)
     end
+
+    def set_current
+        @period = Period.find(params[:id])
+        authorize(@period)
+
+        if request.post?
+            if @period.set_current
+                notice = "Period set as current one"
+            else
+                notice = @period.errors.full_messages[0]
+            end
+            redirect_to admin_period_path(@period), notice: notice
+        end
+    end
 end

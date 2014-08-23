@@ -4,6 +4,9 @@
         = link_to [ :admin, period ], class: 'uk-panel uk-panel-box' do
             = period.name
             .uk-align-right
+                - if period.current_one?
+                    .uk-badge
+                        Current period
                 %i.uk-icon-chevron-right.uk-margin-left
 - sidebar! do |s|
     - s.header 'Administration'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140821133651) do
+ActiveRecord::Schema.define(version: 20140823094537) do
 
   create_table "abstract_roles", force: true do |t|
     t.integer  "user_id"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20140821133651) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "handle"
+    t.boolean  "current",    default: false
   end
 
   add_index "periods", ["handle"], name: "index_periods_on_handle"

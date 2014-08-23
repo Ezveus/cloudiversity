@@ -48,6 +48,8 @@ Cloudiversity::Application.routes.draw do
         resources :periods, id: Handleable::ROUTE_FORMAT do
             member do
                 get :destroy_confirmation
+                get :set_current
+                post :set_current
             end
         end
     end
