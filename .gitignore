@@ -1,6 +1,13 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore Gemfile-related files, to disable noise during development
+/Gemfile.local
+/Gemfile.lock
+
+# Ignore the SQL schema, as it may contain module-related data
+/db/schema.rb
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
