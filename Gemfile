@@ -59,3 +59,11 @@ end
 
 # A web server, compatible with YRI and JRuby
 gem 'puma'
+
+# Load a local version of the Gemfile, which contains local tools, gems,
+# and other workspace-dependant dependancies.
+File.expand_path('Gemfile.local', File.dirname(__FILE__)).tap do |gloc|
+    if File.exists?(gloc)
+        eval(IO.read(gloc))
+    end
+end
