@@ -107,9 +107,13 @@ class Admin::TeachersController < ApplicationController
             @periods = Period.all
 
             # We can't assign classes if we don't have at least a class, a period and a discipline.
-            redirect_to @teacher.user, alert: 'There are no defined classes. Please add a class first.' if @classes.count == 0
-            redirect_to @teacher.user, alert: 'There are no defined disciplines. Please add a discipline first.' if @disciplines.count == 0
-            redirect_to @teacher.user, alert: 'There are no defined periods. Please add a period first.' if @periods.count == 0
+            if @classes.count == 0
+                redirect_to @teacher.user, alert: 'There are no defined classes. Please add a class first.'
+            elsif @disciplines.count == 0
+                redirect_to @teacher.user, alert: 'There are no defined disciplines. Please add a discipline first.'
+            elsif @periods.count == 0
+                redirect_to @teacher.user, alert: 'There are no defined periods. Please add a period first.'
+            end
         end
     end
 
