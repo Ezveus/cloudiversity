@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
     end
 
     def method_missing(m, *args, &block)
-        @@roles = User.app_roles
+        User.app_roles
         if /is_(?<role__name>\w+)\?/ =~ m.to_s
             role__name.capitalize!
             if @@roles.include?(role__name)
@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
             model.capitalize.singularize.camelize
         end.select do |model|
             begin
-                eval "#{model}.ancestors.include? UserRole"
+                model.constantize.ancestors.include? UserRole
             rescue
                 false
             end
