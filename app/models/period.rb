@@ -23,11 +23,11 @@ class Period < ActiveRecord::Base
         Period.find_by(current: true)
     end
 
-    def set_current
+    def self.set_current(p)
         current_one = Period.get_current
 
         current_one.update(current: false) if current_one
-        self.update(current: true)
+        p.update(current: true)
     end
 
     protected
