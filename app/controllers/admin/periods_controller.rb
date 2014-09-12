@@ -60,7 +60,7 @@ class Admin::PeriodsController < ApplicationController
         authorize(@period)
 
         if request.post?
-            if @period.set_current
+            if Period.set_current(@period)
                 notice = "Period set as current one"
             else
                 notice = @period.errors.full_messages[0]
