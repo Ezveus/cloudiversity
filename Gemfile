@@ -21,6 +21,7 @@ gem 'codemirror-rails', '~> 4.2'
 gem 'nested_form', '~> 0.3.2'
 gem 'will_paginate', '~> 3.0'
 gem 'highline',      '~> 1.6.21'
+gem 'cells'
 
 group :doc do
     gem 'yard', require: false

@@ -1,1 +1,5 @@
 %h1 Welcome to Cloudiversity
+- Cloudiversity::ModuleManager.modules.each do |mod|
+    - current_user.roles.each do |r|
+        - if mod.role_previews.include? r.name
+            = render_cell "preview_#{mod.name.underscore}_#{r.name}".to_sym, :show, user: current_user
