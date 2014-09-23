@@ -1,6 +1,18 @@
 class Admin::SchoolClassesController < ApplicationController
     def index
-        @school_classes = policy_scope(SchoolClass)
+        multirole do |role|
+            role.json_for :admin
+
+            role.admin do
+                @school_classes = SchoolClass.all
+
+                role.json { @school_classes }
+            end
+
+            role.teacher do |teacher|
+                @school_classes = teacher.teacher_school_class_discipline.group_by { |tscd| tscd.discipline }
+            end
+        end
     end
 
     def show

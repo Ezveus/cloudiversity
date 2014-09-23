@@ -1,1 +1,8 @@
+- title! 'Welcome'
 %h1 Welcome to Cloudiversity
+= sidebar! do |s|
+    - s.header current_user.full_name
+    = s.link 'Profile', current_user
+    - if current_user.is_teacher?
+        - s.header 'Teacher'
+        = s.link 'My classes', [ :admin, SchoolClass ], badge: current_user.as_teacher.teacher_school_class_discipline.count
