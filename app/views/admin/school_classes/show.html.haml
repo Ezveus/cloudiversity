@@ -15,11 +15,15 @@
         .cl-box-list
             - @school_class.teacher_school_class_discipline.each do |dis|
                 .uk-panel.uk-panel-box
-                    %strong= link_to dis.discipline.name, [ :admin, dis.discipline ]
-                    .uk-float-right
+                    %strong= dis.discipline.name
+                    .uk-text-muted
                         %i.uk-icon-mortar-board
-                        = link_to dis.teacher.full_name, dis.teacher.user
+                        = dis.teacher.full_name
+                        = link_to dis.teacher.user do
+                            %i.uk-icon-arrow-circle-right
 - sidebar! do |s|
     - s.header 'Administration'
     - if policy(@school_class).create?
         = s.link 'Edit class', edit_admin_school_class_path(@school_class)
+    - if policy(@school_class).add_new?
+        = s.link 'Add students', admin_school_class_add_wizard_path(@school_class)

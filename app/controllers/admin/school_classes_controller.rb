@@ -67,50 +67,6 @@ class Admin::SchoolClassesController < ApplicationController
         redirect_to admin_school_classes_path, notice: 'Class successfully removed'
     end
 
-    def add
-        redirect = lambda do |msg|
-            redirect_to admin_school_class_add_path(@school_class),
-                alert: msg
-        end
-
-        @school_class = SchoolClass.find(params[:school_class_id])
-        authorize @school_class, :update?
-
-        if request.post?
-            if params[:student].nil?
-                redirect.call 'Please select at least one student'
-                return
-            end
-
-            students = params[:student].map do |id, student|
-                if student['id'] == '0'
-                    nil
-                else
-                    id.to_i
-                end
-            end.delete_if { |e| e.nil? }
-
-            if students.empty?
-                redirect.call 'Please select at least one student'
-                return
-            end
-
-            rogue_students = Student.all.select { |s| students.include?(s.user.id) }
-            unless rogue_students.empty?
-                redirect.call 'Some of selected students are already attending a class'
-                return
-            end
-
-            created_students = students.map { |student| Student.create!(user: User.find(student), school_class: @school_class) }
-
-            redirect_to admin_school_class_path(@school_class),
-                notice: "Added #{created_students.count} students to #{@school_class.name}"
-            return
-        end
-
-        @users = User.all.select { |u| u.roles.empty? }
-    end
-
     def remove
         @school_class = SchoolClass.find(params[:school_class_id])
         authorize @school_class, :update?
@@ -123,5 +79,57 @@ class Admin::SchoolClassesController < ApplicationController
         else
             redirect_to admin_school_class_path(@school_class), alert: 'Student is not attending this class'
         end
+    end
+
+    # The wizard
+    def add
+        authorize(@school_class = SchoolClass.find(params[:school_class_id]))
+        @school_classes = policy_scope(SchoolClass).where.not(id: @school_class.id)
+    end
+
+    # Adding new students from list of non-assigned
+    def add_new
+        authorize(@school_class = SchoolClass.find(params[:school_class_id]))
+        @users = User.joins("LEFT JOIN abstract_roles ON users.id = abstract_roles.user_id").group("users.id").having("COUNT(abstract_roles.id) = 0")
+    end
+
+    # Transfer from an existing class
+    def transfer
+        authorize(@school_class = SchoolClass.find(params[:school_class_id]))
+        @old_school_class = SchoolClass.find(params[:old_school_class_id])
+
+        redirect_to [ :admin, @school_class ], notice: 'Can\'t move students in the same class' if @school_class == @old_school_class
+    end
+
+    # Proceeding to add
+    def add_proceed
+        # Get the mode (add/transfer)
+        raise "Invalid mode" if not %w{add transfer}.include? params.require(:mode)
+        newcomers = params.require(:newcomers).map { |e| e.to_i }
+
+        authorize(@school_class = SchoolClass.find(params[:school_class_id]))
+        @old_school_class = SchoolClass.find(params[:old_school_class_id]) if params[:mode] == 'transfer'
+
+        if @school_class == @old_school_class
+            redirect_to [ :admin, @school_class ], alert: 'Source and destination classes are the same'
+            return
+        end
+
+        newcomers.each do |nc|
+            if params[:mode] == 'add'
+                u = User.find_by(id: nc)
+                next if u.nil? || u.roles.count > 0
+                
+                student = Student.new(user: u)
+            else
+                student = Student.find_by(id: nc)
+                next if student.nil? || student.school_class != @old_school_class
+            end
+
+            student.school_class = @school_class
+            student.save!
+        end
+
+        redirect_to [ :admin, @school_class ], notice: 'Students have been added'
     end
 end

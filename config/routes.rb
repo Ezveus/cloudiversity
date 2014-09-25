@@ -40,9 +40,15 @@ Cloudiversity::Application.routes.draw do
         resources :students, only: [ :create, :destroy, :edit, :update ]
 
         resources :school_classes, id: Handleable::ROUTE_FORMAT do
-            get 'add' => 'school_classes#add', as: 'add'
-            post 'add' => 'school_classes#add'
-            delete ':student_id' => 'school_classes#remove', as: 'remove'
+            # The main page for transfers
+            get 'add'                           => 'school_classes#add',     as: 'add_wizard'
+
+            # Add new students or take them from another class
+            get 'add/new'                       => 'school_classes#add_new', as: 'add_new'
+            get 'transfer/:old_school_class_id' => 'school_classes#transfer', old_school_class_id: Handleable::ROUTE_FORMAT, as: 'transfer'
+
+            # Proceed to changes
+            post 'add'                          => 'school_classes#add_proceed'
         end
         resources :disciplines, id: Handleable::ROUTE_FORMAT
     end

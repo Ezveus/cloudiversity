@@ -1,5 +1,4 @@
 class SchoolClassPolicy < ApplicationPolicy
-
     def create?
         user.is_admin?
     end
@@ -11,6 +10,14 @@ class SchoolClassPolicy < ApplicationPolicy
     def destroy?
         user.is_admin?
     end
+
+    def add?
+        user.is_admin?
+    end
+
+    alias_method :add_new?, :add?
+    alias_method :transfer?, :add?
+    alias_method :add_proceed?, :add?
 
     class Scope < Struct.new(:user, :scope)
         def resolve
