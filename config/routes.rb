@@ -51,6 +51,13 @@ Cloudiversity::Application.routes.draw do
             post 'add'                          => 'school_classes#add_proceed'
         end
         resources :disciplines, id: Handleable::ROUTE_FORMAT
+        resources :periods, id: Handleable::ROUTE_FORMAT do
+            member do
+                get :destroy_confirmation
+                get :set_current
+                post :set_current
+            end
+        end
     end
 
     get 'admin' => 'static#admin', as: :admin
