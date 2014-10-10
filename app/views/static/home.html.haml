@@ -1,5 +1,6 @@
 %h1 Welcome to Cloudiversity
-- Cloudiversity::ModuleManager.modules.each do |mod|
-    - current_user.roles.each do |r|
-        - if mod.role_previews.include? r.name
-            = render_cell "preview_#{mod.name.underscore}_#{r.name}".to_sym, :show, user: current_user
+- unless @widgets.nil? || @widgets.empty?
+    %ul.uk-grid{'data-uk-grid-margin' => ''}
+        - @widgets.each do |name|
+            %li.uk-width-1-3
+                .uk-panel.uk-panel-box= begin render_cell name, :show, user: current_user rescue render_cell :widget_error, :show, name: name end

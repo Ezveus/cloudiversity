@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
         :validatable, :recoverable
 
     has_many :abstract_roles
+    has_many :widget_list_items, -> { order('position ASC') }
 
     mount_uploader :avatar, AvatarUploader
 
