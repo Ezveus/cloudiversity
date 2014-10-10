@@ -11,7 +11,7 @@ module UserRole
         delegate :full_name, :login_full_name, :login, to: :user
 
         def clean_abstract_role
-            self.abstract_role.destroy
+            self.abstract_role.destroy if self && self.abstract_role
         end
     end
 end
