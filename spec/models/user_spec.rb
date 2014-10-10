@@ -1,13 +1,3 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  login
-#  email
-#  first_name
-#  last_name
-#
-
 require 'spec_helper'
 
 describe User do

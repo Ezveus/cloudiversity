@@ -70,15 +70,6 @@ describe Admin::TeachersController do
         end
     end
 
-# teacher_params.disciplines << @discipline
-# teacher_params.school_classes << @school_class
-# expect(assigns(:teacher).school_classes.count).to eq(1)
-# expect(assigns(:teacher).disciplines.count).to eq(1)
-# expect(assigns(:school_class).teachers.count).to eq(1)
-# expect(assigns(:school_class).disciplines.count).to eq(1)
-# expect(assigns(:discipline).school_classes.count).to eq(1)
-# expect(assigns(:discipline).teachers.count).to eq(1)
-
     describe "DELETE 'destroy'" do
         before(:each) do
             @teacher = FactoryGirl.create(:teacher)

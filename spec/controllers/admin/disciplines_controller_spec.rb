@@ -4,7 +4,6 @@ include SpecControllerHelpers
 
 test_discipline = FactoryGirl.create(:discipline)
 
-
 describe Admin::DisciplinesController do
     before(:each) do
         @admin = FactoryGirl.create(:admin)

@@ -18,6 +18,5 @@ FactoryGirl.define do
         email "admin@cloudiversity.eu"
         first_name "Bruce"
         last_name "Almighty"
-        # after(:create) { |a| a.add_role :admin }
     end
 end
