@@ -26,6 +26,7 @@ module Cloudiversity::LayoutHelper
         # `opts` is an optional hash which can hold an the following entries:
         # * `icon`: Sets an icon to the link (icon name, without prefix)
         # * `subtitle`: Adds an additional subtitle text
+        # * `notification`: Adds a notification
         def link(text, link, opts = {})
             waiting_header = @waiting_header
             @waiting_header = nil
@@ -48,6 +49,10 @@ module Cloudiversity::LayoutHelper
 
                         unless opts[:subtitle].nil?
                             s += content_tag(:div, opts[:subtitle])
+                        end
+
+                        unless opts[:badge].nil?
+                            s += content_tag(:div, opts[:badge], class: 'uk-badge uk-badge-notification uk-float-right')
                         end
 
                         raw s

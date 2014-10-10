@@ -12,14 +12,21 @@
         .uk-text-center
             = render partial: 'users/thumbnail', collection: @school_class.students.map { |s| s.user }, as: :user
     %li
-        .cl-box-list
-            - @school_class.teacher_school_class_discipline.each do |dis|
-                .uk-panel.uk-panel-box
-                    %strong= link_to dis.discipline.name, [ :admin, dis.discipline ]
-                    .uk-float-right
-                        %i.uk-icon-mortar-board
-                        = link_to dis.teacher.full_name, dis.teacher.user
+        - @periods.each do |period, tscds|
+            %h3= link_to period.to_s, admin_period_path(period)
+            .uk-margin-large-left
+                .cl-box-list
+                    - tscds.each do |tscd|
+                        .uk-panel.uk-panel-box
+                            %strong= link_to tscd.discipline.name, [ :admin, tscd.discipline ]
+                            .uk-text-muted
+                                %i.uk-icon-mortar-board
+                                = tscd.teacher.full_name
+                                = link_to tscd.teacher.user do
+                                    %i.uk-icon-arrow-circle-right
 - sidebar! do |s|
     - s.header 'Administration'
     - if policy(@school_class).create?
         = s.link 'Edit class', edit_admin_school_class_path(@school_class)
+    - if policy(@school_class).add_new?
+        = s.link 'Add students', admin_school_class_add_wizard_path(@school_class)

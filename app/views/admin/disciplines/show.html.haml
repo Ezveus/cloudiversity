@@ -3,12 +3,15 @@
     %li= link_to 'Administration', admin_path
     %li= link_to 'Disciplines', [ :admin, Discipline ]
     %li.active= @discipline.name
-%dl.uk-description-list.uk-description-list-horizontal
-    %dt.uk-text-muted Teacher
-    %dd.uk-text-muted Classes
-    - @teachers.each do |teacher, classes|
-        %dt= link_to teacher.full_name, teacher.user
-        %dd
-            %ul.uk-list
-                - classes.each do |klass|
-                    %li= link_to klass.school_class.name, [:admin, klass.school_class]
+
+- @periods.each do |period, tscds|
+    %h3= link_to period.to_s, admin_period_path(period)
+    %dl.uk-description-list.uk-description-list-horizontal
+        %dt.uk-text-muted Teacher
+        %dd.uk-text-muted Classes
+        - tscds.group_by { |tscd| tscd.teacher }.each do |teacher, classes|
+            %dt= link_to teacher.full_name, teacher.user
+            %dd
+                %ul.uk-list
+                    - classes.each do |klass|
+                        %li= link_to klass.school_class.name, [:admin, klass.school_class]

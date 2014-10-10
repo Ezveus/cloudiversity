@@ -1,21 +1,19 @@
-- content_for :title do
-    Add attendees to #{@school_class.name}
-= form_for [ :admin, @school_class ], url: admin_school_class_add_path(@school_class), method: :post do |f|
-    %table
-        %thead
-            %tr
-                %th
-                %th Name
-        %tbody
-            - @users.each do |user|
-                = fields_for 'student[]', user do |student_fields|
-                    %tr
-                        %td= student_fields.check_box :id, checked: false, class: 'inline'
-                        %td= student_fields.label :id, user.full_name
-    = f.submit class: 'button'
-- content_for :toolbar do
-    %dl
-        %dt Actions
-        %dd
-            %ul.link-list
-                %li= link_to("view this class", admin_school_class_path(@school_class), class: "glyph-show")
+- title! 'Add attendees'
+%h1.uk-h2
+    Add attendees to
+    %em= @school_class.name
+.cl-box-list
+    = link_to admin_school_class_add_new_path(@school_class), class: 'uk-panel uk-panel-box' do
+        .uk-panel-title Add new students
+        Will let you select students to add from a list of persons with no roles (typically newly
+        created users).
+%h2.uk-h4 Transfer from another class
+.cl-box-list
+    - @school_classes.each do |klass|
+        = link_to admin_school_class_transfer_path(@school_class, klass), class: 'uk-panel uk-panel-box' do
+            = klass.name
+            .uk-align-right
+                %span.uk-text-muted
+                    .uk-icon.uk-icon-mortar-board
+                    = klass.students.count
+                .uk-icon.uk-icon-chevron-right.uk-margin-left

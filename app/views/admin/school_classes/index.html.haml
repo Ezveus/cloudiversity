@@ -1,15 +1,14 @@
 - title! 'Classes'
-.cl-box-list
-    - @school_classes.each do |cls|
-        = link_to [ :admin, cls ], class: 'uk-panel uk-panel-box' do
-            = cls.name
-            .uk-align-right
-                %span.uk-text-muted
-                    %i.uk-icon-group
-                    = cls.students.count
-                    %i.uk-icon-mortar-board.uk-margin-left
-                    = cls.teacher_school_class_discipline.count
-                %i.uk-icon-chevron-right.uk-margin-left
-- sidebar! do |s|
+= sidebar! do |s|
     - s.header 'Administration'
-    = s.link 'Create class', new_admin_school_class_path, icon: 'plus' if policy(SchoolClass).create?
+    = s.link 'Create a class', new_admin_school_class_path, icon: 'plus' if policy(SchoolClass).create?
+- if roles.multiple?
+    %ul.uk-subnav.uk-subnav-pill{data: {'uk-switcher' => "{connect: '#cl-role-switcher'}"}}
+        = roles.each_role do |role|
+            %li= link_to role.class.name, "##{role.class.name}"
+    %ul.uk-switcher#cl-role-switcher
+        - roles.each do |role|
+            %li
+                = roles.render(self)
+- else
+    = roles.render(self)

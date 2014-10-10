@@ -15,6 +15,6 @@
     %p
         <strong>Note:</strong> If you just want to change the teacher of this relation, use the "Transfer" button on the user view.
         .uk-align-right
-            = form_tag admin_teacher_unassign_path(@teacher, discipline: @discipline, school_class: @school_class), method: :delete do
+            = form_tag admin_teacher_unassign_path(@teacher, discipline: @discipline, school_class: @school_class, period: @period), method: :delete do
                 = link_to "Cancel", @teacher.user, class: 'uk-button'
                 = submit_tag "Unassign", class: 'uk-button uk-button-danger'

@@ -41,3 +41,6 @@ __MACOSX
 
 # THANKS VIM
 *.swp
+
+# THANKS RUBYMINE
+/.idea

@@ -5,7 +5,7 @@
     %p
         Transfer will keep all existing data. They will be made accessible to the new teacher and revoked from the old teacher.
     %p New assignated teacher:
-    = form_for @tscd, url: admin_teacher_transfer_path(@teacher, discipline: @discipline, school_class: @school_class), method: :post, html: {class: 'uk-form'} do |f|
+    = form_for @tscd, url: admin_teacher_transfer_path(@teacher, discipline: @discipline, school_class: @school_class, period: @period), method: :post, html: {class: 'uk-form'} do |f|
         .uk-form-controls
             = f.collection_select :teacher_id, Teacher.all, :id, :full_name, {}, {class: 'uk-width-1-1'}
             .uk-align-right.uk-margin-top
