@@ -39,9 +39,12 @@ group :development do
 end
 
 group :development, :test do
-    gem 'rspec-rails', '~> 2.14'
+    gem 'rspec-rails', '~> 3.1'
     gem 'factory_girl_rails', '~> 4.4.0'
     gem 'database_cleaner', '~> 1.2.0'
+    gem 'faker', '~> 1.4.3'
+    gem 'simplecov', '~> 0.9.0', require: false
+    gem 'timecop', '~> 0.7.1'
 end
 
 group :production do
@@ -61,7 +64,7 @@ end
 gem 'puma'
 
 # Load a local version of the Gemfile, which contains local tools, gems,
-# and other workspace-dependant dependancies.
+# and other workspace-dependant dependencies.
 File.expand_path('Gemfile.local', File.dirname(__FILE__)).tap do |gloc|
     if File.exists?(gloc)
         eval(IO.read(gloc))

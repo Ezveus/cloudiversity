@@ -120,7 +120,7 @@ class Admin::SchoolClassesController < ApplicationController
             if params[:mode] == 'add'
                 u = User.find_by(id: nc)
                 next if u.nil? || u.roles.count > 0
-                
+
                 student = Student.new(user: u)
             else
                 student = Student.find_by(id: nc)

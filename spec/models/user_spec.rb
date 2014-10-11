@@ -5,68 +5,212 @@ describe User do
         @user_attributes = FactoryGirl.attributes_for(:user)
     end
 
-    it "should create a new instance of User with valids attributes" do
-        User.create!(@user_attributes)
+    it 'should create a valid user' do
+        create(:user)
     end
 
-    describe "Login tests" do
-        it "should need a login" do
-            bad_guy = User.new(@user_attributes.merge(login: ""))
-            bad_guy.should_not be_valid
-        end
-
-        it "should reject too short login" do
-            short_login = "a"
-            short_login_user = User.new(@user_attributes.merge(login: short_login))
-            short_login_user.should_not be_valid
-        end
-
-        it "should reject a non-unique login" do
-            User.create!(@user_attributes)
-            user_with_duplicate_login = User.new(@user_attributes.merge(email: "another@valid.email"))
-            user_with_duplicate_login.should_not be_valid
+    it 'should use its login to identify itself' do
+        build(:user).tap do |user|
+            expect(user.to_param).to eq(user.login)
         end
     end
 
-    describe "Email tests" do
-        it "should need an email" do
-            bad_guy = User.new(@user_attributes.merge(email: ""))
-            bad_guy.should_not be_valid
-        end
-
-        it "should reject unvalid email" do
-            invalid_email_user = User.new(@user_attributes.merge(email: "user_at_foo.org"))
-            invalid_email_user.should_not be_valid
-        end
-
-        it "should reject a non-unique email (case insensitive)" do
-            upcased_email = @user_attributes[:email].upcase
-            User.create!(@user_attributes.merge(email: upcased_email,
-                         login: "User 1"))
-            user_with_duplicate_email = User.new(@user_attributes.merge(login: "User 2"))
-            user_with_duplicate_email.should_not be_valid
+    it 'should be searchable by index and by login' do
+        create(:user).tap do |user|
+            expect(User.find(user.id)).to eq(user)
+            expect(User.find(user.login)).to eq(user)
         end
     end
 
-    describe "Name tests" do
-        it "should have a first name" do
-            bad_guy = User.new(@user_attributes.merge(first_name: ""))
-            bad_guy.should_not be_valid
+    describe 'login' do
+        it 'should require a login' do
+            build(:user).tap do |user|
+                user.login = nil
+                expect(user).not_to be_valid
+            end
         end
 
-        it "should have a last name" do
-            bad_guy = User.new(@user_attributes.merge(last_name: ""))
-            bad_guy.should_not be_valid
+        it 'should reject short logins' do
+            build(:user).tap do |user|
+                user.login = user.login[0, 7]
+                expect(user).to be_valid
+
+                user.login = user.login[0, 6]
+                expect(user).to be_valid
+
+                user.login = user.login[0, 5]
+                expect(user).not_to be_valid
+            end
         end
 
-        it "should respond to full_name" do
-            guy = User.new(@user_attributes)
-            guy.respond_to? :full_name
+        it 'should reject non-unique logins' do
+            create(:user).tap do |user|
+                build(:user).tap do |copycat|
+                    copycat.login = user.login
+                    expect(copycat).not_to be_valid
+
+                    copycat.login = user.login.swapcase
+                    expect(copycat).not_to be_valid
+                end
+            end
         end
 
-        it "should have following full name: first_name last_name" do
-            guy = User.new(@user_attributes)
-            guy.full_name == guy.first_name + " " + guy.last_name
+        it 'should reject invalid formats' do
+            build(:user).tap do |user|
+                %w{
+                    0abcdef
+                    _abcdef
+                    -abcdef
+                    accentué
+                    me@example.org
+                    (%@:;,.?)
+                }.each do |bad_login|
+                    user.login = bad_login
+                    expect(user).not_to be_valid
+                end
+            end
+        end
+    end
+
+    describe 'email' do
+        it 'requires an email' do
+            build(:user).tap do |user|
+                user.email = nil
+                expect(user).not_to be_valid
+            end
+        end
+
+        it 'should reject invalid email' do
+            build(:user).tap do |user|
+                user.email = Faker::Internet.user_name(user.full_name, %w(-))
+                expect(user).not_to be_valid
+            end
+        end
+
+        it 'should reject non-unique emails' do
+            create(:user).tap do |user|
+                build(:user).tap do |copycat|
+                    copycat.email = user.email
+                    expect(copycat).not_to be_valid
+
+                    copycat.email = user.email.swapcase
+                    expect(copycat).not_to be_valid
+                end
+            end
+        end
+    end
+
+    describe 'name' do
+        it 'should have a name' do
+            build(:user).tap do |user|
+                user.last_name = nil
+                user.first_name = nil
+                expect(user).not_to be_valid
+
+                user.last_name = Faker::Name.last_name
+                expect(user).not_to be_valid
+
+                user.last_name = nil
+                user.first_name = Faker::Name.first_name
+                expect(user).not_to be_valid
+            end
+        end
+
+        it 'should determine a valid full name' do
+            build(:user).tap do |user|
+                expect(user.full_name).to eq("#{user.last_name}, #{user.first_name}")
+            end
+        end
+    end
+
+    describe 'password' do
+        it 'should forbid creating a user without password' do
+            build(:user).tap do |user|
+                user.password = nil
+                expect(user).not_to be_valid
+            end
+        end
+
+        it 'should require password to be a correct length' do
+            build(:user).tap do |user|
+                user.password = Faker::Internet.password(7, 7)
+                expect(user).not_to be_valid
+
+                user.password = Faker::Internet.password(8, 8)
+                expect(user).to be_valid
+
+                user.password = Faker::Internet.password(10, 10)
+                expect(user).to be_valid
+
+                user.password = Faker::Internet.password(64, 64)
+                expect(user).to be_valid
+
+                user.password = Faker::Internet.password(65, 65)
+                expect(user).not_to be_valid
+            end
+        end
+
+        it 'should require a confirmation on change' do
+            build(:user).tap do |user|
+                user.password = Faker::Internet.password(8, 10)
+                user.password_confirmation = ''
+                expect(user).not_to be_valid
+
+                user.password_confirmation = Faker::Internet.password(8, 10) until user.password != user.password_confirmation
+                expect(user).not_to be_valid
+
+                user.password_confirmation = user.password
+                expect(user).to be_valid
+            end
+        end
+    end
+
+    describe 'helpers' do
+        it 'should report correct password status' do
+            build(:user).tap do |user|
+                expect(user.password_set?).to be_truthy
+                expect(user.good?).to be_truthy
+
+                user.password = nil
+                user.encrypted_password = nil
+                expect(user.password_set?).to be_falsey
+                expect(user.good?).to be_falsey
+            end
+        end
+
+        it 'should report correct password reset token status' do
+            build(:user).tap do |user|
+                user.send_reset_password_instructions
+                expect(user.reset_pending?).to be_truthy
+                expect(user.reset_expired?).to be_falsey
+
+                Timecop.travel 13.hours.from_now do
+                    expect(user.reset_pending?).to be_truthy
+                    expect(user.reset_expired?).to be_truthy
+                end
+            end
+        end
+
+        it 'should report lock status' do
+            build(:user).tap do |user|
+                user.lock_access!
+                expect(user.good?).to be_falsey
+            end
+        end
+    end
+
+    describe 'roles' do
+        it 'should report no roles' do
+            create(:user).tap do |user|
+                expect(user.roles.empty?).to be_truthy
+            end
+        end
+
+        it 'should respond correctly to role functions' do
+            create(:user).tap do |user|
+                expect(user.is_admin?).to be_falsey
+                expect(user.as_admin).to be_nil
+            end
         end
     end
 end

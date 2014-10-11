@@ -38,3 +38,6 @@ __MACOSX
 
 # THANKS RUBYMINE
 /.idea
+
+# THANKS SIMPLECOV
+/coverage
