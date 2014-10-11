@@ -11,5 +11,9 @@
     %ul.uk-grid{'data-uk-grid-margin' => ''}
         - @widgets.each do |name|
             %li.uk-width-1-3
-                .uk-panel.uk-panel-box= begin render_cell name, :show, user: current_user rescue render_cell :widget_error, :show, name: name end
+                .cl-widget.uk-panel.uk-panel-box
+                    - begin
+                        = render_cell name, :show, user: current_user
+                    - rescue Exception => e
+                        = "Failed to render widget #{name}: #{e}"
 
