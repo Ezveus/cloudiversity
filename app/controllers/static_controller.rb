@@ -8,15 +8,11 @@ class StaticController < ApplicationController
         roles = current_user.roles.map(&:name)
         available_widgets = Cloudiversity::ModuleManager.modules.map do |mod|
             # select roles
-            begin
-                (mod.role_previews & roles).map do |r|
-                    "preview_#{mod.name.underscore}_#{r}" # cell name
-                end
-            rescue
-                []
+            (mod.role_previews & roles).map do |r|
+                "preview_#{mod.name.underscore}_#{r}" # cell name
             end
         end.flatten
-        # preferences
+        # TODO: preferences
         # user_widgets = current_user.widget_list_items.map{|wli| "preview_#{wli.name}"}
         # @widgets = (user_widgets & available_widgets).map(&:to_sym)
         @widgets = available_widgets
