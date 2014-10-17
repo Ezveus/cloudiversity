@@ -13,9 +13,10 @@ class StaticController < ApplicationController
 
     def version
         respond_to do |f|
-            f.json { render json: {
-                version: Cloudiversity::Version
-            } }
+            json = { version: Cloudiversity::Version }
+            json.merge!({ modules: Cloudiversity::ModuleManager.modules.map(&:name) }) unless current_user.nil?
+
+            f.json { render json: json }
         end
     end
 end
