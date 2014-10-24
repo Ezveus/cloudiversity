@@ -1,23 +1,31 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+    admin:
+        page_title: Administration
+        title: Cloudiversity administration
+        periods:
+            title: Periods
+            see: See all periods
+        students:
+            title: Students
+            introduction: There are %{students} students in %{school_classes} classes.
+            classes_section: School classes
+            see_classes: View classes and students
+            create_class: Create a school class
+            students_section: Students
+            create_student: Create a student
+        teaching:
+            title: Teachings
+            introduction: There are %{teachers} teachers teaching %{disciplines} disciplines.
+            disciplines:
+                title: Disciplines
+                see: See disciplines
+                create: Create a discipline
+            teachers:
+                title: Teachers
+                see: See teacher list
+                create: Create a teacher
+        sidebar:
+            title: More
+            all_users: See all users
+            create_user: Create an user
+            create_user_sub: Create an user without any role

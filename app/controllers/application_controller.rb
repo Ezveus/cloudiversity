@@ -180,4 +180,9 @@ class ApplicationController < ActionController::Base
         default: 'You cannot perform this action.' # You shall not pass
         redirect_to(request.referrer || root_path)
     end
+
+    before_action :set_locale
+    def set_locale
+        I18n.locale = cookies[:lang] || I18n.default_locale
+    end
 end

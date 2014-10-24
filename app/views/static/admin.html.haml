@@ -1,68 +1,51 @@
-- title! 'Administration'
+- title! t('admin.page_title')
+%h1= t('admin.title')
+.uk-panel.uk-panel-box.uk-width-1-1
+    %h2= t('admin.periods.title')
+    .uk-align-right
+        = link_to t('admin.periods.see'), admin_periods_path, class: 'uk-button uk-button-default'
 .uk-grid
-    .uk-width-large-1-2
+    .uk-width-large-1-2.uk-margin-top
         .uk-panel.uk-panel-box
-            %h3.uk-panel-title User management
+            %h3.uk-panel-title= t('admin.students.title')
+            %p= t('admin.students.introduction', students: @students.count, school_classes: @school_classes.count)
             %ul.uk-nav.uk-nav-side
-                %li
-                    = link_to admin_users_path do
-                        %i.uk-icon-eye
-                        View all
-                        %div View, edit, remove users, or change user roles
-                %li
-                    = link_to new_admin_user_path do
-                        %i.uk-icon-plus
-                        Create a new one
-                -#
-                    %li
-                        = link_to '' do
-                        %i.uk-icon-key
-                        Activate accounts
-                %li.uk-nav-header Filter users
-                %li= link_to 'Teachers', admin_teachers_path
-                %li.uk-nav-header Search
-                %li
-                    = form_tag search_admin_users_path, method: :post, class: 'cl-links-form uk-form' do
-                        .uk-autocomplete(data-uk-autocomplete="{source: '#{search_admin_users_path}', param: 'login'}")
-                            = search_field_tag :login, '', class: 'uk-form-field uk-width-1-1', placeholder: 'Search by login...'
-                            %script{type: 'text/autocomplete'}
-                                %ul.uk-nav.uk-nav-autocomplete.uk-autocomplete-results
-                                    {{~items}}
-                                    %li{data: {value: '{{$item.value}}'}}
-                                        %a{href: '{{$item.url}}'}
-                                            {{ $item.title }}
-                                            %div {{ $item.text }}
-                                        {{/items}}
-                                        %hr/
-                %li= link_to 'Advanced search', search_admin_users_path
-    .uk-width-large-1-2
-        .uk-panel.uk-panel-box
-            %h3.uk-panel-title School structure
-            %ul.uk-nav.uk-nav-side
-                %li.uk-nav-header Disciplines
-                %li
-                    = link_to admin_disciplines_path do
-                        %i.uk-icon-eye
-                        View all
-                %li
-                    = link_to new_admin_discipline_path do
-                        %i.uk-icon-plus
-                        Create a new one
-                %li.uk-nav-header Classes
+                %li.uk-nav-header= t('admin.students.classes_section')
                 %li
                     = link_to admin_school_classes_path do
                         %i.uk-icon-eye
-                        View all
+                        = t('admin.students.see_classes')
                 %li
                     = link_to new_admin_school_class_path do
                         %i.uk-icon-plus
-                        Create a new one
-                %li.uk-nav-header Periods
+                        = t('admin.students.create_class')
+                %li.uk-nav-header= t('admin.students.students_section')
                 %li
-                    = link_to admin_periods_path do
-                        %i.uk-icon-eye
-                        View all
-                %li
-                    = link_to new_admin_period_path do
+                    = link_to '' do
                         %i.uk-icon-plus
-                        Create a new one
+                        = t('admin.students.create_student')
+    .uk-width-large-1-2.uk-margin-top
+        .uk-panel.uk-panel-box
+            %h3.uk-panel-title= t('admin.teaching.title')
+            %p= t('admin.teaching.introduction', teachers: @teachers.count, disciplines: @disciplines.count)
+            %ul.uk-nav.uk-nav-side
+                %li.uk-nav-header= t('admin.teaching.disciplines.title')
+                %li
+                    = link_to admin_disciplines_path do
+                        %i.uk-icon-eye
+                        = t('admin.teaching.disciplines.see')
+                    = link_to new_admin_discipline_path do
+                        %i.uk-icon-plus
+                        = t('admin.teaching.disciplines.create')
+                %li.uk-nav-header= t('admin.teaching.teachers.title')
+                %li
+                    = link_to admin_teachers_path do
+                        %i.uk-icon-eye
+                        = t('admin.teaching.teachers.see')
+                    = link_to '' do
+                        %i.uk-icon-plus
+                        = t('admin.teaching.teachers.create')
+- sidebar! do |s|
+    - s.header t('admin.sidebar.title')
+    = s.link t('admin.sidebar.all_users'), admin_users_path, icon: 'user'
+    = s.link t('admin.sidebar.create_user'), new_admin_user_path, icon: 'plus', subtitle: t('admin.sidebar.create_user_sub')

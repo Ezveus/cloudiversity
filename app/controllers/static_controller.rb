@@ -9,6 +9,11 @@ class StaticController < ApplicationController
 
     def admin
         raise Pundit::NotAuthorizedError unless current_user.is_admin?
+
+        @students       = Student.all
+        @school_classes = SchoolClass.all
+        @disciplines    = Discipline.all
+        @teachers       = Teacher.all
     end
 
     def version

@@ -17,6 +17,7 @@
 #= require uikit/addons/form-select
 #= require uikit/addons/search
 #= require uikit/addons/autocomplete
+#= require uikit/addons/datepicker
 #
 # Nested Form
 #= require jquery_nested_form

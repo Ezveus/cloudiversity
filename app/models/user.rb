@@ -21,10 +21,12 @@ class User < ActiveRecord::Base
         format: /\A.+@.+\..+\z/,
         uniqueness: { case_sensitive: false }
     validates :password,
-        presence: true,
         confirmation: true,
-        length: { minimum: 8, maximum: 64 },
-        on: :create
+        length: { in: 8..64 },
+        unless: Proc.new { |u| u.password.blank? }
+    validates :password_confirmation,
+        presence: true,
+        unless: Proc.new { |u| u.password.nil? }
 
     self.per_page = 10
 

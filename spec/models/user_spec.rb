@@ -124,28 +124,40 @@ describe User do
     end
 
     describe 'password' do
-        it 'should forbid creating a user without password' do
+        it 'should allow creating a user without password' do
             build(:user).tap do |user|
                 user.password = nil
+                expect(user).to be_valid
+            end
+        end
+
+        it 'should require password confirmation if set' do
+            build(:user).tap do |user|
+                user.password = Faker::Internet.password(10, 10)
+                user.password_confirmation = nil
                 expect(user).not_to be_valid
+
+                user.password_confirmation = user.password
+                expect(user).to be_valid
             end
         end
 
         it 'should require password to be a correct length' do
             build(:user).tap do |user|
                 user.password = Faker::Internet.password(7, 7)
+                user.password_confirmation = user.password
                 expect(user).not_to be_valid
 
                 user.password = Faker::Internet.password(8, 8)
-                expect(user).to be_valid
-
-                user.password = Faker::Internet.password(10, 10)
+                user.password_confirmation = user.password
                 expect(user).to be_valid
 
                 user.password = Faker::Internet.password(64, 64)
+                user.password_confirmation = user.password
                 expect(user).to be_valid
 
                 user.password = Faker::Internet.password(65, 65)
+                user.password_confirmation = user.password
                 expect(user).not_to be_valid
             end
         end
