@@ -1,4 +1,3 @@
-
 module Attachable
     extend ActiveSupport::Concern
 

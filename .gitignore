@@ -26,6 +26,10 @@
 # Production Env
 public/assets
 
+# Documentation
+/.yardoc
+/doc
+
 # THANKS APPLE
 .DS_Store
 __MACOSX
@@ -38,3 +42,6 @@ __MACOSX
 
 # THANKS RUBYMINE
 /.idea
+
+# THANKS SIMPLECOV
+/coverage

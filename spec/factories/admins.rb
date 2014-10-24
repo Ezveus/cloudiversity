@@ -1,6 +1,8 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
-  factory :admin_role, class: Admin do
-  end
+    factory :admin do
+        after :build do |admin|
+            u = create :user
+            admin.user = u
+        end
+    end
 end
