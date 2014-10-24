@@ -38,7 +38,7 @@ class Admin::TeachersController < ApplicationController
         end
         authorize @teacher
 
-        if @teacher.teacher_school_class_discipline.count > 0
+        if @teacher.teachings.count > 0
             # We can't allow this
             if request.delete?
                 redirect_to @teacher.user, alert: 'Cannot remove if it has assigned classes'
@@ -63,30 +63,28 @@ class Admin::TeachersController < ApplicationController
         authorize @teacher
 
         if request.post?
-            if params.require(:teacher_school_class_discipline)[:classes].nil?
+            if params.require(:teaching)[:classes].nil?
                 redirect_to @teacher.user, notice: 'You did not select any classes.'
                 return
             end
 
-            classes, discipline, period = params.require(:teacher_school_class_discipline).slice(:classes, :discipline, :period).values
+            classes, discipline = params.require(:teaching).slice(:classes, :discipline).values
             transaction = [] # See comment below
 
             classes.each do |cls, _|
                 # Just check if the ids are valid
                 SchoolClass.find cls
                 Discipline.find discipline
-                Period.find period
 
                 # We check if the association already exists, to not double
                 # it
-                tscd = TeacherSchoolClassDiscipline.find_or_initialize_by(
+                teaching = Teaching.find_or_initialize_by(
                     teacher_id: @teacher.id,
                     school_class_id: cls,
-                    discipline_id: discipline,
-                    period_id: period)
-                next if tscd.persisted?
+                    discipline_id: discipline)
+                next if teaching.persisted?
 
-                transaction << tscd
+                transaction << teaching
             end
 
             # If one fail, all fail: we stock the objects we created to
@@ -104,15 +102,12 @@ class Admin::TeachersController < ApplicationController
         else
             @classes = SchoolClass.all
             @disciplines = Discipline.all
-            @periods = Period.all
 
             # We can't assign classes if we don't have at least a class, a period and a discipline.
             if @classes.count == 0
                 redirect_to @teacher.user, alert: 'There are no defined classes. Please add a class first.'
             elsif @disciplines.count == 0
                 redirect_to @teacher.user, alert: 'There are no defined disciplines. Please add a discipline first.'
-            elsif @periods.count == 0
-                redirect_to @teacher.user, alert: 'There are no defined periods. Please add a period first.'
             end
         end
     end
@@ -122,21 +117,18 @@ class Admin::TeachersController < ApplicationController
         @teacher = Teacher.find params[:teacher_id]
         @discipline = Discipline.find params[:discipline]
         @school_class = SchoolClass.find params[:school_class]
-        @period = Period.find params[:period]
 
-        @tscd = TeacherSchoolClassDiscipline.find_by!(
+        @teaching = Teaching.find_by!(
             teacher: @teacher,
             discipline: @discipline,
-            school_class: @school_class,
-            period: @period
-        )
+            school_class: @school_class)
 
-        authorize @tscd, :update?
+        authorize @teaching, :update?
 
         if request.post?
-            new_teacher = Teacher.find params.require(:teacher_school_class_discipline).require(:teacher_id)
-            @tscd.teacher = new_teacher
-            @tscd.save
+            new_teacher = Teacher.find params.require(:teaching).require(:teacher_id)
+            @teaching.teacher = new_teacher
+            @teaching.save
 
             redirect_to @teacher.user, notice: "The discipline #{@discipline.name} in #{@school_class.name} has been transferred to #{new_teacher.full_name}."
         end
@@ -147,19 +139,16 @@ class Admin::TeachersController < ApplicationController
         @teacher = Teacher.find params[:teacher_id]
         @discipline = Discipline.find params[:discipline]
         @school_class = SchoolClass.find params[:school_class]
-        @period = Period.find params[:period]
 
-        @tscd = TeacherSchoolClassDiscipline.find_by!(
+        @teaching = Teaching.find_by!(
             teacher: @teacher,
             discipline: @discipline,
-            school_class: @school_class,
-            period: @period
-        )
+            school_class: @school_class)
 
-        authorize @tscd, :delete?
+        authorize @teaching, :delete?
 
         if request.delete?
-            @tscd.destroy
+            @teaching.destroy
             redirect_to @teacher.user, notice: "The class has been unassigned. All associated data has been deleted."
         end
     end

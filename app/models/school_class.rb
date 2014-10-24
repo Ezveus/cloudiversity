@@ -1,11 +1,11 @@
 class SchoolClass < ActiveRecord::Base
     include Handleable
 
-    has_many :students, dependent: :destroy
-    has_many :teacher_school_class_discipline, dependent: :destroy
-    has_many :teachers, through: :teacher_school_class_discipline
-    has_many :disciplines, through: :teacher_school_class_discipline
-    has_many :periods, through: :teacher_school_class_discipline
+    has_and_belongs_to_many :students
+    has_many :teachings, dependent: :destroy
+    has_many :teachers, through: :teachings
+    has_many :disciplines, through: :teachings
+    belongs_to :period
 
     # We want at least a non numeric character, so handles are useful
     validates :name, presence: true, format: /[^\d]/
@@ -13,6 +13,10 @@ class SchoolClass < ActiveRecord::Base
     protected
 
     def generate_handle
-        name.parameterize
+        "#{name.parameterize}-#{period.handle}"
+    end
+
+    def to_s
+        "#{name} (#{period.name})"
     end
 end

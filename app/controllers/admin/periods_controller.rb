@@ -1,6 +1,6 @@
 class Admin::PeriodsController < ApplicationController
     def index
-        @periods = policy_scope(Period)
+        @periods = policy_scope(Period).sort_by(&:start_date).reverse
     end
 
     def show
@@ -53,19 +53,5 @@ class Admin::PeriodsController < ApplicationController
     def destroy_confirmation
         @period = Period.find(params[:id])
         authorize(@period)
-    end
-
-    def set_current
-        @period = Period.find(params[:id])
-        authorize(@period)
-
-        if request.post?
-            if Period.set_current(@period)
-                notice = "Period set as current one"
-            else
-                notice = @period.errors.full_messages[0]
-            end
-            redirect_to admin_period_path(@period), notice: notice
-        end
     end
 end

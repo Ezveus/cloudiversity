@@ -5,11 +5,11 @@
                 %i.uk-icon.uk-icon-institution
                 Assign classes
         Teacher
-    - if teacher.teacher_school_class_discipline.count > 0
-        - teacher.teacher_school_class_discipline.group_by { |tscd| tscd.period }.each do |period, tscds|
+    - if teacher.teachings.count > 0
+        - teacher.teachings.group_by { |teaching| teaching.period }.each do |period, teachings|
             %h4= link_to period.to_s, admin_period_path(period)
             %dl.uk-description-list.uk-description-list-horizontal
-                - tscds.group_by { |e| e.discipline }.each do |discipline, classes|
+                - teachings.group_by { |teaching| teaching.discipline }.each do |discipline, classes|
                     %dt= link_to discipline.name, [ :admin, discipline ]
                     %dd
                         %ul.uk-list
@@ -19,10 +19,10 @@
                                     %span.uk-text-muted (#{cls.school_class.students.count} students)
                                     .uk-button-group.uk-float-right
                                         - if policy(cls).update?
-                                            = link_to admin_teacher_transfer_path(cls.teacher, discipline: cls.discipline, school_class: cls.school_class, period: cls.period), class: 'uk-button uk-button-mini', title: "Assign a different teacher" do
+                                            = link_to admin_teacher_transfer_path(cls.teacher, discipline: cls.discipline, school_class: cls.school_class), class: 'uk-button uk-button-mini', title: "Assign a different teacher" do
                                                 %i.uk-icon.uk-icon-exchange
                                         - if policy(cls).delete?
-                                            = link_to admin_teacher_unassign_path(cls.teacher, discipline: cls.discipline, school_class: cls.school_class, period: cls.period), class: 'uk-button uk-button-danger uk-button-mini', title: "Remove #{discipline.name} in #{cls.school_class.name}" do
+                                            = link_to admin_teacher_unassign_path(cls.teacher, discipline: cls.discipline, school_class: cls.school_class), class: 'uk-button uk-button-danger uk-button-mini', title: "Remove #{discipline.name} in #{cls.school_class.name}" do
                                                 %i.uk-icon.uk-icon-ban
     - else
         %em.uk-display-block.uk-text-center.uk-text-muted

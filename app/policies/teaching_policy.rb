@@ -1,4 +1,4 @@
-class TeacherSchoolClassDisciplinePolicy < ApplicationPolicy
+class TeachingPolicy < ApplicationPolicy
     class Scope < Struct.new(:user, :scope)
         def resolve
             if user.roles.count > 1
@@ -67,7 +67,7 @@ class TeacherSchoolClassDisciplinePolicy < ApplicationPolicy
     ## Returns true if the current user can see the record
     def user_can_see?
         return true if user.is_admin?
-        (user.as_teacher.tscd.include?(record) if user.is_teacher?) ||
+        (user.as_teacher.teachings.include?(record) if user.is_teacher?) ||
         (user.as_student.teacher_school_class_disciplines.include?(record) if user.is_student?)
         # TODO: Manage parent
     end

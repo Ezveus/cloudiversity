@@ -6,11 +6,7 @@
         .uk-form-row
             = f.label :school_class_id, class: 'uk-form-label'
             .uk-form-controls
-                .uk-form-select.uk-button.uk-width-1-1.uk-text-left{data: {'uk-form-select' => ''}}
-                    %span
-                    = f.collection_select :school_class_id, SchoolClass.all, :id, :name, {}, {class: 'uk-width-1-1'}
-                    .uk-float-right
-                        %i.uk-icon-chevron-down
+                = f.collection_select :school_class_ids, SchoolClass.all, :id, :to_s, {}, {multiple: true, class: 'uk-width-1-1'}
             .uk-align-right.uk-margin-top
                 = link_to 'Cancel', @student.user, class: 'uk-button'
                 = f.submit 'Apply', class: 'uk-button uk-button-primary'
