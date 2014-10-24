@@ -4,13 +4,15 @@ class Admin::SchoolClassesController < ApplicationController
             role.json_for :admin
 
             role.admin do
+                # TODO: Group by periods
                 @school_classes = SchoolClass.all
 
                 role.json { @school_classes }
             end
 
             role.teacher do |teacher|
-                @school_classes = teacher.teacher_school_class_discipline.group_by { |tscd| tscd.discipline }
+                # TODO: Group by periods
+                r.teachings.group_by(&:discipline)
             end
         end
     end
@@ -18,7 +20,7 @@ class Admin::SchoolClassesController < ApplicationController
     def show
         @school_class = SchoolClass.find(params[:id])
         authorize @school_class
-        @periods = @school_class.teacher_school_class_discipline.group_by { |tscd| tscd.period }
+        @periods = @school_class.teachings.group_by(&:period)
     end
 
     def edit
@@ -75,7 +77,8 @@ class Admin::SchoolClassesController < ApplicationController
         @student = Student.find(params[:student_id])
 
         if @student.school_class == @school_class
-            @student.destroy
+            @school_class.students.delete @student
+            @school_class.save
             redirect_to admin_school_class_path(@school_class), notice: 'Student removed successfully'
         else
             redirect_to admin_school_class_path(@school_class), alert: 'Student is not attending this class'
@@ -92,6 +95,7 @@ class Admin::SchoolClassesController < ApplicationController
     def add_new
         authorize(@school_class = SchoolClass.find(params[:school_class_id]))
         @users = User.joins("LEFT JOIN abstract_roles ON users.id = abstract_roles.user_id").group("users.id").having("COUNT(abstract_roles.id) = 0")
+        @users += Student.select { |s| s.school_classes.empty? }.map(&:user) # Students without a class
     end
 
     # Transfer from an existing class
@@ -119,12 +123,17 @@ class Admin::SchoolClassesController < ApplicationController
         newcomers.each do |nc|
             if params[:mode] == 'add'
                 u = User.find_by(id: nc)
-                next if u.nil? || u.roles.count > 0
+                next if u.nil?
 
-                student = Student.new(user: u)
+                if u.roles.count > 0
+                    next unless u.is_student?
+                    student = u.as_student
+                else
+                    student = Student.new(user: u)
+                end
             else
                 student = Student.find_by(id: nc)
-                next if student.nil? || student.school_class != @old_school_class
+                next if student.nil? || student.school_class != @old_school_class # TODO: WARNING !!!!
             end
 
             student.school_class = @school_class

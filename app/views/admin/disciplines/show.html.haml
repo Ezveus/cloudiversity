@@ -4,12 +4,12 @@
     %li= link_to 'Disciplines', [ :admin, Discipline ]
     %li.active= @discipline.name
 
-- @periods.each do |period, tscds|
+- @periods.each do |period, teachings|
     %h3= link_to period.to_s, admin_period_path(period)
     %dl.uk-description-list.uk-description-list-horizontal
         %dt.uk-text-muted Teacher
         %dd.uk-text-muted Classes
-        - tscds.group_by { |tscd| tscd.teacher }.each do |teacher, classes|
+        - teachings.group_by { |teaching| teaching.teacher }.each do |teacher, classes|
             %dt= link_to teacher.full_name, teacher.user
             %dd
                 %ul.uk-list

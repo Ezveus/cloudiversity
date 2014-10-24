@@ -13,5 +13,7 @@ module UserRole
         def clean_abstract_role
             self.abstract_role.destroy if self && self.abstract_role
         end
+
+        validates_with UserInheritingValidator
     end
 end

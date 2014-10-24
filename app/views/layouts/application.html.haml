@@ -25,13 +25,6 @@
                                     = link_to destroy_user_session_path, method: :delete do
                                         %i.uk-icon-sign-out
                                         Sign out
-            - if (current_period = Period.get_current)
-                %ul.uk-navbar-nav.uk-navbar-flip.uk-visible-large
-                    %li{data: {'uk-dropdown' => ''}}
-                        = link_to current_period.name, '#'
-                        .uk-dropdown.uk-dropdown-navbar
-                            %ul.uk-nav.uk-nav-navbar
-                                %li= link_to "From #{current_period.start_date} to #{current_period.end_date}", '#'
             = link_to '', '#cl-menu', class: 'uk-navbar-toggle uk-hidden-large', 'data-uk-offcanvas' => ''
             = link_to root_path, class: 'uk-navbar-brand uk-visible-large' do
                 %strong> Cloud

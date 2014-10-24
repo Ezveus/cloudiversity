@@ -86,8 +86,8 @@ Period.create!(name: "Semester 2 2015", start_date: Date.parse("01/07/2015"), en
 Period.create!(name: "Semester 1 2016", start_date: Date.parse("01/01/2016"), end_date: Date.parse("30/06/2016"))
 Period.create!(name: "Semester 2 2016", start_date: Date.parse("01/07/2016"), end_date: Date.parse("31/12/2016"))
 
-TeacherSchoolClassDiscipline.destroy_all
-TeacherSchoolClassDiscipline.create!(
+Teaching.destroy_all
+Teaching.create!(
                                     [
                                         { teacher: liliana.as_teacher, school_class: ts1, discipline: maths, period: semester1_2014 },
                                         { teacher: jace.as_teacher, school_class: tl, discipline: philo, period: semester1_2014 },
