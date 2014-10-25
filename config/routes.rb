@@ -61,6 +61,7 @@ Cloudiversity::Application.routes.draw do
     end
 
     get 'admin' => 'static#admin', as: :admin
+    get 'home' => 'static#home', as: :home
 
     root 'static#home'
 end

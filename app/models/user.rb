@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
         :validatable, :recoverable
 
     has_many :abstract_roles
-    has_many :widget_list_items, -> { order('position ASC') }
+    # has_many :widget_list_items, -> { order('position ASC') }
 
     mount_uploader :avatar, AvatarUploader
 
@@ -49,8 +49,10 @@ class User < ActiveRecord::Base
         login + " - " + full_name
     end
 
-    def roles
-        abstract_roles
+    alias_method :roles, :abstract_roles
+
+    def roles_names
+        roles.map(&:name)
     end
 
     def method_missing(m, *args, &block)
