@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
                 if matched_roles.count > 1 and not params.include?(:as)
                     # We can't serve JSON for multirole without knowing which
                     # one the client wants.
-                    render json: { error: "Ambiguous role" }, status: 300 # 300 = Multiple Choices
+                    render json: { error: "Ambiguous role" }, status: :multiple_choices # 300
                 else
                     # Get the current role
                     role =  if params.include?(:as)
@@ -65,12 +65,12 @@ class ApplicationController < ActionController::Base
                             else
                                 matched_roles.first
                             end
-                    render(json: { error: "Invalid role" }, status: 400) and return if role.nil?
+                    render(json: { error: "Invalid role" }, status: :bad_request) and return if role.nil? # 400
 
                     roles[role.to_sym].call current_user.send("as_#{role}")
                     blk = ctx.instance_variable_get(:@json_object) # Call the controller code for role
                     render(json: { error: "You must call `MultiroleContext#json` in the roles where " +
-                                   "you want to render JSON" }, status: 500) and return if blk.nil?
+                                   "you want to render JSON" }, status: :internal_server_error) and return if blk.nil? # 500
 
                     # The rendered JSON is given by the block return.
                     render json: blk.call
