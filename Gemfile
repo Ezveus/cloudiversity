@@ -13,7 +13,7 @@ gem 'devise', '~> 3.2.4'
 gem 'devise-encryptable', '~> 0.2.0'
 gem 'simple_token_authentication', '~> 1.5.0'
 gem 'pundit', '~> 0.2.3'
-gem 'rails_uikit', github: 'adaedra/rails_uikit'
+gem 'rails_uikit', github: 'adaedra/rails_uikit', ref: '22eb7b'
 gem 'therubyracer', platforms: :ruby
 gem 'therubyrhino', platforms: :jruby
 gem 'carrierwave', '~> 0.10.0'
@@ -21,6 +21,7 @@ gem 'codemirror-rails', '~> 4.2'
 gem 'nested_form', '~> 0.3.2'
 gem 'will_paginate', '~> 3.0'
 gem 'highline',      '~> 1.6.21'
+gem 'rails-i18n', '~> 4.0.0'
 
 group :doc do
     gem 'yard', require: false
@@ -29,8 +30,6 @@ end
 group :development do
     gem 'binding_of_caller', platforms: :ruby
     gem 'better_errors'
-    gem 'pry'
-    gem 'pry-rails'
 
     gem 'sqlite3', platforms: :ruby
     gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby

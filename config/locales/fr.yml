@@ -1,34 +1,42 @@
 fr:
-    admin:
-        page_title: Administration
-        title: Administration de Cloudiversity
-        periods:
-            title: Périodes
-            see: Voir toutes les périodes
-        students:
-            title: Étudiants
-            introduction: Il y a %{students} étudiants dans %{school_classes} classes.
-            classes_section: Classes
-            see_classes: Voir la liste
-            create_class: Créer une classe
-            students_section: Étudiants
-            create_student: Créer un étudiant
-        teaching:
-            title: Enseignements
-            introduction: Il y a %{teachers} professeurs enseignant %{disciplines} disciplines.
+    lang: Français
+    static:
+        admin:
+            page_title: Administration
+            title: Administration de Cloudiversity
+            periods:
+                title: Périodes
+                all: Voir toutes les périodes
+            students:
+                title: Étudiants
+                intro: Il y a %{students} étudiants dans %{school_classes} classes.
+                section: Étudiants
+                create: Créer un étudiant
+            classes:
+                section: Classes
+                view: Liste des classes
+                create: Créer une nouvelle classe
+            teachings:
+                title: Enseignements
+                intro: Il y a %{teachers} professeurs enseignant %{disciplines} disciplines.
             disciplines:
-                title: Matières
-                see: Voir les matières
-                create: Créer une matière
+                section: Disciplines
+                view: Voir les disciplines
+                create: Créer une discipline
             teachers:
-                title: Professeurs
-                see: Liste des professeurs
-                create: Créer un professeur
-        sidebar:
-            title: Avancé
-            all_users: Voir tous les utilisateurs
-            create_user: Créer un utilisateur
-            create_user_sub: Créer un utilisateur sans aucun rôle
-    time:
-        formats:
-            default: '%Y-%m-%d %H:%M:%S'
+                section: Professeurs
+                view: Liste des professeurs
+                create: Créer un nouveau professeur
+            sidebar:
+                title: Avancé
+                all_users: Tous les utilisateurs
+                create_user: Créer un utilisateur
+                create_user_sub: Créer un utilisateur sans aucun rôle
+    periods:
+        summary:
+            remaining: '%{remaining} jours restants'
+            future: Débute dans %{duration} jours
+            past: Terminé depuis %{duration} jours
+    layouts:
+        application:
+            locale: Langue

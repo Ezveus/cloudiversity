@@ -14,6 +14,7 @@ class StaticController < ApplicationController
         @school_classes = SchoolClass.all
         @disciplines    = Discipline.all
         @teachers       = Teacher.all
+        @periods        = Period.current
     end
 
     def version
@@ -23,5 +24,10 @@ class StaticController < ApplicationController
 
             f.json { render json: json }
         end
+    end
+
+    def locale
+        cookies[:lang] = { value: params[:locale], expires: 1.year.from_now, path: '/' }
+        redirect_to request.referrer || root_path
     end
 end
