@@ -1,31 +1,42 @@
 en:
-    admin:
-        page_title: Administration
-        title: Cloudiversity administration
-        periods:
-            title: Periods
-            see: See all periods
-        students:
-            title: Students
-            introduction: There are %{students} students in %{school_classes} classes.
-            classes_section: School classes
-            see_classes: View classes and students
-            create_class: Create a school class
-            students_section: Students
-            create_student: Create a student
-        teaching:
-            title: Teachings
-            introduction: There are %{teachers} teachers teaching %{disciplines} disciplines.
+    lang: English
+    static:
+        admin:
+            page_title: Administration
+            title: Cloudiversity Administration
+            periods:
+                title: Periods
+                all: See all periods
+            students:
+                title: Students
+                intro: There are %{students} studying in %{school_classes} school classes.
+                section: Students
+                create: Create a student
+            classes:
+                section: School Classes
+                view: School class list
+                create: Create a new class
+            teachings:
+                title: Teachings
+                intro: There are %{teachers} teachers teachings %{disciplines} disciplines.
             disciplines:
-                title: Disciplines
-                see: See disciplines
+                section: Disciplines
+                view: See disciplines
                 create: Create a discipline
             teachers:
-                title: Teachers
-                see: See teacher list
-                create: Create a teacher
-        sidebar:
-            title: More
-            all_users: See all users
-            create_user: Create an user
-            create_user_sub: Create an user without any role
+                section: Teachers
+                view: Teacher list
+                create: Create a new teacher
+            sidebar:
+                title: More
+                all_users: All users
+                create_user: Create an user
+                create_user_sub: Create an user without roles
+    periods:
+        summary:
+            remaining: '%{remaining} days left'
+            future: Starts in %{duration} days
+            past: Finished since %{duration} days
+    layouts:
+        application:
+            locale: Language

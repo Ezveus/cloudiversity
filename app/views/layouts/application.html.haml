@@ -25,6 +25,13 @@
                                     = link_to destroy_user_session_path, method: :delete do
                                         %i.uk-icon-sign-out
                                         Sign out
+                                %li.uk-nav-divider
+                                %li.uk-nav-header= t('.locale')
+                                - if I18n.available_locales.count > 1
+                                    - I18n.available_locales.each do |locale|
+                                        %li
+                                            = link_to locale_path(locale) do
+                                                = t('lang', locale: locale)
             = link_to '', '#cl-menu', class: 'uk-navbar-toggle uk-hidden-large', 'data-uk-offcanvas' => ''
             = link_to root_path, class: 'uk-navbar-brand uk-visible-large' do
                 %strong> Cloud

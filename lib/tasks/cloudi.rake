@@ -60,12 +60,8 @@ namespace :cloudi do
             password = i.ask("Password: ") { |o| o.echo = false }
             password_confirmation = i.ask("Confirmation (type password again): ") { |o| o.echo = false }
 
-            if password != password_confirmation
-                $stderr.puts "Password mismatch"
-                next
-            end
-
             u.password = password
+            u.password_confirmation = password_confirmation
             puts ""
 
             if u.save

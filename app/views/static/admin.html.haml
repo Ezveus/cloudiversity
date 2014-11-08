@@ -1,51 +1,54 @@
-- title! t('admin.page_title')
-%h1= t('admin.title')
+- title! t('.page_title')
+%h1= t('.title')
 .uk-panel.uk-panel-box.uk-width-1-1
-    %h2= t('admin.periods.title')
-    .uk-align-right
-        = link_to t('admin.periods.see'), admin_periods_path, class: 'uk-button uk-button-default'
+    %h2= t('.periods.title')
+    - @periods.each do |period|
+        .uk-margin-bottom
+            = render partial: 'periods/summary', object: period, as: :period
+    .uk-text-right
+        = link_to t('.periods.all'), admin_periods_path, class: 'uk-button uk-button-default'
 .uk-grid
     .uk-width-large-1-2.uk-margin-top
         .uk-panel.uk-panel-box
-            %h3.uk-panel-title= t('admin.students.title')
-            %p= t('admin.students.introduction', students: @students.count, school_classes: @school_classes.count)
+            %h3.uk-panel-title= t('.students.title')
+            %p= t('.students.intro', students: @students.count, school_classes: @school_classes.count)
             %ul.uk-nav.uk-nav-side
-                %li.uk-nav-header= t('admin.students.classes_section')
+                %li.uk-nav-header= t('.classes.section')
                 %li
                     = link_to admin_school_classes_path do
                         %i.uk-icon-eye
-                        = t('admin.students.see_classes')
+                        = t('.classes.view')
                 %li
                     = link_to new_admin_school_class_path do
                         %i.uk-icon-plus
-                        = t('admin.students.create_class')
-                %li.uk-nav-header= t('admin.students.students_section')
+                        = t('.classes.create')
+                %li.uk-nav-header= t('.students.section')
                 %li
-                    = link_to '' do
+                    = link_to new_admin_user_path(role: :student) do
                         %i.uk-icon-plus
-                        = t('admin.students.create_student')
+                        = t('.students.create')
     .uk-width-large-1-2.uk-margin-top
         .uk-panel.uk-panel-box
-            %h3.uk-panel-title= t('admin.teaching.title')
-            %p= t('admin.teaching.introduction', teachers: @teachers.count, disciplines: @disciplines.count)
+            %h3.uk-panel-title= t('.teachings.title')
+            %p= t('.teachings.intro', teachers: @teachers.count, disciplines: @disciplines.count)
             %ul.uk-nav.uk-nav-side
-                %li.uk-nav-header= t('admin.teaching.disciplines.title')
+                %li.uk-nav-header= t('.disciplines.section')
                 %li
                     = link_to admin_disciplines_path do
                         %i.uk-icon-eye
-                        = t('admin.teaching.disciplines.see')
+                        = t('.disciplines.view')
                     = link_to new_admin_discipline_path do
                         %i.uk-icon-plus
-                        = t('admin.teaching.disciplines.create')
-                %li.uk-nav-header= t('admin.teaching.teachers.title')
+                        = t('.disciplines.create')
+                %li.uk-nav-header= t('.teachers.section')
                 %li
                     = link_to admin_teachers_path do
                         %i.uk-icon-eye
-                        = t('admin.teaching.teachers.see')
-                    = link_to '' do
+                        = t('.teachers.view')
+                    = link_to new_admin_user_path(role: :teacher) do
                         %i.uk-icon-plus
-                        = t('admin.teaching.teachers.create')
+                        = t('.teachers.create')
 - sidebar! do |s|
-    - s.header t('admin.sidebar.title')
-    = s.link t('admin.sidebar.all_users'), admin_users_path, icon: 'user'
-    = s.link t('admin.sidebar.create_user'), new_admin_user_path, icon: 'plus', subtitle: t('admin.sidebar.create_user_sub')
+    - s.header t('.sidebar.title')
+    = s.link t('.sidebar.all_users'), admin_users_path, icon: 'user'
+    = s.link t('.sidebar.create_user'), new_admin_user_path, icon: 'plus', subtitle: t('.sidebar.create_user_sub')

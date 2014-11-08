@@ -1,6 +1,11 @@
 class Admin::PeriodsController < ApplicationController
     def index
-        @periods = policy_scope(Period).sort_by(&:start_date).reverse
+        @periods = policy_scope(Period).sort_by(&:start_date).group_by(&:relative).slice(:past, :current, :future)
+        @periods_map = {
+            past: 'Past',
+            current: 'Current',
+            future: 'Future'
+        }
     end
 
     def show
