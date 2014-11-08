@@ -51,7 +51,7 @@ class TeachingPolicy < ApplicationPolicy
         !(record.nil? && user.roles.empty?) && user_can_see?
     end
 
-    def index_per_tscd?
+    def index_per_teaching?
         show?
     end
 
