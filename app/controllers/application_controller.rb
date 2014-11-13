@@ -116,7 +116,8 @@ class ApplicationController < ActionController::Base
             format.html do
                 role_block, role_name = roles.map do |role_name, role_block|
                     auth_methods = ctx.instance_variable_get(:@authorization_methods)
-                    if auth_methods[role_name].call current_user.send("as_#{role_name}"), updated_record
+                    if current_user.send("is_#{role_name}?") &&
+                            auth_methods[role_name].call(current_user.send("as_#{role_name}"), updated_record)
                         [role_block, role_name]
                     else
                         nil
