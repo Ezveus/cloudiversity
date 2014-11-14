@@ -22,6 +22,8 @@ gem 'nested_form', '~> 0.3.2'
 gem 'will_paginate', '~> 3.0'
 gem 'highline',      '~> 1.6.21'
 gem 'rails-i18n', '~> 4.0.0'
+# database foreign keys
+gem 'foreigner'
 
 group :doc do
     gem 'yard', require: false

@@ -111,5 +111,14 @@ class CloudiversityInitialisation < ActiveRecord::Migration
             t.index      :student_id
             t.index      :school_class_id
         end
+
+        add_foreign_key :abstract_roles,            :users,             dependent:  :delete
+        add_foreign_key :kinships,                  :parents,           dependent:  :delete
+        add_foreign_key :kinships,                  :students,          dependent:  :delete
+        add_foreign_key :teachings,                 :teachers,          dependent:  :delete
+        add_foreign_key :teachings,                 :school_classes,    dependent:  :delete
+        add_foreign_key :teachings,                 :disciplines,       dependent:  :delete
+        add_foreign_key :school_classes_students,   :students,          dependent:  :delete
+        add_foreign_key :school_classes_students,   :school_classes,    dependent:  :delete
     end
 end
