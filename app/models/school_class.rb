@@ -10,13 +10,13 @@ class SchoolClass < ActiveRecord::Base
     # We want at least a non numeric character, so handles are useful
     validates :name, presence: true, format: /[^\d]/
 
+    def to_s
+        "#{name} (#{period.name})"
+    end
+
     protected
 
     def generate_handle
         "#{name.parameterize}-#{period.handle}"
-    end
-
-    def to_s
-        "#{name} (#{period.name})"
     end
 end
