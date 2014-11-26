@@ -1,24 +1,26 @@
 !!!
-%html{lang: :en}
+%html.uk-height-1-1{lang: :en}
     %head
         %title #{yield :title} &mdash; Cloudiversity
         %meta{name: :viewport, content: 'width=device-width,initial-scale=1.0'}/
         %meta{charset: 'utf-8'}/
         = stylesheet_link_tag 'application', media: 'all'
         = csrf_meta_tags
-    %body
-        %nav.uk-navbar.uk-navbar-attached
-            = link_to root_path, class: 'uk-navbar-brand uk-visible-large' do
-                %strong> Cloud
-                iversity
-            .uk-navbar-content.uk-navbar-center
-                = yield :title
-        %main
-            .uk-width-large-2-5.uk-container-center
-                .uk-panel
+    %body.uk-height-1-1
+        .uk-height-1-1.uk-vertical-align.uk-text-center
+            .uk-vertical-align-middle.uk-container-center#cl-login-page
+                .uk-panel.uk-text-center
+                    = image_tag 'school_logo.png', class: 'uk-width-1-1 uk-visible-large cl-school-logo'
                     - if alert
                         .uk-alert.uk-alert-warning= alert
                     - if notice
                         .uk-alert= notice
+                .uk-panel.uk-panel-box.uk-text-left.uk-margin-top
                     = yield
+                .uk-panel.uk-text-center.uk-margin-top.uk-vertical-align.cl-branding
+                    = link_to 'http://cloudiversity.eu', class: 'uk-vertical-align-middle' do
+                        = image_tag 'cloudiversity.svg', class: 'cl-logo', target: '_blank'
+                        .uk-vertical-align-middle
+                            %b> Cloud
+                            iversity
         = javascript_include_tag 'application'

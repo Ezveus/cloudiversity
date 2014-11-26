@@ -32,6 +32,21 @@ fr:
                 all_users: Tous les utilisateurs
                 create_user: Créer un utilisateur
                 create_user_sub: Créer un utilisateur sans aucun rôle
+        home:
+            page:
+                title: Bienvenue
+            title: Bienvenue à Cloudiversity
+            profile: Profil
+            teacher:
+                section: Professeur
+                classes: Classes
+        menu:
+            home: Accueil
+            admin: Administration
+            user: Utilisateur
+            sign_out: Se déconnecter
+            modules: Modules
+            locales: Langue
     periods:
         summary:
             remaining: '%{remaining} jours restants'
@@ -40,3 +55,11 @@ fr:
     layouts:
         application:
             locale: Langue
+            profile: Profil
+            sign_out: Se déconnecter
+    devise:
+        sessions:
+            new:
+                sign_in: Se connecter
+                username: Nom d'utilisateur
+                password: Mot de passe

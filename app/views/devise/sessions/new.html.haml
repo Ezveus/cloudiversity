@@ -2,13 +2,19 @@
 -# If the user see this view after a POST, chances are there is a problem
 -# with the login.
 - if request.post?
-    .uk-panel.uk-panel-box.uk-margin-bottom
+    .uk-panel.uk-margin-bottom
         %h3.uk-panel-title Locked out?
         If you lost your password or locked your account, you have to
         contact your school's system administrator, who can unlock your
         account.
 = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'uk-form uk-form-horizontal'}) do |f|
-    = f.auto_input :login, field_opts: {autofocus: true}
-    = f.auto_input :password
     .uk-form-row
-        = f.submit 'Sign in', class: 'uk-button uk-button-success uk-align-right'
+        .uk-form-icon.uk-width-1-1
+            %i.uk-icon-user
+            = f.text_field :login, autofocus: true, class: 'uk-width-1-1 uk-form-large', placeholder: t('.username')
+    .uk-form-row
+        .uk-form-icon.uk-width-1-1
+            %i.uk-icon-key
+            = f.password_field :password, class: 'uk-width-1-1 uk-form-large', placeholder: t('.password')
+    .uk-form-row
+        = f.submit t('.sign_in'), class: 'uk-button uk-button-success uk-width-1-1'

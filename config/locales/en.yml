@@ -32,6 +32,21 @@ en:
                 all_users: All users
                 create_user: Create an user
                 create_user_sub: Create an user without roles
+        home:
+            page:
+                title: Welcome
+            title: Welcome to Cloudiversity
+            profile: Profile
+            teacher:
+                section: Teacher
+                classes: School Classes
+        menu:
+            home: Home
+            admin: Administration
+            user: User
+            sign_out: Sign out
+            modules: Modules
+            locales: Language
     periods:
         summary:
             remaining: '%{remaining} days left'
@@ -40,3 +55,11 @@ en:
     layouts:
         application:
             locale: Language
+            profile: Profile
+            sign_out: Sign out
+    devise:
+        sessions:
+            new:
+                sign_in: Sign in
+                username: Login
+                password: Password

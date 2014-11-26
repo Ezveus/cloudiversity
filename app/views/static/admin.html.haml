@@ -1,15 +1,17 @@
 - title! t('.page_title')
 %h1= t('.title')
-.uk-panel.uk-panel-box.uk-width-1-1
-    %h2= t('.periods.title')
-    - @periods.each do |period|
-        .uk-margin-bottom
-            = render partial: 'periods/summary', object: period, as: :period
-    .uk-text-right
-        = link_to t('.periods.all'), admin_periods_path, class: 'uk-button uk-button-default'
 .uk-grid
-    .uk-width-large-1-2.uk-margin-top
+    .uk-width-1-1
         .uk-panel.uk-panel-box
+            %h2= t('.periods.title')
+            - @periods.each do |period|
+                .uk-margin-bottom
+                    = render partial: 'periods/summary', object: period, as: :period
+            .uk-text-right
+                = link_to t('.periods.all'), admin_periods_path, class: 'uk-button uk-button-default'
+.uk-grid.uk-margin-top-remove
+    .uk-width-large-1-2
+        .uk-panel.uk-panel-box.uk-margin-top
             %h3.uk-panel-title= t('.students.title')
             %p= t('.students.intro', students: @students.count, school_classes: @school_classes.count)
             %ul.uk-nav.uk-nav-side
@@ -27,8 +29,8 @@
                     = link_to new_admin_user_path(role: :student) do
                         %i.uk-icon-plus
                         = t('.students.create')
-    .uk-width-large-1-2.uk-margin-top
-        .uk-panel.uk-panel-box
+    .uk-width-large-1-2
+        .uk-panel.uk-panel-box.uk-margin-top
             %h3.uk-panel-title= t('.teachings.title')
             %p= t('.teachings.intro', teachers: @teachers.count, disciplines: @disciplines.count)
             %ul.uk-nav.uk-nav-side

@@ -1,8 +1,8 @@
-- title! 'Welcome'
-%h1 Welcome to Cloudiversity
+- title! t('.page.title')
+%h1= t('.title')
 = sidebar! do |s|
     - s.header current_user.full_name
-    = s.link 'Profile', current_user
+    = s.link t('.profile'), current_user
     - if current_user.is_teacher?
-        - s.header 'Teacher'
-        = s.link 'My classes', [ :admin, SchoolClass ], badge: current_user.as_teacher.teachings.count
+        - s.header t('.teacher.section')
+        = s.link t('.teacher.classes'), [ :admin, SchoolClass ], badge: current_user.as_teacher.teachings.count
