@@ -1,8 +1,8 @@
-- title! @user == current_user ? 'Profile' : @user.full_name
+- title! @user == current_user ? t('.page.title') : @user.full_name
 - if policy(@user).index?
     %ul.uk-breadcrumb
-        %li= link_to 'Administration', admin_path
-        %li= link_to 'Users', admin_users_path
+        %li= link_to t('.bread.administration'), admin_path
+        %li= link_to t('.bread.users'), admin_users_path
         %li.uk-active= @user.login
 .uk-grid
     .uk-width-medium-1-4.uk-hidden-small
@@ -11,50 +11,48 @@
         .uk-panel.uk-panel-box.uk-panel-box-primary.uk-panel-header
             .uk-panel-title= @user.full_name
             %dl.uk-description-list.uk-description-list-horizontal
-                %dt Login
+                %dt= t('.login')
                 %dd= @user.login
-                %dt E-mail
+                %dt= t('.email')
                 %dd= link_to @user.email, 'mailto:' + @user.email
         - if policy(@user).update?
             .uk-panel.uk-panel-box.uk-panel-header
-                .uk-panel-title Administration
+                .uk-panel-title= t('.administration')
                 %dl.uk-description-list.uk-description-list-horizontal
-                    %dt Account status
+                    %dt= t('.account.status')
                     = user_status(@user)
-                    %dt Connection count
-                    %dd= @user.sign_in_count
                 - if @user.last_sign_in_at?
-                    %h4 Last connection
+                    %h4= t('.account.lastlog')
                     %dl.uk-description-list.uk-description-list-horizontal
-                        %dt From
+                        %dt= t('.account.ip')
                         %dd= @user.current_sign_in_ip
-                        %dt Time
+                        %dt= t('.account.date')
                         %dd= l(@user.current_sign_in_at)
         = render partial: 'teacher/profile', object: @user.as_teacher, as: :teacher if @user.is_teacher?
         = render partial: 'student/profile', object: @user.as_student, as: :student if @user.is_student?
 - sidebar! do |s|
-    - s.header 'Users management'
+    - s.header t('.sidebar.title')
     - if policy(User).create?
-        = s.link 'Create an user', new_admin_user_path, icon: 'plus'
-    - s.header 'Account management'
+        = s.link t('.sidebar.user.create'), new_user_path, icon: 'plus'
+    - s.header t('.sidebar.account')
     - if policy(@user).edit?
-        = s.link 'Edit', edit_admin_user_path(@user), icon: 'pencil'
+        = s.link t('.sidebar.user.edit'), edit_user_path(@user), icon: 'pencil'
     - if policy(@user).reset_password?
-        = s.link(@user.password_set? ? 'Reset password' : 'Initialize password', admin_user_reset_password_path(@user), link: {method: :post}, icon: 'key')
+        = s.link(@user.password_set? ? t('.sidebar.user.reset') : t('.sidebar.user.init'), admin_user_reset_password_path(@user), link: {method: :post}, icon: 'key')
     - if @user.locked_at? and policy(@user).update?
-        = s.link('Unlock', admin_user_unlock_path(@user), link: {method: :post}, icon: 'unlock')
+        = s.link(t('.sidebar.user.unlock'), admin_user_unlock_path(@user), link: {method: :post}, icon: 'unlock')
     - if policy(@user).destroy?
-        = s.link('Delete', admin_user_destroy_path(@user), icon: 'trash-o')
-    - s.header 'Roles'
+        = s.link(t('.sidebar.user.delete'), admin_user_destroy_path(@user), icon: 'trash-o')
+    - s.header t('.sidebar.roles')
     - if not @user.is_admin? and policy(Admin).create?
-        = s.link 'Promote as administrator', admin_user_promote_admin_path(@user)
+        = s.link t('.sidebar.admin.promote'), admin_user_promote_admin_path(@user)
     - elsif @user.is_admin? and policy(@user.as_admin).destroy?
-        = s.link 'Demote from administrator', admin_user_demote_admin_path(@user)
+        = s.link t('.sidebar.admin.demote'), admin_user_demote_admin_path(@user)
     - if not @user.is_teacher? and policy(Teacher).create?
-        = s.link 'Promote as teacher', admin_user_promote_teacher_path(@user)
+        = s.link t('.sidebar.teacher.promote'), admin_user_promote_teacher_path(@user)
     - elsif @user.is_teacher? and policy(@user.as_teacher).destroy?
-        = s.link 'Demote from teacher', admin_user_demote_teacher_path(@user)
+        = s.link t('.sidebar.teacher.demote'), admin_user_demote_teacher_path(@user)
     - if not @user.is_student? and policy(Student).create?
-        = s.link 'Promote as student', admin_user_promote_student_path(@user)
+        = s.link t('.sidebar.student.promote'), admin_user_promote_student_path(@user)
     - elsif @user.is_student? and policy(@user.as_student).destroy?
-        = s.link 'Demote from student', admin_user_demote_student_path(@user)
+        = s.link t('.sidebar.student.demote'), admin_user_demote_student_path(@user)

@@ -63,3 +63,50 @@ fr:
                 sign_in: Se connecter
                 username: Nom d'utilisateur
                 password: Mot de passe
+        passwords:
+            edit:
+                page:
+                    title: 'Changer de mot de passe'
+                title: 'Bienvenue !'
+                password: 'Mot de passe'
+                password_again: 'Répeter le mot de passe'
+    users:
+        show:
+            page:
+                title: Profil
+            bread:
+                administration: Administration
+                users: Utilisateurs
+            login: Identifiant
+            email: Adresse e-mail
+            administration: Administration
+            account:
+                status: État
+                lastlog: Dernière connection
+                ip: Origine
+                date: Date
+            sidebar:
+                title: Actions
+                user:
+                    create: Créer un utilisateur
+                    edit: Modifier
+                    init: Créer un mot de passe
+                    reset: Réinitialiser le mot de passe
+                    delete: Détruire l'utilisateur
+                admin:
+                    promote: Promouvoir en administrateur
+                    demote: Destituer du rôle d'administrateur
+                teacher:
+                    promote: Promouvoir en professeur
+                    demote: Destituer du rôle de professeur
+                student:
+                    promote: Promouvoir en étudiant
+                    demote: Destituer du rôle d'étudiant
+                account: Compte utilisateur
+                roles: Rôles
+        status:
+            ok: Valide
+            locked: Verouillé
+            reset_expired: Réinitialisation du mot de passe expirée
+            reset_pending: Réinitialisation du mot de passe envoyée
+            uninitialized: Non initialisé
