@@ -7,7 +7,7 @@
         = roles.each_role do |role|
             %li= link_to role.class.name, "##{role.class.name}"
     %ul.uk-switcher#cl-role-switcher
-        - roles.each do |role|
+        - roles.each do
             %li
                 = roles.render(self)
 - else

@@ -26,20 +26,31 @@ User.create!(
 
 SchoolClass.destroy_all
 
-ts1 = SchoolClass.create!({ name: "TS1" })
-tes1 = SchoolClass.create!({ name: "TES1" })
-tl = SchoolClass.create!({ name: "TL" })
+Period.destroy_all
+semester1_2014 = Period.create!(name: "Semester 1 2014", start_date: Date.parse("01/01/2014"), end_date: Date.parse("30/06/2014"))
+semester2_2014 = Period.create!(name: "Semester 2 2014", start_date: Date.parse("01/07/2014"), end_date: Date.parse("31/12/2014"))
+Period.create!(name: "Semester 1 2015", start_date: Date.parse("01/01/2015"), end_date: Date.parse("30/06/2015"))
+Period.create!(name: "Semester 2 2015", start_date: Date.parse("01/07/2015"), end_date: Date.parse("31/12/2015"))
+Period.create!(name: "Semester 1 2016", start_date: Date.parse("01/01/2016"), end_date: Date.parse("30/06/2016"))
+Period.create!(name: "Semester 2 2016", start_date: Date.parse("01/07/2016"), end_date: Date.parse("31/12/2016"))
+
+
+p = semester1_2014
+
+ts1 = SchoolClass.create!({ name: "TS1", period: p })
+tes1 = SchoolClass.create!({ name: "TES1", period: p })
+tl = SchoolClass.create!({ name: "TL", period: p })
 
 SchoolClass.create!(
                    [
-                    { name: "TS2" },
-                    { name: "TS3" },
-                    { name: "TS4" },
-                    { name: "TS5" },
-                    { name: "TS6" },
-                    { name: "TES2" },
-                    { name: "TES3" },
-                    { name: "TES4" }
+                    { name: "TS2", period: p },
+                    { name: "TS3", period: p },
+                    { name: "TS4", period: p },
+                    { name: "TS5", period: p },
+                    { name: "TS6", period: p },
+                    { name: "TES2", period: p },
+                    { name: "TES3", period: p },
+                    { name: "TES4", period: p }
                     ])
 
 Discipline.destroy_all
@@ -73,21 +84,13 @@ AbstractRole.create!(
 Student.destroy_all
 AbstractRole.create!(
                      [
-                      { role: Student.create!(school_class: ts1), user: garruk },
-                      { role: Student.create!(school_class: tes1), user: chandra },
-                      { role: Student.create!(school_class: tl), user: gideon }
+                      { role: Student.create!(school_classes: [ts1]), user: garruk },
+                      { role: Student.create!(school_classes: [tes1]), user: chandra },
+                      { role: Student.create!(school_classes: [tl]), user: gideon }
                      ])
 
-Period.destroy_all
-semester1_2014 = Period.create!(name: "Semester 1 2014", start_date: Date.parse("01/01/2014"), end_date: Date.parse("30/06/2014"))
-semester2_2014 = Period.create!(name: "Semester 2 2014", start_date: Date.parse("01/07/2014"), end_date: Date.parse("31/12/2014"))
-Period.create!(name: "Semester 1 2015", start_date: Date.parse("01/01/2015"), end_date: Date.parse("30/06/2015"))
-Period.create!(name: "Semester 2 2015", start_date: Date.parse("01/07/2015"), end_date: Date.parse("31/12/2015"))
-Period.create!(name: "Semester 1 2016", start_date: Date.parse("01/01/2016"), end_date: Date.parse("30/06/2016"))
-Period.create!(name: "Semester 2 2016", start_date: Date.parse("01/07/2016"), end_date: Date.parse("31/12/2016"))
-
-TeacherSchoolClassDiscipline.destroy_all
-TeacherSchoolClassDiscipline.create!(
+Teaching.destroy_all
+Teaching.create!(
                                     [
                                         { teacher: liliana.as_teacher, school_class: ts1, discipline: maths, period: semester1_2014 },
                                         { teacher: jace.as_teacher, school_class: tl, discipline: philo, period: semester1_2014 },

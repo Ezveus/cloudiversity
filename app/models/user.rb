@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
     devise :database_authenticatable,
         :rememberable, :trackable, :lockable,
-        :validatable, :recoverable
+        :recoverable
 
     has_many :abstract_roles
     # has_many :widget_list_items, -> { order('position ASC') }
@@ -17,30 +17,43 @@ class User < ActiveRecord::Base
         format: /\A[a-z][\w\.-]+\z/i
     validates :first_name, presence: true
     validates :last_name, presence: true
+    validates :email,
+        presence: true,
+        format: /\A.+@.+\..+\z/,
+        uniqueness: { case_sensitive: false }
+    validates :password,
+        confirmation: true,
+        length: { in: 8..64 },
+        unless: Proc.new { |u| u.password.blank? }
+    validates :password_confirmation,
+        presence: true,
+        unless: Proc.new { |u| u.password.nil? }
 
     self.per_page = 10
 
+    # Automatically formats the name of the user to include both first and last name in a standardized way.
+    # @return [String]
     def full_name
-        last_name + ", " + first_name
+        "#{last_name}, #{first_name}"
     end
 
-    # Password, reset, stuff. Better done here than in the view.
-    # Has a password ever been set ?
+    # Indicates if an user has a password.
     def password_set?
         encrypted_password?
     end
 
-    # Is a password reset pending ?
+    # Indicates if the user has a password reset pending.
     def reset_pending?
         # Devise resets reset_password_sent_at but not reset_password_token.
         reset_password_sent_at?
     end
 
-    # If a password reset is pending, has it expired ?
+    # Indicates if the user has a password reset pending, and if it is expired.
     def reset_expired?
         reset_password_sent_at? and not reset_password_period_valid?
     end
 
+    # Indicates if (given the fact he has his current password) a user would be able to log in.
     def good?
         password_set? and not locked_at?
     end
@@ -49,12 +62,15 @@ class User < ActiveRecord::Base
         login + " - " + full_name
     end
 
+    # Returns a list of roles attributed to the user.
     alias_method :roles, :abstract_roles
 
     def roles_names
         roles.map(&:name)
     end
 
+    # Allow to refer to the user as one of its role dynamically. Implements a series of +as_role+ and +is_role?+
+    # functions to be able to get the specialized role or check if a user responds to a role dynamically.
     def method_missing(m, *args, &block)
         User.app_roles
         if /is_(?<role__name>\w+)\?/ =~ m.to_s
@@ -76,16 +92,18 @@ class User < ActiveRecord::Base
         super
     end
 
+    # Reimplementing the param generation to use the login instead of the id as key.
+    # @return [String] The same as +login+.
     def to_param
         login
     end
 
-    # Reimplements standard +find+ to be able to find by both login and
+    # Reimplementing standard +find+ to be able to find by both login and
     # id.
     # Just check if the parameter looks like an id (first character is a
     # number) and sends back to standard +find+ or, if it's a login, uses
     # +find_by+.
-    # As the standard method, returns a user or raise an exception.
+    # @return [User] The matched user, if any. Throws an exception if the user is not found.
     def self.find(id)
         if id.to_s =~ /\A\d/
             super id
@@ -107,6 +125,7 @@ class User < ActiveRecord::Base
         }.to_json
     end
 
+    # Allows to get a list of all available roles in the application.
     def self.app_roles
         @@roles ||= ActiveRecord::Base.connection.tables.map do |model|
             model.capitalize.singularize.camelize

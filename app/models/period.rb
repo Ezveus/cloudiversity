@@ -1,33 +1,58 @@
 class Period < ActiveRecord::Base
     include Handleable
 
-    has_many :teacher_school_class_discipline, dependent: :destroy
-    has_many :teachers, through: :teacher_school_class_discipline
-    has_many :disciplines, through: :teacher_school_class_discipline
-    has_many :school_classes, through: :teacher_school_class_discipline
+    has_many :school_classes
+    has_many :teachings, through: :school_classes
 
     validates_presence_of :name, :end_date, :start_date
     validates_uniqueness_of :name
     validates_with TimeSpanValidator
-    validates_with PeriodValidator
+
+    def self.current
+        # FIXME: This is SQLite only. MySQL uses `NOW()`. Should use a standard method or detect cases.
+        where('DATE(\'now\') BETWEEN `start_date` AND `end_date`')
+    end
 
     def to_s
         "#{name} (#{start_date} - #{end_date})"
     end
 
-    def current_one?
-        current
+    def duration
+        (end_date - start_date).to_i
     end
 
-    def self.get_current
-        Period.find_by(current: true)
+    def elapsed
+        (Time.now.to_date - start_date).to_i
     end
 
-    def self.set_current(p)
-        current_one = Period.get_current
+    def remaining
+        (end_date - Time.now.to_date).to_i
+    end
 
-        current_one.update(current: false) if current_one
-        p.update(current: true)
+    def current?
+        start_date < Time.now.to_date and end_date > Time.now.to_date
+    end
+
+    def future?
+        start_date > Time.now.to_date
+    end
+
+    def past?
+        end_date < Time.now.to_date
+    end
+
+    def relative
+        if past?
+            :past
+        elsif future?
+            :future
+        else
+            :current
+        end
+    end
+
+    def elapsed_percent
+        elapsed * 100 / duration
     end
 
     protected

@@ -12,10 +12,11 @@ class Admin::StudentsController < ApplicationController
     end
 
     def create
-        @student = Student.new(params.require(:student).permit(:school_class_id))
+        @student = Student.new()
         @student.user = User.find(params.require(:student).require(:user_id))
         authorize @student
 
+        @student.school_classes = params['student']['school_class_ids'].map { |sc_id| SchoolClass.find(sc_id.to_i) unless sc_id.blank? }.delete_if(&:nil?)
         if @student.save
             redirect_to @student.user, notice: 'User successfully promoted'
         else
@@ -48,8 +49,9 @@ class Admin::StudentsController < ApplicationController
         @student = Student.find(params[:id])
         authorize @student
 
-        if @student.update(params.require(:student).permit(:school_class_id))
-            redirect_to @student.user, notice: 'Class successfully updated'
+        @student.school_classes = params['student']['school_class_ids'].map { |sc_id| SchoolClass.find(sc_id.to_i) unless sc_id.blank? }.delete_if(&:nil?)
+        if @student.save
+            redirect_to @student.user, notice: 'Classes successfully updated'
         else
             render action: :edit
         end

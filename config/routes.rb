@@ -2,6 +2,7 @@ Cloudiversity::Application.routes.draw do
     devise_for :users, controllers: { sessions: 'cloudiversity/sessions' }
 
     get 'version' => 'static#version'
+    get 'locale/:locale' => 'static#locale', as: 'locale'
 
     get 'user/:id' => 'users#show', as: 'user', id: /[a-z][\w\.-]+/i
     get 'users/current' => 'users#current'

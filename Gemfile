@@ -1,30 +1,54 @@
 source 'https://rubygems.org'
 
-gem 'rails',        '4.0.4'
-gem 'less-rails', '~> 2.5.0'
-gem 'uglifier',     '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails', '~> 3.1.1'
-gem 'jquery-ui-rails', '~> 5.0.0'
-gem 'jbuilder',     '~> 1.2'
-gem 'haml',         '~> 4.0.3'
-gem 'haml-rails', '~> 0.5.3'
-gem 'devise', '~> 3.2.4'
-gem 'devise-encryptable', '~> 0.2.0'
-gem 'simple_token_authentication', '~> 1.5.0'
-gem 'pundit', '~> 0.2.3'
-gem 'rails_uikit', github: 'adaedra/rails_uikit'
+# Rails
+gem 'rails', '4.0.4'
+
+# JavaScript engines
 gem 'therubyracer', platforms: :ruby
 gem 'therubyrhino', platforms: :jruby
-gem 'carrierwave', '~> 0.10.0'
+
+# Asset management 
+# - Javascript
+gem 'uglifier',         '>= 1.3.0'
+gem 'coffee-rails',     '~> 4.0.0'
+gem 'jquery-rails',     '~> 3.1.1'
+gem 'jquery-ui-rails',  '~> 5.0.0'
+gem 'carrierwave',      '~> 0.10.0'
 gem 'codemirror-rails', '~> 4.2'
-gem 'nested_form', '~> 0.3.2'
+
+# - CSS
+gem 'less-rails', '~> 2.5.0'
+
+# - Other
+gem 'rails_uikit', github: 'adaedra/rails_uikit', ref: '22eb7b'
+
+# Page generation
+gem 'haml',       '~> 4.0.3'
+gem 'haml-rails', '~> 0.5.3'
+
+# Helpers
+gem 'nested_form',   '~> 0.3.2'
 gem 'will_paginate', '~> 3.0'
 gem 'highline',      '~> 1.6.21'
 gem 'cells'
 gem 'rspec-cells'
-# gem 'acts_as_list' # TODO: find another gem to handle widget order in user preferences
 
+# Authentication and Rights management
+gem 'devise',                      '~> 3.2.4'
+gem 'devise-encryptable',          '~> 0.2.0'
+gem 'simple_token_authentication', '~> 1.5.0'
+gem 'pundit',                      '~> 0.2.3'
+
+# Translations
+gem 'rails-i18n', '~> 4.0.0'
+gem 'devise-i18n', '~> 0.11.2'
+
+# Other
+gem 'jbuilder', '~> 1.2'
+gem 'highline', '~> 1.6.21'
+gem 'foreigner' # Database foreign keys
+
+# Documentation
 group :doc do
     gem 'yard', require: false
 end
@@ -32,8 +56,6 @@ end
 group :development do
     gem 'binding_of_caller', platforms: :ruby
     gem 'better_errors'
-    gem 'pry'
-    gem 'pry-rails'
 
     gem 'sqlite3', platforms: :ruby
     gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
@@ -42,9 +64,12 @@ group :development do
 end
 
 group :development, :test do
-    gem 'rspec-rails', '~> 2.14'
+    gem 'rspec-rails', '~> 3.1'
     gem 'factory_girl_rails', '~> 4.4.0'
     gem 'database_cleaner', '~> 1.2.0'
+    gem 'faker', '~> 1.4.3'
+    gem 'simplecov', '~> 0.9.0', require: false
+    gem 'timecop', '~> 0.7.1'
 end
 
 group :production do
@@ -64,7 +89,7 @@ end
 gem 'puma'
 
 # Load a local version of the Gemfile, which contains local tools, gems,
-# and other workspace-dependant dependancies.
+# and other workspace-dependant dependencies.
 File.expand_path('Gemfile.local', File.dirname(__FILE__)).tap do |gloc|
     if File.exists?(gloc)
         eval(IO.read(gloc))

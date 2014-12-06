@@ -19,19 +19,18 @@
                         .uk-dropdown.uk-dropdown-navbar
                             %ul.uk-nav.uk-nav-navbar
                                 %li
-                                    = link_to current_user do
-                                        Profile
+                                    = link_to t('.profile'), current_user
                                 %li
                                     = link_to destroy_user_session_path, method: :delete do
                                         %i.uk-icon-sign-out
-                                        Sign out
-            - if (current_period = Period.get_current)
-                %ul.uk-navbar-nav.uk-navbar-flip.uk-visible-large
-                    %li{data: {'uk-dropdown' => ''}}
-                        = link_to current_period.name, '#'
-                        .uk-dropdown.uk-dropdown-navbar
-                            %ul.uk-nav.uk-nav-navbar
-                                %li= link_to "From #{current_period.start_date} to #{current_period.end_date}", '#'
+                                        = t('.sign_out')
+                                %li.uk-nav-divider
+                                %li.uk-nav-header= t('.locale')
+                                - if I18n.available_locales.count > 1
+                                    - I18n.available_locales.each do |locale|
+                                        %li
+                                            = link_to locale_path(locale) do
+                                                = t('lang', locale: locale)
             = link_to '', '#cl-menu', class: 'uk-navbar-toggle uk-hidden-large', 'data-uk-offcanvas' => ''
             = link_to root_path, class: 'uk-navbar-brand uk-visible-large' do
                 %strong> Cloud
@@ -60,7 +59,7 @@
                     .uk-panel
                         = yield
                 .uk-width-large-1-5
-                    .uk-panel
+                    .uk-panel#cl-sidebar
                         = yield :sidebar if content_for? :sidebar
         #cl-menu.uk-offcanvas
             .uk-offcanvas-bar

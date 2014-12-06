@@ -29,5 +29,7 @@ module Cloudiversity
             Devise::SessionsController.layout 'sign_in'
             Devise::PasswordsController.layout 'sign_in'
         end
+
+        config.i18n.available_locales = %w(en fr).map(&:to_sym)
     end
 end

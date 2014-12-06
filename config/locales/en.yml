@@ -1,23 +1,65 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+    lang: English
+    static:
+        admin:
+            page_title: Administration
+            title: Cloudiversity Administration
+            periods:
+                title: Periods
+                all: See all periods
+            students:
+                title: Students
+                intro: There are %{students} studying in %{school_classes} school classes.
+                section: Students
+                create: Create a student
+            classes:
+                section: School Classes
+                view: School class list
+                create: Create a new class
+            teachings:
+                title: Teachings
+                intro: There are %{teachers} teachers teachings %{disciplines} disciplines.
+            disciplines:
+                section: Disciplines
+                view: See disciplines
+                create: Create a discipline
+            teachers:
+                section: Teachers
+                view: Teacher list
+                create: Create a new teacher
+            sidebar:
+                title: More
+                all_users: All users
+                create_user: Create an user
+                create_user_sub: Create an user without roles
+        home:
+            page:
+                title: Welcome
+            title: Welcome to Cloudiversity
+            profile: Profile
+            teacher:
+                section: Teacher
+                classes: School Classes
+        menu:
+            home: Home
+            admin: Administration
+            user: User
+            sign_out: Sign out
+            modules: Modules
+            locales: Language
+    periods:
+        summary:
+            remaining: '%{remaining} days left'
+            future: Starts in %{duration} days
+            past: Finished since %{duration} days
+    layouts:
+        application:
+            locale: Language
+            profile: Profile
+            sign_out: Sign out
+    devise:
+        sessions:
+            new:
+                sign_in: Sign in
+                username: Login
+                password: Password

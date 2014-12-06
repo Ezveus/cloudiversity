@@ -20,8 +20,4 @@ class PeriodPolicy < ApplicationPolicy
     def destroy_confirmation?
         destroy?
     end
-
-    def set_current?
-        update?
-    end
 end

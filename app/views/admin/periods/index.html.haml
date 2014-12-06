@@ -1,13 +1,10 @@
 - title! 'Periods'
-.cl-box-list
-    - @periods.each do |period|
-        = link_to [ :admin, period ], class: 'uk-panel uk-panel-box' do
-            = period.name
-            .uk-align-right
-                - if period.current_one?
-                    .uk-badge
-                        Current period
-                %i.uk-icon-chevron-right.uk-margin-left
+- @periods.each do |relative, periods|
+    %h3= @periods_map[relative]
+    .cl-box-list
+        - periods.each do |period|
+            = link_to [ :admin, period ], class: 'uk-panel uk-panel-box' do
+                = render partial: 'periods/summary', object: period, as: :period
 - sidebar! do |s|
     - s.header 'Administration'
     = s.link 'Create period', new_admin_period_path, icon: 'plus' if policy(Period).create?

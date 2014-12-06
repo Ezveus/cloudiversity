@@ -7,12 +7,29 @@
 @import "uikit/addons/search";
 @import "uikit/addons/form-select";
 @import "uikit/addons/form-advanced";
+@import "uikit/addons/datepicker";
 @import "uikit_cloudiversity";
+
+@cl-theme-red: #94383a;
 
 main {
     max-width: 1600px;
     margin: 2em auto;
-    padding: 0 2em;
+    padding: 0 @grid-gutter-horizontal;
+}
+
+@media (max-width: @breakpoint-medium-max) {
+    main {
+        padding: 0 @utility-margin;
+    }
+
+    .uk-panel-box {
+        border-left-width: 0;
+        border-right-width: 0;
+        border-radius: 0;
+        margin-left: -@utility-margin;
+        margin-right: -@utility-margin;
+    }
 }
 
 // Load our font
@@ -69,8 +86,23 @@ main {
     }
 }
 
+.uk-panel.uk-panel-box.attachments {
+  clear: both; // fixes agenda assignment progress button being hidden by attachments
+}
+
 // Search
 @search-border: @cl-theme-border;
 @search-background: white;
 
+// See missing translations
+.translation_missing {
+  color: @cl-theme-red;
+  border-bottom: 2px dotted @cl-theme-red;
+}
+
+.cl-branding, .cl-branding a {
+    color: @cl-theme-primary;
+}
+
 @import "users";
+@import "fixes";

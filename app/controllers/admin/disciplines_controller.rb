@@ -7,7 +7,7 @@ class Admin::DisciplinesController < ApplicationController
         @discipline = Discipline.find(params[:id])
         authorize @discipline
 
-        @periods = @discipline.teacher_school_class_discipline.group_by { |tscd| tscd.period }
+        @periods = @discipline.teachings.group_by(&:period).sort_by { |e| e[0].start_date }.reverse
     end
 
     def new

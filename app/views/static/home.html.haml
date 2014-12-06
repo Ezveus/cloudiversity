@@ -1,11 +1,11 @@
-- title! 'Welcome'
-%h1 Welcome to Cloudiversity
+- title! t('.page.title')
+%h1= t('.title')
 = sidebar! do |s|
     - s.header current_user.full_name
-    = s.link 'Profile', current_user
+    = s.link t('.profile'), current_user
     - if current_user.is_teacher?
-        - s.header 'Teacher'
-        = s.link 'My classes', [ :admin, SchoolClass ], badge: current_user.as_teacher.teacher_school_class_discipline.count
+        - s.header t('.teacher.section')
+        = s.link t('.teacher.classes'), [ :admin, SchoolClass ], badge: current_user.as_teacher.teachings.count
 
 - unless @widgets.nil? || @widgets.empty?
     %ul.uk-grid{'data-uk-grid-margin' => ''}
@@ -16,4 +16,3 @@
                         = render_cell name, :show, user: current_user
                     - rescue Exception => e
                         = "Failed to render widget #{name}: #{e}"
-
