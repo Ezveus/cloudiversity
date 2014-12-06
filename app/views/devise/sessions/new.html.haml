@@ -1,12 +1,4 @@
 -title! 'Sign in'
--# If the user see this view after a POST, chances are there is a problem
--# with the login.
-- if request.post?
-    .uk-panel.uk-margin-bottom
-        %h3.uk-panel-title Locked out?
-        If you lost your password or locked your account, you have to
-        contact your school's system administrator, who can unlock your
-        account.
 = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'uk-form uk-form-horizontal'}) do |f|
     .uk-form-row
         .uk-form-icon.uk-width-1-1
@@ -18,3 +10,12 @@
             = f.password_field :password, class: 'uk-width-1-1 uk-form-large', placeholder: t('.password')
     .uk-form-row
         = f.submit t('.sign_in'), class: 'uk-button uk-button-success uk-width-1-1'
+-# If the user see this view after a POST, chances are there is a problem
+-# with the login.
+- if request.post?
+    %hr/
+    .uk-panel.uk-margin-top.uk-text-small
+        .uk-panel-title Locked out?
+        If you lost your password or locked your account, you have to
+        contact your school's system administrator, who can unlock your
+        account.
