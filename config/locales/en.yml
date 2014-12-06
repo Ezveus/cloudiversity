@@ -63,3 +63,10 @@ en:
                 sign_in: Sign in
                 username: Login
                 password: Password
+        passwords:
+            edit:
+                page:
+                    title: Change password
+                title: 'Welcome!'
+                password: 'Password'
+                password_again: 'Repeat password'
