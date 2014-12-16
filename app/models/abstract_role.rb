@@ -4,4 +4,8 @@ class AbstractRole < ActiveRecord::Base
 
     validates :user, presence: true
     validates :role, presence: true
+
+    def name
+        role_type.underscore
+    end
 end

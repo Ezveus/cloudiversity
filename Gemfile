@@ -29,6 +29,9 @@ gem 'haml-rails', '~> 0.5.3'
 # Helpers
 gem 'nested_form',   '~> 0.3.2'
 gem 'will_paginate', '~> 3.0'
+gem 'highline',      '~> 1.6.21'
+gem 'cells'
+gem 'rspec-cells'
 
 # Authentication and Rights management
 gem 'devise',                      '~> 3.2.4'

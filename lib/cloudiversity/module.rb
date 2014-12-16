@@ -23,5 +23,9 @@ module Cloudiversity
         def namespace
             name.underscore
         end
+
+        def role_previews
+            []
+        end
     end
 end
