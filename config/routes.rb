@@ -4,9 +4,20 @@ Cloudiversity::Application.routes.draw do
     get 'version' => 'static#version'
     get 'locale/:locale' => 'static#locale', as: 'locale'
 
-    get 'user/:id' => 'users#show', as: 'user', id: /[a-z][\w\.-]+/i
-    get 'users/current' => 'users#current'
+    # Users are a complicated resource, let's do it manually
+    # resources :users, id: /[a-z][\w\.-]+/i
+    get '/u/:id' => 'users#show', id: User::ID_FORMAT, as: 'user'
 
+    get  '/users'     => 'users#index', as: 'users'
+    get  '/users/new' => 'users#new',   as: 'new_user'
+    post '/users'     => 'users#create'
+
+    get    '/u/:id/edit' => 'users#edit',   id: User::ID_FORMAT, as: 'edit_user'
+    patch  '/u/:id'      => 'users#update', id: User::ID_FORMAT
+    put    '/u/:id'      => 'users#update', id: User::ID_FORMAT
+    delete '/u/:id'      => 'users#delete', id: User::ID_FORMAT
+
+    # TODO: Tear this down.
     namespace :admin do
         resources :users, id: /[a-z][\w\.-]+/i do
             post 'reset_password' => 'users#reset_password', as: 'reset_password'

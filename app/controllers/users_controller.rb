@@ -16,4 +16,14 @@ class UsersController < ApplicationController
             format.html { redirect_to current_user }
         end
     end
+
+    def edit
+        @user = User.find params[:id]
+        authorize @user
+    end
+
+    def new
+        @user = User.new
+        authorize @user
+    end
 end
