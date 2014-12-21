@@ -1,4 +1,10 @@
 = form_for [ :admin, school_class ], html: { class: 'uk-form uk-form-horizontal' } do |f|
     = f.auto_input :name, field: { required: true }
+    .uk-form-row
+        = f.label :period_id, class: 'uk-form-label'
+        .uk-form-controls
+            .uk-button.uk-form-select.uk-width-1-1(data-uk-form-select)
+                %span
+                = f.collection_select(:period_id, Period.all, :id, :name, {}, { class: 'uk-width-1-1' })
     .uk-align-right.uk-margin-top
         = f.submit class: 'button right', class: 'uk-button uk-button-primary'

@@ -48,7 +48,6 @@ gem 'devise-i18n', '~> 0.11.2'
 
 # Other
 gem 'jbuilder', '~> 1.2'
-gem 'highline', '~> 1.6.21'
 gem 'foreigner' # Database foreign keys
 
 # Documentation
