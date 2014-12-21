@@ -57,3 +57,9 @@ __MACOSX
 
 # Uploads
 /public/uploads/*
+
+# Bower
+Gemfile
+vendor/assets/.bowerrc
+vendor/assets/bower.json
+vendor/assets/bower_components/

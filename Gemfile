@@ -22,6 +22,9 @@ gem 'less-rails', '~> 2.5.0'
 # - Other
 gem 'rails_uikit', github: 'adaedra/rails_uikit', ref: '22eb7b'
 
+# - External assets
+gem 'bower-rails', '~> 0.9.1'
+
 # Page generation
 gem 'haml',       '~> 4.0.3'
 gem 'haml-rails', '~> 0.5.3'
