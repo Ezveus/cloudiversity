@@ -12,7 +12,7 @@ class Admin::SchoolClassesController < ApplicationController
 
             role.teacher do |teacher|
                 # TODO: Group by periods
-                r.teachings.group_by(&:discipline)
+                @school_classes = teacher.teachings.group_by(&:discipline)
             end
         end
     end
@@ -31,9 +31,9 @@ class Admin::SchoolClassesController < ApplicationController
     def update
         @school_class = SchoolClass.find(params[:id])
         authorize @school_class
-        if @school_class.update(params.require(:school_class).permit(:name))
+        if @school_class.update(params.require(:school_class).permit(:name, :period_id))
             redirect_to admin_school_class_path(@school_class),
-                notice: 'Class successfully renamed'
+                notice: 'Class successfully modified'
         else
             render action: :edit
         end
@@ -45,7 +45,7 @@ class Admin::SchoolClassesController < ApplicationController
     end
 
     def create
-        @school_class = SchoolClass.new(params.require(:school_class).permit(:name))
+        @school_class = SchoolClass.new(params.require(:school_class).permit(:name, :period_id))
         authorize @school_class
 
         if @school_class.save

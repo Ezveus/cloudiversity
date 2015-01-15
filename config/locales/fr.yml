@@ -104,9 +104,44 @@ fr:
                     demote: Destituer du rôle d'étudiant
                 account: Compte utilisateur
                 roles: Rôles
+        new:
+            page:
+                title: Créer un utilisateur
+        edit:
+            page:
+                title: 'Modifier %{login}'
+        form:
+            login:
+                section: Identifiants
+                password: Défini par l'utilisateur
+                password_help: |
+                    Le mot de passe sera défini par l'utilisateur
+                    lors de l'activation du compte.
+            id:
+                section: Informations personelles
+                optionnal: Informations optionnelles
+            create: Créer un utilisateur
+            edit: Enregistrer
+            activate: Activer le compte maintenant
         status:
             ok: Valide
             locked: Verouillé
             reset_expired: Réinitialisation du mot de passe expirée
             reset_pending: Réinitialisation du mot de passe envoyée
             uninitialized: Non initialisé
+    activerecord:
+        models:
+            user: Utilisateur
+            period: Période
+        attributes:
+            user:
+                login: Nom d'utilisateur
+                email: E-mail
+                first_name: Prénom
+                last_name: Nom de famille
+                avatar: Portrait
+                password: Mot de passe
+            period:
+                name: Nom
+                start_date: Date de début
+                end_date: Date de fin

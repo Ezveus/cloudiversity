@@ -18,6 +18,8 @@
 #= require uikit/addons/search
 #= require uikit/addons/autocomplete
 #= require uikit/addons/datepicker
+#= require moment
+#= require fullcalendar
 #
 # Nested Form
 #= require jquery_nested_form

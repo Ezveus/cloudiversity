@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+    ID_FORMAT = /[a-z][\w\.-]+/i
+
     acts_as_token_authenticatable
 
     devise :database_authenticatable,
@@ -14,7 +16,7 @@ class User < ActiveRecord::Base
         presence: true,
         length: { minimum: 6 },
         uniqueness: true,
-        format: /\A[a-z][\w\.-]+\z/i
+        format: ID_FORMAT
     validates :first_name, presence: true
     validates :last_name, presence: true
     validates :email,
