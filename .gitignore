@@ -46,8 +46,10 @@ __MACOSX
 # THANKS VIM
 *.swp
 
-# THANKS RUBYMINE
+# THANKS RUBYMINE/INTELLIJ's RUBY PLUGIN
 /.idea
+.generators
+.rakeTasks
 
 # THANKS SIMPLECOV
 /coverage
