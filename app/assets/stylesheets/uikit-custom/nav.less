@@ -1,0 +1,22 @@
+.hook-nav-side() {
+    border: 1px solid transparent;
+
+    // Icon padding
+    padding-left: calc(~"1em + "@nav-padding-horizontal);
+
+    i {
+        margin-left: -1em;
+        width: 1em;
+        margin-right: @nav-padding-horizontal;
+        text-align: center;
+    }
+
+    .uk-panel-box > & {
+        border-radius: 0;
+        margin: 0 5px;
+    }
+}
+
+.hook-nav-side-hover() {
+    border-color: @nav-side-border-color;
+}

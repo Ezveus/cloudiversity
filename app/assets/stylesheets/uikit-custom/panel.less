@@ -1,0 +1,20 @@
+.hook-panel-box() {
+    box-shadow: 0 0 2px @cl-theme-gray;
+
+    .cl-box-list > & {
+        box-shadow: none;
+
+        + .uk-panel-box {
+            margin-top: 1px;
+        }
+    }
+
+    a&:hover {
+        background-color: @cl-theme-white;
+    }
+}
+
+.cl-box-list {
+    background-color: @cl-theme-lightgray;
+    box-shadow: 0 0 2px @cl-theme-gray;
+}

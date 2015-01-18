@@ -1,0 +1,97 @@
+@import "uikit/less/uikit-variables";
+
+// Cloudiversity variables
+// -----------------------
+@cl-theme-primary: #123456;
+@cl-theme-secondary: #456789;
+@cl-theme-dark: #012345;
+@cl-theme-white: #EEEEEE;
+@cl-theme-gray: #404040;
+@cl-theme-lightgray: #D0D0D0;
+
+@cl-theme-blue: #547f92;
+@cl-theme-red: #94383a;
+@cl-theme-green: #7b914d;
+@cl-theme-yellow: #e5e464;
+@cl-theme-purple: #94648b;
+@cl-theme-cyan: #5c9088;
+@cl-theme-orange: #c58f38;
+
+@cl-theme-radius: 2px;
+
+// UIkit variables
+// ---------------
+// Please group in the same way uikit modules are grouped
+
+// core/base
+@base-body-background: #EAEBEE;
+@base-body-font-family: 'Fira Sans', sans-serif;
+@base-body-color: #000000;
+
+@base-link-color: @cl-theme-primary;
+@base-link-hover-color: @cl-theme-secondary;
+
+@base-heading-font-family: @base-body-font-family;
+@base-heading-color: @base-body-color;
+
+@base-selection-background: @cl-theme-secondary;
+@base-selection-color: @cl-theme-white;
+
+// core/text
+@text-primary-color: @cl-theme-primary;
+@text-success-color: @cl-theme-green;
+@text-warning-color: @cl-theme-orange;
+@text-danger-color: @cl-theme-red;
+
+// core/utility
+@utility-container-large-max-width: 1600px;
+
+// core/navbar
+@navbar-background: @cl-theme-secondary;
+@navbar-color: @cl-theme-white;
+
+@navbar-nav-height: 36px;
+@navbar-nav-color: @cl-theme-white;
+@navbar-nav-font-family: @base-body-font-family;
+@navbar-nav-hover-background: @cl-theme-primary;
+@navbar-nav-hover-color: @cl-theme-white;
+@navbar-nav-onclick-background: @cl-theme-dark;
+@navbar-nav-onclick-color: @cl-theme-white;
+
+@navbar-brand-color: @cl-theme-white;
+@navbar-brand-hover-color: @cl-theme-white;
+@navbar-brand-font-size: 1rem;
+
+@navbar-toggle-color: @cl-theme-white;
+@navbar-toggle-hover-color: @cl-theme-white;
+
+// core/nav
+@nav-padding-vertical: 2px;
+@nav-padding-horizontal: 10px;
+
+@nav-side-color: @cl-theme-gray;
+@nav-side-border-color: @cl-theme-primary; // custom
+@nav-side-hover-background: @cl-theme-secondary;
+@nav-side-hover-color: @cl-theme-white;
+
+// core/panel
+@panel-box-background: #FEFEFD;
+
+// core/button
+@button-border-color-step: 20%; // custom
+@button-background-color-step: 10%; // custom
+
+@button-primary-background: @cl-theme-secondary;
+@button-primary-hover-background: lighten(@cl-theme-secondary, @button-background-color-step);
+@button-primary-active-background: darken(@cl-theme-secondary, @button-background-color-step);
+@button-primary-color: @button-primary-hover-color;
+
+@button-success-background: @cl-theme-green;
+@button-success-hover-background: lighten(@cl-theme-green, @button-background-color-step);
+@button-success-active-background: darken(@cl-theme-green, @button-background-color-step);
+@button-success-color: @button-success-hover-color;
+
+@button-danger-background: @cl-theme-red;
+@button-danger-hover-background: lighten(@cl-theme-red, @button-background-color-step);
+@button-danger-active-background: darken(@cl-theme-red, @button-background-color-step);
+@button-danger-color: @button-success-hover-color;
