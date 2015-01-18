@@ -32,6 +32,11 @@ class UserPolicy < ApplicationPolicy
         user.is_admin?
     end
 
+    # Access to private information
+    def private?
+        user == record || user.is_admin?
+    end
+
     class Scope < Struct.new(:user, :scope)
         def resolve
             scope.order('last_name, first_name')

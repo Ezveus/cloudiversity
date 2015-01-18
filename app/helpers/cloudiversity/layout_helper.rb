@@ -80,4 +80,10 @@ module Cloudiversity::LayoutHelper
             end
         end
     end
+
+    def muted(text = nil, &blk)
+        content_tag :div, class: 'uk-text-muted' do
+            text.nil? ? blk.call : text
+        end
+    end
 end

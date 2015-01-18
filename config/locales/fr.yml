@@ -82,7 +82,7 @@ fr:
             administration: Administration
             account:
                 status: État
-                lastlog: Dernière connection
+                lastlog: Dernière connexion
                 ip: Origine
                 date: Date
             sidebar:
@@ -104,6 +104,8 @@ fr:
                     demote: Destituer du rôle d'étudiant
                 account: Compte utilisateur
                 roles: Rôles
+            personal: Informations personelles
+            empty: Non renseigné
         new:
             page:
                 title: Créer un utilisateur
@@ -141,6 +143,8 @@ fr:
                 last_name: Nom de famille
                 avatar: Portrait
                 password: Mot de passe
+                phone: Téléphone
+                address: Adresse
             period:
                 name: Nom
                 start_date: Date de début
