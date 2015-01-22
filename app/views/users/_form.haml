@@ -11,19 +11,23 @@
                     .uk-form-help-block= t('.login.password_help')
     .uk-panel.uk-panel-box.uk-margin-bottom
         .uk-panel-title= t('.id.section')
-        = f.auto_input :first_name, { required: true }
-        = f.auto_input :last_name, { required: true }
+        = f.auto_input :first_name, field: { required: true }
+        = f.auto_input :last_name, field: { required: true }
         %hr/
         .uk-panel-title= t('.id.optionnal')
-        .uk-text-center.uk-text-muted
-            Empty
+        = f.auto_input :phone, field_method: :telephone
+        = f.auto_input :address, field_method: :text_area, field: { rows: 4 }
     - if params[:role]
         .uk-panel.uk-panel-box.uk-margin-bottom
             .uk-text-center.uk-text-muted
                 = params[:role]
     .uk-grid
-        .uk-width-1-2
-            = check_box_tag :activate
-            = label_tag :activate, t('.activate')
-        .uk-width-1-2.uk-text-right
-            = f.submit t(@user.persisted? ? '.edit' : '.create'), class: 'uk-button uk-button-primary'
+        - unless @user.persisted?
+            .uk-width-1-2
+                = check_box_tag :activate
+                = label_tag :activate, t('.activate')
+            .uk-width-1-2.uk-text-right
+                = f.submit t('.create'), class: 'uk-button uk-button-primary'
+        - else
+            .uk-width-1-1.uk-text-right
+                = f.submit t('.edit'), class: 'uk-button uk-button-primary'

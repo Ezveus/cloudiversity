@@ -4,7 +4,7 @@
 #= require jquery-ui/widget
 #= require jquery-ui/slider
 #= require_tree .
-#= require uikit/uikit
+#= require uikit/js/uikit
 #
 # Markdown editor
 #= require codemirror
@@ -13,11 +13,11 @@
 #= require codemirror/modes/xml
 #= require codemirror/modes/gfm
 #= require marked
-#= require uikit/addons/htmleditor
-#= require uikit/addons/form-select
-#= require uikit/addons/search
-#= require uikit/addons/autocomplete
-#= require uikit/addons/datepicker
+#= require uikit/js/components/htmleditor
+#= require uikit/js/components/form-select
+#= require uikit/js/components/search
+#= require uikit/js/components/autocomplete
+#= require uikit/js/components/datepicker
 #= require moment
 #= require fullcalendar
 #

@@ -1,0 +1,30 @@
+#cl-login-page {
+    max-width: 350px;
+
+    .cl-school-logo {
+        max-width: 250px;
+    }
+
+    .cl-logo {
+        height: 48px;
+    }
+}
+
+body#cl-login-page-body {
+    overflow: hidden;
+    background: transparent;
+
+    &:before {
+        content: "";
+        background: transparent image-url("tile.png") center center repeat;
+
+        position: absolute;
+        width: 200%;
+        height: 200%;
+
+        top: -50%;
+        left: -50%;
+
+        transform: rotate(-15deg);
+    }
+}

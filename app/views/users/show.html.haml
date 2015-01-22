@@ -7,6 +7,12 @@
 .uk-grid
     .uk-width-medium-1-4.uk-hidden-small
         = image_tag(@user.avatar.url, class: 'uk-thumbnail uk-width-1-1')
+        - if policy(@user).update?
+            .uk-margin-top.uk-text-center
+                = form_for(@user) do |f|
+                    .uk-form-file
+                        %button.uk-button.uk-button-mini Change picture
+                        = f.file_field :avatar, 'data-autosubmit' => true
     .uk-width-medium-3-4
         .uk-panel.uk-panel-box.uk-panel-box-primary.uk-panel-header
             .uk-panel-title= @user.full_name
@@ -28,6 +34,14 @@
                         %dd= @user.current_sign_in_ip
                         %dt= t('.account.date')
                         %dd= l(@user.current_sign_in_at)
+        - if policy(@user).private?
+            .uk-panel.uk-panel-box.uk-panel-header
+                .uk-panel-title= t('.personal')
+                %dl.uk-description-list.uk-description-list-horizontal
+                    %dt= t('activerecord.attributes.user.phone')
+                    %dd= (@user.phone.nil? || @user.phone.empty?) ? muted(t('.empty')) : @user.phone
+                    %dt= t('activerecord.attributes.user.address')
+                    %dd= (@user.address.nil? || @user.address.empty?) ? muted(t('.empty')) : @user.address
         = render partial: 'teacher/profile', object: @user.as_teacher, as: :teacher if @user.is_teacher?
         = render partial: 'student/profile', object: @user.as_student, as: :student if @user.is_student?
 - sidebar! do |s|

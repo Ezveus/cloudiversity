@@ -18,9 +18,7 @@ gem 'codemirror-rails', '~> 4.2'
 
 # - CSS
 gem 'less-rails', '~> 2.5.0'
-
-# - Other
-gem 'rails_uikit', github: 'adaedra/rails_uikit', ref: '22eb7b'
+gem 'autoprefixer-rails', '~> 5.0.0'
 
 # - External assets
 gem 'bower-rails', '~> 0.9.1'

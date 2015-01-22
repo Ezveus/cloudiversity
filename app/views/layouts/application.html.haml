@@ -10,34 +10,23 @@
         = controller_stylesheet_link_tag media: 'all'
         = csrf_meta_tags
     %body
-        %nav.uk-navbar.uk-navbar-attached
-            %ul.uk-navbar-nav.uk-navbar-flip.uk-visible-large
-                - if current_user.present?
-                    %li{data: {'uk-dropdown' => ''}}
-                        = link_to current_user do
-                            = current_user.full_name
-                        .uk-dropdown.uk-dropdown-navbar
-                            %ul.uk-nav.uk-nav-navbar
-                                %li
-                                    = link_to t('.profile'), current_user
-                                %li
-                                    = link_to destroy_user_session_path, method: :delete do
-                                        %i.uk-icon-sign-out
-                                        = t('.sign_out')
-                                %li.uk-nav-divider
-                                %li.uk-nav-header= t('.locale')
-                                - if I18n.available_locales.count > 1
-                                    - I18n.available_locales.each do |locale|
-                                        %li
-                                            = link_to locale_path(locale) do
-                                                = t('lang', locale: locale)
-            = link_to '', '#cl-menu', class: 'uk-navbar-toggle uk-hidden-large', 'data-uk-offcanvas' => ''
-            = link_to root_path, class: 'uk-navbar-brand uk-visible-large' do
-                %strong> Cloud
-                iversity
-            .uk-navbar-content.uk-navbar-center
-                = yield :title
-        %main
+        %main.uk-container.uk-container-center
+            %nav.uk-navbar
+                %ul.uk-navbar-nav.uk-navbar-flip.uk-visible-large
+                    - if current_user.present?
+                        %li
+                            = link_to current_user do
+                                %i.uk-icon-user
+                                = current_user.full_name
+                        %li
+                            = link_to destroy_user_session_path, method: :delete do
+                                %i.uk-icon-sign-out
+                = link_to '', '#cl-menu', class: 'uk-navbar-toggle', 'data-uk-offcanvas' => ''
+                = link_to root_path, class: 'uk-navbar-brand uk-visible-large' do
+                    %strong> Cloud
+                    iversity
+                .uk-navbar-content.uk-navbar-center
+                    = yield :title
             - if alert
                 .uk-alert.uk-alert-warning= alert
             - if notice
