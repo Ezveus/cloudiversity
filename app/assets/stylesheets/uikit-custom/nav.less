@@ -2,10 +2,10 @@
     border: 1px solid transparent;
 
     // Icon padding
-    padding-left: calc(~"1em + "@nav-padding-horizontal);
+    padding-left: calc(~"1em + 2 * "@nav-padding-horizontal);
 
     i {
-        margin-left: -1em;
+        margin-left: calc(~"-1em - "@nav-padding-horizontal);
         width: 1em;
         margin-right: @nav-padding-horizontal;
         text-align: center;

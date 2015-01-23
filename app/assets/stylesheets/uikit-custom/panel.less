@@ -1,8 +1,27 @@
 .hook-panel-box() {
-    box-shadow: 0 0 2px @cl-theme-gray;
+    border: 1px solid @cl-theme-lightgray;
+    border-radius: @cl-theme-radius;
+    box-shadow: 0 20px 20px rgba(255, 255, 255, 0.5) inset;
 
     .cl-box-list > & {
-        box-shadow: none;
+        border-width: 0;
+        border-radius: 0;
+
+        &:not(:first-child) {
+            box-shadow: none;
+        }
+
+        &:first-child {
+            border-radius: @cl-theme-radius @cl-theme-radius 0 0;
+        }
+
+        &:last-child {
+            border-radius: 0 0 @cl-theme-radius @cl-theme-radius;
+        }
+
+        &:only-child {
+            border-radius: @cl-theme-radius;
+        }
 
         + .uk-panel-box {
             margin-top: 1px;
@@ -16,5 +35,6 @@
 
 .cl-box-list {
     background-color: @cl-theme-lightgray;
-    box-shadow: 0 0 2px @cl-theme-gray;
+    border: 1px solid @cl-theme-lightgray;
+    border-radius: @cl-theme-radius;
 }
