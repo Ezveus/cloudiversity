@@ -18,6 +18,7 @@
 #= require uikit/addons/search
 #= require uikit/addons/autocomplete
 #= require uikit/addons/datepicker
+#= require uikit/addons/sortable
 #= require moment
 #= require fullcalendar
 #

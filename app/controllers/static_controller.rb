@@ -36,6 +36,12 @@ class StaticController < ApplicationController
         end
     end
 
+    def update_widget_order
+        respond_to do |format|
+
+        end
+    end
+
     def admin
         raise Pundit::NotAuthorizedError unless current_user.is_admin?
 
