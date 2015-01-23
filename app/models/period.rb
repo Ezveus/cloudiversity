@@ -14,6 +14,6 @@ class Period < ActiveRecord::Base
 
     protected
     def generate_handle
-        name.parameterize
+      name.nil? ? nil : name.parameterize
     end
 end
