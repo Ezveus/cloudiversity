@@ -1,0 +1,80 @@
+//= require codemirror
+//= require jquery-ui/slider
+
+@import "uikit/themes/default/gradient/uikit";
+@import "uikit/addons/htmleditor";
+@import "uikit/themes/default/gradient/addons/htmleditor";
+@import "uikit/addons/search";
+@import "uikit/addons/form-select";
+@import "uikit/addons/form-advanced";
+@import "uikit_cloudiversity";
+
+main {
+    max-width: 1600px;
+    margin: 2em auto;
+    padding: 0 2em;
+}
+
+// Load our font
+@font-face {
+    font-family: "Fira Sans";
+    src: font-url('FiraSans-Regular.woff');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Fira Sans";
+    src: font-url('FiraSans-Bold.woff');
+    font-weight: bold;
+}
+
+// Fix for form fields
+.uk-form input[type="radio"], .uk-form input[type="checkbox"] {
+    overflow: initial;
+}
+
+// Forms inside of link lists
+.cl-links-form {
+    margin: -5px 15px 5px 15px;
+}
+
+.cl-links-form > .uk-autocomplete {
+    & .uk-dropdown {
+        position: static;
+        width: 100%;
+        display: block !important;
+
+        border: none;
+        background: transparent;
+        margin: 5px -15px;
+        padding: 0 15px;
+        box-sizing: content-box;
+        box-shadow: none;
+
+        // TODO: Use base uikit classes for that
+        & ul, & li {
+            padding: 0;
+            margin: 0;
+        }
+
+        & a {
+            padding: 5px 15px;
+            margin: 0 -15px;
+            color: black;
+
+            &:hover {
+                background-color: @nav-side-hover-background;
+            }
+        }
+    }
+}
+
+.uk-panel.uk-panel-box.attachments {
+  clear: both; // fixes agenda assignment progress button being hidden by attachments
+}
+
+// Search
+@search-border: @cl-theme-border;
+@search-background: white;
+
+@import "users";

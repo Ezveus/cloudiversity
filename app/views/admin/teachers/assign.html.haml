@@ -1,0 +1,34 @@
+- title! 'Assign classes'
+.uk-container-center.uk-width-large-3-5
+    .uk-panel-title
+        Assign classes to:
+    = render partial: 'users/summary', object: @teacher.user, as: :user
+    = form_for TeacherSchoolClassDiscipline.new, url: admin_teacher_assign_path(@teacher), method: :post, html: {class: 'uk-form uk-form-horizontal'} do |f|
+        .uk-form-row.uk-margin-top
+            = f.label :discipline, class: 'uk-form-label'
+            .uk-form-controls
+                .uk-form-select.uk-button.uk-width-1-1.uk-text-left{data: {'uk-form-select' => ''}}
+                    %span
+                    = f.collection_select :discipline, @disciplines, :id, :name, {}, { class: 'uk-width-1-1' }
+                    .uk-float-right
+                        %i.uk-icon-chevron-down
+        .uk-form-row
+            = f.label :period, class: 'uk-form-label'
+            .uk-form-controls
+                .uk-form-select.uk-button.uk-width-1-1.uk-text-left{data: {'uk-form-select' => ''}}
+                    %span
+                    = f.collection_select :period, @periods, :id, :to_s, { selected: (cp = Period.get_current).nil? ? nil : cp.id}, { class: 'uk-width-1-1' }
+                    .uk-float-right
+                        %i.uk-icon-chevron-down
+        .uk-form-row
+            = f.label :classes, 'Classes', class: 'uk-form-label'
+            .uk-form-controls
+                .uk-panel.uk-panel-box.uk-scrollable-box
+                    - @classes.each do |cls|
+                        %div
+                            = check_box_tag "teacher_school_class_discipline[classes][#{cls.id}]"
+                            = label_tag "teacher_school_class_discipline[classes][#{cls.id}]", cls.name
+                            %span.uk-text-muted #{cls.students.count} student(s)
+        .uk-form-row.uk-align-right
+            = link_to 'Cancel', @teacher.user, class: 'uk-button'
+            = f.submit 'Assign', class: 'uk-button uk-button-primary'

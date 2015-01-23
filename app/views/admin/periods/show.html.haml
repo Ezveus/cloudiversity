@@ -1,0 +1,36 @@
+- title! "Period"
+- if current_user.is_admin?
+    %ul.uk-breadcrumb
+        %li= link_to 'Administration', admin_path
+        %li= link_to 'Periods', admin_periods_path
+        %li.uk-active Period
+
+.uk-panel.uk-panel-box.uk-panel-header
+    .uk-panel-title
+        %h2=@period.name
+    - if @period.current_one?
+        .uk-panel-badge.uk-badge
+            Current period
+    %ul
+        %li From #{@period.start_date}
+        %li To #{@period.end_date}
+
+%br
+
+.uk-panel.uk-panel-box.uk-panel-header
+    .uk-panel-title
+        Teachers, school classes & disciplines
+    - @period.teacher_school_class_discipline.group_by { |tscd| tscd.teacher }.each do |teacher, tscds|
+        %h4= link_to teacher.full_name, user_path(teacher.user)
+        %dl.uk-description-list.uk-description-list-horizontal
+            - tscds.group_by { |tscd| tscd.discipline }.each do |discipline, tscds|
+                %dt= link_to discipline.name, admin_discipline_path(discipline)
+                %dd
+                    - tscds.each do |tscd|
+                        = link_to tscd.school_class.name, admin_school_class_path(tscd.school_class)
+
+- sidebar! do |s|
+    - s.header 'Administration'
+    = s.link 'Edit period', edit_admin_period_path(@period), icon: "edit" if policy(@period).update?
+    = s.link 'Set as current period', set_current_admin_period_path(@period), icon: "check-square-o" if policy(@period).set_current?
+    = s.link 'Delete period', destroy_confirmation_admin_period_path(@period), icon: "trash-o" if policy(@period).destroy?

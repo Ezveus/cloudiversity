@@ -1,0 +1,2 @@
+module Cloudiversity::SessionsHelper
+end

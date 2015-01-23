@@ -1,0 +1,15 @@
+- title! 'Add students'
+%h1.h2
+    Add students to
+    %em= @school_class.name
+= form_for @school_class, url: admin_school_class_add_path(@school_class), method: :post do |f|
+    %ul.uk-grid
+        - @users.each do |user|
+            %li.uk-width-medium-1-2
+                .uk-panel.uk-margin-bottom
+                    = check_box_tag 'newcomers[]', user.id
+                    = image_tag user.avatar.url, class: 'uk-thumbnail cl-profile-checks'
+                    = user.full_name
+    .uk-align-right
+        = hidden_field_tag 'mode', 'add'
+        = f.submit 'Proceed', class: 'uk-button uk-button-primary'

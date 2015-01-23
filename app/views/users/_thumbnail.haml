@@ -1,0 +1,6 @@
+= link_to user, class: 'cl-user-thumbnail uk-panel uk-panel-box' do
+    .uk-panel-teaser
+        = image_tag user.avatar.url
+    %strong= user.full_name
+    %br/
+    .uk-text-muted= user.login

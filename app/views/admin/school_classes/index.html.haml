@@ -1,0 +1,14 @@
+- title! 'Classes'
+= sidebar! do |s|
+    - s.header 'Administration'
+    = s.link 'Create a class', new_admin_school_class_path, icon: 'plus' if policy(SchoolClass).create?
+- if roles.multiple?
+    %ul.uk-subnav.uk-subnav-pill{data: {'uk-switcher' => "{connect: '#cl-role-switcher'}"}}
+        = roles.each_role do |role|
+            %li= link_to role.class.name, "##{role.class.name}"
+    %ul.uk-switcher#cl-role-switcher
+        - roles.each do |role|
+            %li
+                = roles.render(self)
+- else
+    = roles.render(self)

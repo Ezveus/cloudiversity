@@ -1,0 +1,4 @@
+= form_for [ :admin, school_class ], html: { class: 'uk-form uk-form-horizontal' } do |f|
+    = f.auto_input :name, field: { required: true }
+    .uk-align-right.uk-margin-top
+        = f.submit class: 'button right', class: 'uk-button uk-button-primary'

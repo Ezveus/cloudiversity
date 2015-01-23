@@ -1,0 +1,20 @@
+%li
+    = link_to root_path do
+        Home
+%li
+    - if current_user.is_admin?
+        = link_to admin_path do
+            Administration
+- if is_mobile
+    %li.uk-nav-header User
+    %li
+        = link_to current_user do
+            %strong= current_user.full_name
+            %br/
+            %small= current_user.roles.map { |r| r.role_type }.join(', ')
+        = link_to destroy_user_session_path, method: :delete do
+            %i.uk-icon-sign-out
+            Sign out
+%li.uk-nav-header Modules
+- Cloudiversity::ModuleManager.modules.each do |mod|
+    %li= link_to mod.name, '/' + mod.namespace
