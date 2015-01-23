@@ -1,32 +1,11 @@
-.cl-user-thumbnail {
-    width: 192px;
-    display: inline-block;
-    margin: 0 5px 10px 5px;
-    vertical-align: bottom;
-}
-
-.cl-user-row {
-    padding: 5px;
-    margin-bottom: 10px;
-}
-
 .cl-user-picture {
-    vertical-align: middle;
-    border: 1px solid darken(@cl-theme-border, 20%);
-    border-radius: @global-border-radius - 1px;
-    display: inline-block;
-    margin-right: 5px;
+    .uk-vertical-align-middle;
+    .uk-display-inline-block;
+    .uk-margin-right;
 
-    & > img {
-        border-radius: @global-border-radius - 2px;
-        height: 58px;
-    }
-
-    & + .uk-panel {
-        vertical-align: middle;
-    }
+    max-width: 64px;
 }
 
-.cl-profile-checks {
-    height: 48px;
+.uk-panel.cl-user-row {
+    padding: 0;
 }

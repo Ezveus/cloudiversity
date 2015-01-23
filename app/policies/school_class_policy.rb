@@ -15,6 +15,10 @@ class SchoolClassPolicy < ApplicationPolicy
         user.is_admin?
     end
 
+    def list_students?
+        !user.nil?
+    end
+
     alias_method :add_new?, :add?
     alias_method :transfer?, :add?
     alias_method :add_proceed?, :add?
