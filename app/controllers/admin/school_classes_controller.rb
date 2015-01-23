@@ -142,4 +142,13 @@ class Admin::SchoolClassesController < ApplicationController
 
         redirect_to [ :admin, @school_class ], notice: 'Students have been added'
     end
+
+    def list_students
+        authorize(@school_class = SchoolClass.find(params[:id]))
+        respond_to do |format|
+            format.json do
+                render json: @school_class.students.map { |student| { id: student.id, name: student.full_name } }
+            end
+        end
+    end
 end

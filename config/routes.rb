@@ -17,6 +17,8 @@ Cloudiversity::Application.routes.draw do
     put    '/u/:id'      => 'users#update', id: User::ID_FORMAT
     delete '/u/:id'      => 'users#delete', id: User::ID_FORMAT
 
+    get    '/school_class/:id/students' => 'admin/school_classes#list_students'
+
     # TODO: Tear this down.
     namespace :admin do
         resources :users, id: /[a-z][\w\.-]+/i do
