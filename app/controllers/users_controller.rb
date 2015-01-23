@@ -16,4 +16,26 @@ class UsersController < ApplicationController
             format.html { redirect_to current_user }
         end
     end
+
+    def edit
+        @user = User.find params[:id]
+        authorize @user
+    end
+
+    def new
+        @user = User.new
+        authorize @user
+    end
+
+    def update
+        @user = User.find(params[:id])
+        authorize @user
+
+        if @user.update(params.require(:user).permit(:email, :first_name, :last_name, :avatar, :phone, :address))
+            redirect_to @user,
+                        notice: 'User updated successfully.'
+        else
+            render action: :edit
+        end
+    end
 end

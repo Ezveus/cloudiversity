@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+    ID_FORMAT = /[a-z][\w\.-]+/i
+
     acts_as_token_authenticatable
 
     devise :database_authenticatable,
@@ -6,6 +8,7 @@ class User < ActiveRecord::Base
         :recoverable
 
     has_many :abstract_roles
+    # has_many :widget_list_items, -> { order('position ASC') }
 
     mount_uploader :avatar, AvatarUploader
 
@@ -13,7 +16,7 @@ class User < ActiveRecord::Base
         presence: true,
         length: { minimum: 6 },
         uniqueness: true,
-        format: /\A[a-z][\w\.-]+\z/i
+        format: ID_FORMAT
     validates :first_name, presence: true
     validates :last_name, presence: true
     validates :email,
@@ -64,10 +67,14 @@ class User < ActiveRecord::Base
     # Returns a list of roles attributed to the user.
     alias_method :roles, :abstract_roles
 
+    def roles_names
+        roles.map(&:name)
+    end
+
     # Allow to refer to the user as one of its role dynamically. Implements a series of +as_role+ and +is_role?+
     # functions to be able to get the specialized role or check if a user responds to a role dynamically.
     def method_missing(m, *args, &block)
-        @@roles = User.app_roles
+        User.app_roles
         if /is_(?<role__name>\w+)\?/ =~ m.to_s
             role__name.capitalize!
             if @@roles.include?(role__name)
@@ -126,7 +133,7 @@ class User < ActiveRecord::Base
             model.capitalize.singularize.camelize
         end.select do |model|
             begin
-                eval "#{model}.ancestors.include? UserRole"
+                model.constantize.ancestors.include? UserRole
             rescue
                 false
             end

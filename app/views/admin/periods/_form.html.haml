@@ -1,9 +1,9 @@
 = form_for [ :admin, period ], html: { class: 'uk-form uk-form-horizontal' } do |f|
     = f.auto_input :name, field: { required: true }
-    .uk-grid.uk-margin-top
-        .uk-width-1-2
+    .uk-grid
+        .uk-width-xlarge-1-2.uk-margin-top
             = f.auto_input :start_date, field_method: :date, field: { data: {'uk-datepicker' => '{format: \'YYYY-MM-DD\'}' }}
-        .uk-width-1-2
+        .uk-width-xlarge-1-2.uk-margin-top
             = f.auto_input :end_date, field_method: :date, field: { data: {'uk-datepicker' => '{format: \'YYYY-MM-DD\'}' }}
     .uk-align-right.uk-margin-top
         = f.submit class: 'button right', class: 'uk-button uk-button-primary'

@@ -8,9 +8,15 @@
 # Ignore the SQL schema, as it may contain module-related data
 /db/schema.rb
 
+# Ignore module migrations
+/db/migrate/*_engine.rb
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
+
+# Ignore uploaded files
+/public/uploads/*
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
@@ -40,8 +46,22 @@ __MACOSX
 # THANKS VIM
 *.swp
 
-# THANKS RUBYMINE
+# THANKS RUBYMINE/INTELLIJ's RUBY PLUGIN
 /.idea
+.generators
+.rakeTasks
 
 # THANKS SIMPLECOV
 /coverage
+
+# The school logo
+/app/assets/images/school_logo.png
+
+# Uploads
+/public/uploads/*
+
+# Bower
+Gemfile
+vendor/assets/.bowerrc
+vendor/assets/bower.json
+vendor/assets/bower_components/

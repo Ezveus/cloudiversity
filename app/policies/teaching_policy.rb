@@ -51,7 +51,7 @@ class TeachingPolicy < ApplicationPolicy
         !(record.nil? && user.roles.empty?) && user_can_see?
     end
 
-    def index_per_tscd?
+    def index_per_teaching?
         show?
     end
 
@@ -68,7 +68,7 @@ class TeachingPolicy < ApplicationPolicy
     def user_can_see?
         return true if user.is_admin?
         (user.as_teacher.teachings.include?(record) if user.is_teacher?) ||
-        (user.as_student.teacher_school_class_disciplines.include?(record) if user.is_student?)
+        (user.as_student.teachings.include?(record) if user.is_student?)
         # TODO: Manage parent
     end
 end

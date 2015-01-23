@@ -1,0 +1,36 @@
+.hook-button() {
+    border: 1px solid darken(@button-background, @button-border-color-step);
+    border-radius: @cl-theme-radius;
+    box-shadow: 0 0 2px fade(white, 50%) inset;
+
+    .uk-form input& {
+        border-radius: @cl-theme-radius;
+    }
+}
+
+.hook-button-primary() {
+    border-color: darken(@button-primary-background, @button-border-color-step);
+    border-radius: @cl-theme-radius;
+
+    .uk-form input& {
+        color: @button-primary-hover-color;
+    }
+}
+
+.hook-button-success() {
+    border-color: darken(@button-success-background, @button-border-color-step);
+    border-radius: @cl-theme-radius;
+
+    .uk-form input& {
+        color: @button-success-hover-color;
+    }
+}
+
+.hook-button-danger() {
+    border-color: darken(@button-danger-background, @button-border-color-step);
+    border-radius: @cl-theme-radius;
+
+    .uk-form input& {
+        color: @button-danger-hover-color;
+    }
+}

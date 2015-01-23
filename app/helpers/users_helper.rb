@@ -1,42 +1,42 @@
 module UsersHelper
     def user_status(user, color = true)
         css = 'uk-text-success'
-        text = 'OK'
+        text = :ok
 
         if user.password_set?
             if user.locked_at?
                 css = 'uk-text-danger'
-                text = 'Locked'
+                text = :locked
             elsif user.reset_pending?
                 if user.reset_expired?
                     css = ''
-                    text = 'Password reset expired'
+                    text = :reset_expired
                 else
                     css = 'uk-text-warning'
-                    text = 'Password reset pending'
+                    text = :reset_pending
                 end
             end
         else
             if user.reset_pending?
                 if user.reset_expired?
                     css = ''
-                    text = 'Password reset expired'
+                    text = :reset_expired
                 else
                     css = 'uk-text-warning'
-                    text = 'Password reset pending'
+                    text = :reset_pending
                 end
             else
                 css = 'uk-text-warning'
-                text = 'Uninitialized account'
+                text = :uninitialized
             end
         end
 
         if color
             content_tag :dd, class: css do
-                text
+                t("users.status.#{text.to_sym}")
             end
         else
-            text
+            t("users.status.#{text.to_sym}")
         end
     end
 

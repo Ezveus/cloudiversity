@@ -1,12 +1,10 @@
 %li
-    = link_to root_path do
-        Home
+    = link_to t('.home'), root_path
 %li
     - if current_user.is_admin?
-        = link_to admin_path do
-            Administration
+        = link_to t('.admin'), admin_path
 - if is_mobile
-    %li.uk-nav-header User
+    %li.uk-nav-header= t('.user')
     %li
         = link_to current_user do
             %strong= current_user.full_name
@@ -14,7 +12,13 @@
             %small= current_user.roles.map { |r| r.role_type }.join(', ')
         = link_to destroy_user_session_path, method: :delete do
             %i.uk-icon-sign-out
-            Sign out
-%li.uk-nav-header Modules
+            = t('.sign_out')
+    - if I18n.available_locales.count > 1
+        %li.uk-nav-header= t('.locales')
+        - I18n.available_locales.each do |locale|
+            %li
+                = link_to locale_path(locale) do
+                    = t('lang', locale: locale)
+%li.uk-nav-header= t('.modules')
 - Cloudiversity::ModuleManager.modules.each do |mod|
-    %li= link_to mod.name, '/' + mod.namespace
+    %li= link_to t('modules.' + mod.name), '/' + mod.namespace
