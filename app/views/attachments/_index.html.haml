@@ -1,5 +1,0 @@
-.uk-panel.uk-panel-box.attachments
-    .uk-panel-title= I18n.t('attachments', default: 'Attachments')
-    - attachments.each do |att|
-        = image_tag att.icon, alt: att.filename
-        = link_to att.filename, att.file.url

@@ -1,9 +1,0 @@
-- content_for :title do
-    Create discipline
-= render partial: 'form', object: @discipline, as: :discipline
-- content_for :toolbar do
-    %dl
-        %dt Actions
-        %dd
-            %ul.link-list
-                %li= link_to("view all disciplines", admin_disciplines_path, class: "glyph-index")

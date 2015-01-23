@@ -1,9 +1,0 @@
-- content_for :title do
-    Create class
-= render partial: 'form', object: @school_class, as: :school_class
-- content_for :toolbar do
-    %dl
-        %dt Actions
-        %dd
-            %ul.link-list
-                %li= link_to("view all classes", admin_school_classes_path, class: "glyph-index")

@@ -1,7 +1,0 @@
-%tr
-    %td= link_to(student.user.login, admin_student_path(student))
-    %td= student.user.full_name
-    %td= mail_to student.user.email
-    %td
-        = link_to('Edit', edit_admin_student_path(student), class: 'button glyph-button glyph-edit')
-        = link_to('Delete', admin_student_path(student), method: :delete, class: 'button glyph-button glyph-delete')

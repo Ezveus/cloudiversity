@@ -1,7 +1,0 @@
-- title! 'Teachers'
-.uk-text-center
-    = render partial: 'users/thumbnail', collection: @teachers.map { |t| t.user }, as: :user
-- sidebar! do |b|
-    - b.header 'Management'
-    - if policy(Teacher.new).create?
-        = b.link 'View all users', admin_users_path, subtitle: 'You can promote new teachers from there'

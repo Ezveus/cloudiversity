@@ -1,7 +1,0 @@
-- title! 'Users'
-.cl-box-list
-    = render partial: 'users/row', collection: @users, as: :user
-= will_paginate @users
-- sidebar! do |b|
-    = b.header 'Manage users'
-    = b.link 'Create user', new_admin_user_path, icon: 'plus'
