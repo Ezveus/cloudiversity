@@ -155,9 +155,15 @@ class Admin::TeachersController < ApplicationController
 
     def list_teachings
         authorize(Teacher)
-        @teacher = Teacher.find params[:id]
+        @teacher = User.find(params[:id])
         respond_to do |format|
             format.json do
+
+                if @teacher.is_teacher?
+                    @teacher = @teacher.as_teacher
+                else
+                    return render(json: { error: "Invalid role" }, status: :bad_request)
+                end
 
                 @teachings = @teacher.teachings.group_by(&:discipline).map { |discipline, teachings| {
                         discipline: { id: discipline.id, name: discipline.name },
