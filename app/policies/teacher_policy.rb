@@ -19,6 +19,10 @@ class TeacherPolicy < ApplicationPolicy
         update?
     end
 
+    def list_teachings?
+        user.is_admin? || user.is_teacher?
+    end
+
     class Scope < Struct.new(:user, :scope)
         def resolve
             scope.all

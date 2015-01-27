@@ -18,6 +18,7 @@
 #= require uikit/js/components/search
 #= require uikit/js/components/autocomplete
 #= require uikit/js/components/datepicker
+#= require uikit/js/components/sortable
 #= require moment
 #= require fullcalendar
 #

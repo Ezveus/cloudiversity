@@ -18,6 +18,7 @@ Cloudiversity::Application.routes.draw do
     delete '/u/:id'      => 'users#delete', id: User::ID_FORMAT
 
     get    '/school_class/:id/students' => 'admin/school_classes#list_students'
+    get    '/teacher/:id/teachings'     => 'admin/teachers#list_teachings'
 
     # TODO: Tear this down.
     namespace :admin do

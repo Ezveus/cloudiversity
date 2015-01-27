@@ -152,4 +152,29 @@ class Admin::TeachersController < ApplicationController
             redirect_to @teacher.user, notice: "The class has been unassigned. All associated data has been deleted."
         end
     end
+
+    def list_teachings
+        authorize(Teacher)
+        @teacher = User.find(params[:id])
+        respond_to do |format|
+            format.json do
+
+                if @teacher.is_teacher?
+                    @teacher = @teacher.as_teacher
+                else
+                    return render(json: { error: "Invalid role" }, status: :bad_request)
+                end
+
+                @teachings = @teacher.teachings.group_by(&:discipline).map { |discipline, teachings| {
+                        discipline: { id: discipline.id, name: discipline.name },
+                        school_classes: teachings.map { |teaching| {
+                                school_class_id: teaching.school_class.id, school_class_name: teaching.school_class.name,
+                                period_id: teaching.school_class.period.id, period_name: teaching.school_class.period.name
+                        }}
+                }}
+
+                render json: @teachings
+            end
+        end
+    end
 end
