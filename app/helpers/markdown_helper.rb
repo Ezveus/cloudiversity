@@ -5,6 +5,8 @@ module MarkdownHelper
     # Manages the markdown library. It instanciates a JavaScript runtime
     # to run Marked and then calls it when needed.
     class Parser
+        MARKED_FILE = Rails.root.join('vendor', 'assets', 'bower_components', 'marked', 'lib', 'marked.js').to_s
+
         def initialize
             @engine = init_engine
             @engine.eval('marked.setOptions({ gfm: true, sanitize: true })')
@@ -22,12 +24,12 @@ module MarkdownHelper
         def init_engine
             if RUBY_PLATFORM == "java"
                 Rhino::Context.open do |ctx|
-                    ctx.load(Rails.root.join(*%w{ vendor assets javascripts marked.js }).to_s)
+                    ctx.load(MARKED_FILE)
                     ctx
                 end
             else
                 ctx = V8::Context.new
-                ctx.load(Rails.root.join(*%w{ vendor assets javascripts marked.js }).to_s)
+                ctx.load(MARKED_FILE)
                 ctx
             end
         end
