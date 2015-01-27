@@ -17,13 +17,35 @@ class UsersController < ApplicationController
         end
     end
 
-    def edit
-        @user = User.find params[:id]
+    def new
+        @user = User.new
         authorize @user
     end
 
-    def new
-        @user = User.new
+    def create
+        @user = User.new(params.require(:user).permit(
+                :login,
+                :email,
+                :first_name,
+                :last_name,
+                :phone,
+                :address
+            ))
+        authorize @user
+
+        if @user.save
+            if params.fetch(:activate, false)
+                @user.send_reset_password_instructions
+            end
+
+            redirect_to @user, notice: 'User created successfully'
+        else
+            render action: :new
+        end
+    end
+
+    def edit
+        @user = User.find params[:id]
         authorize @user
     end
 
